@@ -12,6 +12,8 @@ import { Font } from "astro:assets";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import "../styles/theme.css";
 
+const SOFT_SITE = "https://soft-innova.com";
+
 interface Props {
 	title: string;
 	pageTitle?: string | null;
@@ -43,9 +45,6 @@ const {
 const { siteTitle, siteTagline, siteLogo } = resolveBlogSiteIdentity(await getSiteSettings());
 // If title already includes site title (from getSeoMeta), use as-is
 const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
-
-// Fetch primary menu defined in seed
-const menu = await getMenu("primary");
 
 // Optional "social" menu. If a site defines a `social` menu in its seed,
 // it'll render in the footer's "Connect" column. Otherwise that column
@@ -102,16 +101,16 @@ const isLoggedIn = !!Astro.locals.user;
 	<body>
 		<EmDashBodyStart page={pageCtx} />
 		<header class="site-header">
-			<nav class="nav">
-				<a href="/" class="site-title">
-					{siteLogo
-						? <img src={siteLogo.url} alt={siteLogo.alt || siteTitle} class="site-logo-img" />
-						: siteTitle
-					}
+			<nav class="nav" aria-label="Principal">
+				<a href={`${SOFT_SITE}/`} class="nav-brand">
+					<span class="nav-brand-mark" aria-hidden="true">S</span>
+					<span class="nav-brand-wordmark" translate="no">
+						Soft<span class="nav-brand-accent">Innova</span>
+					</span>
 				</a>
 				<div class="nav-right">
 					<LiveSearch
-						placeholder="Search..."
+						placeholder="Buscar..."
 						class="site-search"
 						inputClass="site-search-input"
 						resultsClass="site-search-results"
@@ -119,14 +118,17 @@ const isLoggedIn = !!Astro.locals.user;
 						collections={["posts", "pages"]}
 					/>
 					<div class="nav-links">
-						{
-							menu?.items.map((item) => (
-								<a href={item.url} target={item.target}>
-									{item.label}
-								</a>
-							))
-						}
+						<a href={`${SOFT_SITE}/#productos`}>Productos</a>
+						<a href={`${SOFT_SITE}/#servicios`}>Servicios</a>
+						<a href="/posts">Blog</a>
+						<a href={`${SOFT_SITE}/#reviews`}>Reseñas</a>
 					</div>
+					<a
+						class="nav-cta"
+						href={`${SOFT_SITE}/#contacto`}
+					>
+						Conversemos
+					</a>
 					{
 						isLoggedIn && (
 							<a href="/_emdash/admin" class="nav-admin">
@@ -597,23 +599,91 @@ const isLoggedIn = !!Astro.locals.user;
 				height: var(--nav-height);
 			}
 
-			.site-title {
-				font-size: var(--font-size-lg);
-				font-weight: 600;
-				color: var(--color-text);
+			.nav-brand {
+				display: flex;
+				align-items: center;
+				gap: var(--spacing-3);
 				text-decoration: none;
+				color: var(--color-text);
 				letter-spacing: var(--tracking-snug);
 			}
 
-			.site-title:hover {
-				color: var(--color-accent);
+			.nav-brand:hover .nav-brand-accent {
+				color: var(--color-accent-hover);
 			}
 
-			.site-logo-img {
-				height: 48px;
-				width: auto;
-				display: block;
-				margin: -8px 0;
+			@media (prefers-reduced-motion: reduce) {
+				.nav-cta:hover {
+					transform: none;
+				}
+			}
+
+			.nav-brand-mark {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 2.25rem;
+				height: 2.25rem;
+				border-radius: var(--radius-lg);
+				flex-shrink: 0;
+				font-size: var(--font-size-lg);
+				font-weight: 700;
+				line-height: 1;
+				color: var(--color-on-accent);
+				background: linear-gradient(
+					145deg,
+					color-mix(in srgb, var(--color-accent) 88%, #000),
+					var(--color-accent)
+				);
+				box-shadow: 0 8px 24px
+					color-mix(in srgb, var(--color-accent) 38%, transparent);
+			}
+
+			.nav-brand-wordmark {
+				font-size: var(--font-size-lg);
+				font-weight: 700;
+			}
+
+			.nav-brand-accent {
+				color: var(--color-accent);
+				transition: color var(--transition-fast);
+			}
+
+			.nav-cta {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				min-height: 44px;
+				padding: var(--spacing-2) var(--spacing-5);
+				font-size: var(--font-size-sm);
+				font-weight: 600;
+				line-height: 1.25;
+				color: var(--color-on-accent);
+				text-decoration: none;
+				white-space: nowrap;
+				border-radius: 9999px;
+				background: linear-gradient(
+					145deg,
+					color-mix(in srgb, var(--color-accent) 82%, #000),
+					var(--color-accent)
+				);
+				box-shadow:
+					0 1px 2px rgb(0 0 0 / 0.06),
+					0 10px 28px color-mix(in srgb, var(--color-accent) 38%, transparent);
+				transition:
+					transform var(--transition-fast),
+					box-shadow var(--transition-fast),
+					filter var(--transition-fast);
+			}
+
+			.nav-cta:hover {
+				transform: translateY(-1px);
+				filter: brightness(1.04);
+			}
+
+			.nav-cta:focus-visible {
+				outline: 2px solid var(--color-accent);
+				outline-offset: 3px;
 			}
 
 			.nav-right {
@@ -636,6 +706,12 @@ const isLoggedIn = !!Astro.locals.user;
 
 			.nav-links a:hover {
 				color: var(--color-accent);
+			}
+
+			.nav-links a:focus-visible {
+				outline: 2px solid var(--color-accent);
+				outline-offset: 3px;
+				border-radius: var(--radius);
 			}
 
 			.nav-admin {
@@ -937,7 +1013,13 @@ const isLoggedIn = !!Astro.locals.user;
 					padding: var(--spacing-3) var(--spacing-4);
 				}
 
-				.site-title {
+				.nav-brand-wordmark {
+					font-size: var(--font-size-base);
+				}
+
+				.nav-brand-mark {
+					width: 2rem;
+					height: 2rem;
 					font-size: var(--font-size-base);
 				}
 
@@ -966,8 +1048,15 @@ const isLoggedIn = !!Astro.locals.user;
 					justify-content: flex-start;
 				}
 
-				.nav-admin {
+				.nav-cta {
 					order: 2;
+					width: 100%;
+					justify-content: center;
+					min-height: 48px;
+				}
+
+				.nav-admin {
+					order: 3;
 					position: absolute;
 					right: var(--spacing-4);
 					top: var(--spacing-3);
