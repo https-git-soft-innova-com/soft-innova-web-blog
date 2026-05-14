@@ -25,7 +25,6 @@ const tagsByEntry = await getTermsForEntries(
 const postsWithTags = posts.map((post) => ({
 	post,
 	tags: tagsByEntry.get(post.data.id) ?? [],
-	bylines: post.data.bylines ?? [],
 }));
 ---
 
@@ -66,7 +65,7 @@ const postsWithTags = posts.map((post) => ({
 			) : (
 				<>
 					<div class="posts-grid" data-posts-grid>
-						{postsWithTags.map(({ post, tags, bylines }, index) => (
+						{postsWithTags.map(({ post, tags }, index) => (
 							<div
 								class:list={[
 									"post-slot",
@@ -84,7 +83,6 @@ const postsWithTags = posts.map((post) => ({
 									date={post.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(post.data.content)}
 									tags={tags.map((t) => ({ slug: t.slug, label: t.label }))}
-									bylines={bylines}
 								/>
 							</div>
 						))}

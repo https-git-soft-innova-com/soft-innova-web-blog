@@ -59,7 +59,6 @@ const gridPostsWithTags = gridPosts.map((post) => ({
 		slug: t.slug,
 		label: t.label,
 	})),
-	bylines: post.data.bylines ?? [],
 }));
 
 // Format date helper
@@ -168,7 +167,7 @@ function formatDate(date: Date | null | undefined) {
 							)}
 						</header>
 						<div class="posts-grid">
-							{gridPostsWithTags.map(({ post, tags, bylines }) => (
+							{gridPostsWithTags.map(({ post, tags }) => (
 								<PostCard
 									title={post.data.title ?? "Untitled"}
 									excerpt={post.data.excerpt}
@@ -177,7 +176,6 @@ function formatDate(date: Date | null | undefined) {
 									date={post.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(post.data.content)}
 									tags={tags}
-									bylines={bylines}
 								/>
 							))}
 						</div>

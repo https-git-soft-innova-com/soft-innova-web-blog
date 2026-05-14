@@ -1,7 +1,6 @@
 ---
-import { getMenu, getEmDashCollection, getSiteSettings } from "emdash";
+import { getSiteSettings } from "emdash";
 import {
-	WidgetArea,
 	EmDashHead,
 	EmDashBodyStart,
 	EmDashBodyEnd,
@@ -12,6 +11,12 @@ import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import "../styles/theme.css";
 
 const SOFT_SITE = "https://soft-innova.com";
+
+const FOOTER_SOCIAL = {
+	facebook: "https://www.facebook.com/profile.php?id=61572338432440",
+	instagram: "https://www.instagram.com/softech.innovacion/",
+	linkedin: "https://www.linkedin.com/company/softech-innovacion-spa/",
+} as const;
 
 interface Props {
 	title: string;
@@ -41,17 +46,9 @@ const {
 	author,
 	content,
 } = Astro.props;
-const { siteTitle, siteTagline, siteLogo } = resolveBlogSiteIdentity(await getSiteSettings());
+const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
 // If title already includes site title (from getSeoMeta), use as-is
 const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
-
-// Optional "social" menu. If a site defines a `social` menu in its seed,
-// it'll render in the footer's "Connect" column. Otherwise that column
-// just shows RSS, avoiding duplication with the "Navigate" column above.
-const socialMenu = await getMenu("social");
-
-// Fetch pages for footer
-const { entries: pages } = await getEmDashCollection("pages");
 
 // Build public page context for plugin contributions
 // SEO data is passed here and rendered securely by EmDashHead
@@ -141,136 +138,198 @@ const isLoggedIn = !!Astro.locals.user;
 		<footer class="site-footer">
 			<div class="footer-inner">
 				<div class="footer-grid">
-					<div class="footer-brand">
-						<a href="/" class="footer-logo">
-							{siteLogo
-								? <img src={siteLogo.url} alt={siteLogo.alt || siteTitle} class="footer-logo-img" />
-								: siteTitle
-							}
-						</a>
-						<p class="footer-tagline">{siteTagline}</p>
+					<div class="footer-brand-col">
+						<div class="footer-brand-row">
+							<div class="footer-mark" aria-hidden="true">
+								<span class="footer-mark-letter">S</span>
+							</div>
+							<div class="footer-wordmark" translate="no">
+								Soft<span class="footer-wordmark-accent">Innova</span>
+							</div>
+						</div>
+						<p class="footer-desc">
+							Hacemos que la IA y la automatización funcionen en tu negocio.
+							Productos listos, servicios a medida y un equipo que sí responde.
+						</p>
+						<div class="footer-social">
+							<a
+								href={FOOTER_SOCIAL.facebook}
+								class="footer-social-link"
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label="Facebook"
+							>
+								<svg class="footer-social-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+									<path
+										d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+									></path>
+								</svg>
+							</a>
+							<a
+								href={FOOTER_SOCIAL.instagram}
+								class="footer-social-link"
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label="Instagram"
+							>
+								<svg
+									class="footer-social-icon"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									aria-hidden="true"
+								>
+									<rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+									<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+									<line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+								</svg>
+							</a>
+							<a
+								href={FOOTER_SOCIAL.linkedin}
+								class="footer-social-link"
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label="LinkedIn"
+							>
+								<svg
+									class="footer-social-icon"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									aria-hidden="true"
+								>
+									<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"></path>
+									<circle cx="4" cy="4" r="2"></circle>
+								</svg>
+							</a>
+						</div>
 					</div>
-					<div class="footer-nav">
-						<h4 class="footer-heading">Navigate</h4>
+					<div class="footer-col">
+						<h4 class="footer-heading">Productos</h4>
 						<ul class="footer-links">
-							<li><a href="/">Home</a></li>
-							<li><a href="/posts">All Posts</a></li>
-							{
-								pages.slice(0, 3).map((page) => (
-									<li>
-										<a href={`/pages/${page.data.slug || page.id}`}>
-											{page.data.title}
-										</a>
-									</li>
-								))
-							}
+							<li><a href={`${SOFT_SITE}/#productos`}>Annie-AI</a></li>
+							<li><a href={`${SOFT_SITE}/#productos`}>Vicky-AI</a></li>
+							<li><a href={`${SOFT_SITE}/#productos`}>Ro-AI</a></li>
+							<li><a href={`${SOFT_SITE}/#productos`}>Tito</a></li>
+							<li><a href={`${SOFT_SITE}/#productos`}>Mikan</a></li>
+							<li><a href={`${SOFT_SITE}/#productos`}>VAULT</a></li>
 						</ul>
 					</div>
-					<div class="footer-nav">
-						<h4 class="footer-heading">Connect</h4>
+					<div class="footer-col">
+						<h4 class="footer-heading">Empresa</h4>
 						<ul class="footer-links">
-							{
-								socialMenu?.items.map((item) => (
-									<li>
-										<a
-											href={item.url}
-											target={item.target}
-											rel={
-												item.target === "_blank"
-													? "noopener noreferrer"
-													: undefined
-											}
-										>
-											{item.label}
-										</a>
-									</li>
-								))
-							}
-							<li><a href="/rss.xml">RSS Feed</a></li>
+							<li><a href={`${SOFT_SITE}/#servicios`}>Servicios</a></li>
+							<li><a href="/posts">Blog</a></li>
+							<li><a href={`${SOFT_SITE}/#reviews`}>Reseñas</a></li>
+							<li><a href={`${SOFT_SITE}/#contacto`}>Contacto</a></li>
 						</ul>
 					</div>
-					<div class="footer-widgets-section">
-						<WidgetArea name="footer" />
+					<div class="footer-col">
+						<h4 class="footer-heading">Contacto</h4>
+						<ul class="footer-contact-list">
+							<li>
+								<a href="mailto:hola@soft-innova.com">hola@soft-innova.com</a>
+							</li>
+							<li>
+								<a href="https://wa.me/56982637447" target="_blank" rel="noopener noreferrer">
+									+56 9 8263 7447
+								</a>
+							</li>
+							<li>Santiago, Chile</li>
+						</ul>
 					</div>
 				</div>
 				<div class="footer-bottom">
 					<p class="footer-copyright">
-						Powered by <a href="https://emdashcms.com">EmDash</a>
+						© 2026 SoftInnova. Hecho con foco en resultados.
 					</p>
-					<div class="theme-switcher">
-						<button
-							type="button"
-							class="theme-btn"
-							data-theme="light"
-							aria-label="Light mode"
-						>
-							<svg
-								width="16"
-								height="16"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								><circle cx="12" cy="12" r="5"></circle><line
-									x1="12"
-									y1="1"
-									x2="12"
-									y2="3"></line><line x1="12" y1="21" x2="12" y2="23"
-								></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"
-								></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"
-								></line><line x1="1" y1="12" x2="3" y2="12"></line><line
-									x1="21"
-									y1="12"
-									x2="23"
-									y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"
-								></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"
-								></line></svg
+					<div class="footer-bottom-right">
+						<nav class="footer-legal" aria-label="Legal">
+							<a href={`${SOFT_SITE}/privacidad`}>Privacidad</a>
+							<a href={`${SOFT_SITE}/terminos`}>Términos</a>
+							<a href={`${SOFT_SITE}/propiedad-intelectual`}>Propiedad intelectual</a>
+						</nav>
+						<div class="theme-switcher">
+							<button
+								type="button"
+								class="theme-btn"
+								data-theme="light"
+								aria-label="Light mode"
 							>
-						</button>
-						<button
-							type="button"
-							class="theme-btn"
-							data-theme="dark"
-							aria-label="Dark mode"
-						>
-							<svg
-								width="16"
-								height="16"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
-								></path></svg
+								<svg
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									><circle cx="12" cy="12" r="5"></circle><line
+										x1="12"
+										y1="1"
+										x2="12"
+										y2="3"></line><line x1="12" y1="21" x2="12" y2="23"
+									></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"
+									></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"
+									></line><line x1="1" y1="12" x2="3" y2="12"></line><line
+										x1="21"
+										y1="12"
+										x2="23"
+										y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"
+									></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"
+									></line></svg
+								>
+							</button>
+							<button
+								type="button"
+								class="theme-btn"
+								data-theme="dark"
+								aria-label="Dark mode"
 							>
-						</button>
-						<button
-							type="button"
-							class="theme-btn"
-							data-theme="system"
-							aria-label="System theme"
-						>
-							<svg
-								width="16"
-								height="16"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								><rect x="2" y="3" width="20" height="14" rx="2" ry="2"
-								></rect><line x1="8" y1="21" x2="16" y2="21"></line><line
-									x1="12"
-									y1="17"
-									x2="12"
-									y2="21"></line></svg
+								<svg
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+									></path></svg
+								>
+							</button>
+							<button
+								type="button"
+								class="theme-btn"
+								data-theme="system"
+								aria-label="System theme"
 							>
-						</button>
+								<svg
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									><rect x="2" y="3" width="20" height="14" rx="2" ry="2"
+									></rect><line x1="8" y1="21" x2="16" y2="21"></line><line
+										x1="12"
+										y1="17"
+										x2="12"
+										y2="21"></line></svg
+								>
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -615,19 +674,13 @@ const isLoggedIn = !!Astro.locals.user;
 				justify-content: center;
 				width: 2.25rem;
 				height: 2.25rem;
-				border-radius: var(--radius-lg);
+				border-radius: 50%;
 				flex-shrink: 0;
 				font-size: var(--font-size-lg);
 				font-weight: 700;
 				line-height: 1;
-				color: var(--color-on-accent);
-				background: linear-gradient(
-					145deg,
-					color-mix(in srgb, var(--color-accent) 88%, #000),
-					var(--color-accent)
-				);
-				box-shadow: 0 8px 24px
-					color-mix(in srgb, var(--color-accent) 38%, transparent);
+				color: #fff;
+				background: #f5a623;
 			}
 
 			.brand-text {
@@ -746,131 +799,209 @@ const isLoggedIn = !!Astro.locals.user;
 				min-height: calc(100vh - var(--nav-height) - 300px);
 			}
 
-			/* Footer */
+			/* Footer — SoftInnova corporate */
 			.site-footer {
-				background: var(--color-bg-subtle);
-				border-top: 1px solid var(--color-border-subtle);
+				background: #0f172a;
+				color: #fff;
+				border-top: 1px solid rgba(255, 255, 255, 0.06);
 			}
 
 			.footer-inner {
 				max-width: var(--wide-width);
 				margin: 0 auto;
-				padding: var(--spacing-16) var(--spacing-6) var(--spacing-8);
+				padding: var(--spacing-16) var(--spacing-6) var(--spacing-10);
 			}
 
 			.footer-grid {
 				display: grid;
-				grid-template-columns: 2fr 1fr 1fr 1fr;
-				gap: var(--spacing-12);
+				grid-template-columns: minmax(0, 1.35fr) repeat(3, minmax(0, 1fr));
+				gap: var(--spacing-10) var(--spacing-12);
 				margin-bottom: var(--spacing-12);
 			}
 
-			.footer-brand {
-				max-width: 280px;
-			}
-
-			.footer-logo {
-				font-size: var(--font-size-lg);
-				font-weight: 600;
-				color: var(--color-text);
-				text-decoration: none;
-				letter-spacing: var(--tracking-snug);
-			}
-
-			.footer-logo-img {
-				height: 24px;
-				width: auto;
-			}
-
-			.footer-tagline {
-				margin-top: var(--spacing-3);
-				font-size: var(--font-size-sm);
-				color: var(--color-muted);
-				line-height: var(--leading-relaxed);
-			}
-
-			.footer-nav {
+			.footer-brand-col {
 				min-width: 0;
 			}
 
-			.footer-heading {
-				font-size: var(--font-size-xs);
-				font-weight: 500;
+			.footer-brand-row {
+				display: flex;
+				align-items: center;
+				gap: var(--spacing-3);
+				margin-bottom: var(--spacing-5);
+			}
+
+			.footer-mark {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 2.5rem;
+				height: 2.5rem;
+				border-radius: 0.75rem;
+				flex-shrink: 0;
+				background: linear-gradient(145deg, #f5a623, #ea7a1c);
+			}
+
+			.footer-mark-letter {
+				font-size: 1.125rem;
+				font-weight: 700;
+				color: #fff;
+				line-height: 1;
+			}
+
+			.footer-wordmark {
+				font-size: var(--font-size-2xl);
+				font-weight: 700;
+				color: #fff;
+				letter-spacing: var(--tracking-snug);
+			}
+
+			.footer-wordmark-accent {
+				color: #f5a623;
+			}
+
+			.footer-desc {
+				font-size: var(--font-size-sm);
+				line-height: var(--leading-relaxed);
+				color: rgba(255, 255, 255, 0.65);
+				max-width: 22rem;
+			}
+
+			.footer-social {
+				display: flex;
+				gap: var(--spacing-3);
+				margin-top: var(--spacing-6);
+			}
+
+			.footer-social-link {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 2.5rem;
+				height: 2.5rem;
+				border-radius: 9999px;
+				background: rgba(255, 255, 255, 0.06);
+				color: #fff;
+				text-decoration: none;
+				transition: background-color 200ms ease;
+			}
+
+			.footer-social-link:hover {
+				background: #f5a623;
+				color: #fff;
+			}
+
+			.footer-social-icon {
+				width: 18px;
+				height: 18px;
+			}
+
+			.footer-col {
+				min-width: 0;
+			}
+
+			.site-footer .footer-heading {
+				font-size: var(--font-size-sm);
+				font-weight: 700;
 				text-transform: uppercase;
-				letter-spacing: var(--tracking-wider);
-				color: var(--color-muted);
+				letter-spacing: 0.08em;
+				color: #fff;
 				margin-bottom: var(--spacing-4);
 			}
 
-			.footer-links {
+			.site-footer .footer-links {
 				list-style: none;
+				margin: 0;
+				padding: 0;
 			}
 
-			.footer-links li {
+			.site-footer .footer-links li {
 				margin-bottom: var(--spacing-2);
 			}
 
-			.footer-links a {
-				color: var(--color-text-secondary);
+			.site-footer .footer-links a {
+				font-size: var(--font-size-sm);
+				color: rgba(255, 255, 255, 0.65);
 				text-decoration: none;
+				transition: color 200ms ease;
+			}
+
+			.site-footer .footer-links a:hover {
+				color: #f5a623;
+			}
+
+			.footer-contact-list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
 				font-size: var(--font-size-sm);
-				transition: color var(--transition-fast);
-			}
-
-			.footer-links a:hover {
-				color: var(--color-text);
-			}
-
-			.footer-widgets-section :global(.widget-area) {
-				display: block;
-			}
-
-			.footer-widgets-section :global(.widget) {
-				color: var(--color-text-secondary);
-			}
-
-			.footer-widgets-section :global(.widget__title) {
-				font-size: var(--font-size-xs);
-				font-weight: 500;
-				text-transform: uppercase;
-				letter-spacing: var(--tracking-wider);
-				color: var(--color-muted);
-				margin-bottom: var(--spacing-4);
-			}
-
-			.footer-widgets-section :global(.widget__content) {
-				color: var(--color-text-secondary);
-				font-size: var(--font-size-sm);
+				color: rgba(255, 255, 255, 0.65);
 				line-height: var(--leading-relaxed);
+			}
+
+			.footer-contact-list li {
+				margin-bottom: var(--spacing-2);
+			}
+
+			.site-footer .footer-contact-list a {
+				color: rgba(255, 255, 255, 0.65);
+				text-decoration: none;
+				transition: color 200ms ease;
+			}
+
+			.site-footer .footer-contact-list a:hover {
+				color: #f5a623;
 			}
 
 			.footer-bottom {
 				display: flex;
-				justify-content: space-between;
+				flex-wrap: wrap;
 				align-items: center;
-				padding-top: var(--spacing-6);
-				border-top: 1px solid var(--color-border);
+				justify-content: space-between;
+				gap: var(--spacing-6);
+				padding-top: var(--spacing-8);
+				border-top: 1px solid rgba(255, 255, 255, 0.08);
 			}
 
 			.footer-copyright {
 				font-size: var(--font-size-sm);
-				color: var(--color-muted);
+				color: rgba(255, 255, 255, 0.55);
+				margin: 0;
 			}
 
-			.footer-copyright a {
-				color: var(--color-text-secondary);
+			.footer-bottom-right {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: var(--spacing-6);
 			}
 
-			/* Theme switcher */
-			.theme-switcher {
+			.footer-legal {
+				display: flex;
+				flex-wrap: wrap;
+				gap: var(--spacing-4);
+				align-items: center;
+			}
+
+			.site-footer .footer-legal a {
+				font-size: var(--font-size-sm);
+				color: rgba(255, 255, 255, 0.55);
+				text-decoration: none;
+				transition: color 200ms ease;
+			}
+
+			.site-footer .footer-legal a:hover {
+				color: #f5a623;
+			}
+
+			.site-footer .theme-switcher {
 				display: flex;
 				gap: var(--spacing-1);
 				padding: var(--spacing-1);
-				background: var(--color-surface);
+				background: rgba(255, 255, 255, 0.08);
 				border-radius: var(--radius);
 			}
 
-			.theme-btn {
+			.site-footer .theme-btn {
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -878,23 +1009,25 @@ const isLoggedIn = !!Astro.locals.user;
 				height: 28px;
 				background: transparent;
 				border: none;
-				color: var(--color-muted);
+				color: rgba(255, 255, 255, 0.45);
 				border-radius: var(--radius);
 				cursor: pointer;
-				transition: all var(--transition-fast);
+				transition:
+					color var(--transition-fast),
+					background var(--transition-fast);
 			}
 
-			.theme-btn:hover {
-				color: var(--color-text-secondary);
+			.site-footer .theme-btn:hover {
+				color: rgba(255, 255, 255, 0.85);
 			}
 
-			.theme-btn.active {
-				background: var(--color-bg);
-				color: var(--color-text);
-				box-shadow: var(--shadow-btn-active);
+			.site-footer .theme-btn.active {
+				background: rgba(255, 255, 255, 0.12);
+				color: #fff;
+				box-shadow: none;
 			}
 
-			.theme-btn svg {
+			.site-footer .theme-btn svg {
 				width: 16px;
 				height: 16px;
 			}
@@ -905,9 +1038,8 @@ const isLoggedIn = !!Astro.locals.user;
 					gap: var(--spacing-8);
 				}
 
-				.footer-brand {
-					grid-column: span 2;
-					max-width: none;
+				.footer-brand-col {
+					grid-column: 1 / -1;
 				}
 			}
 
@@ -965,19 +1097,19 @@ const isLoggedIn = !!Astro.locals.user;
 					grid-template-columns: 1fr;
 				}
 
-				.footer-brand {
-					grid-column: span 1;
+				.footer-brand-col {
+					grid-column: auto;
 				}
 
 				.footer-bottom {
 					flex-direction: column;
-					gap: var(--spacing-4);
-					text-align: center;
+					align-items: flex-start;
+					text-align: left;
 				}
 
-				.footer-controls {
-					flex-wrap: wrap;
-					justify-content: center;
+				.footer-bottom-right {
+					width: 100%;
+					justify-content: space-between;
 				}
 			}
 		</style>
