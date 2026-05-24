@@ -1,35 +1,35 @@
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "my-emdash-site",
-	"main": "./src/worker.ts",
-	"compatibility_date": "2026-02-24",
-	"compatibility_flags": ["nodejs_compat"],
-	"d1_databases": [
-		{
-			"binding": "DB",
-			"database_name": "my-emdash-site",
-			"database_id": "78b60750-35a2-43fe-b5dd-4bb9cccca8e6",
-		},
-	],
-	"r2_buckets": [
-		{
-			"binding": "MEDIA",
-			"bucket_name": "blog-soft-innova-media",
-		},
-	],
-	"kv_namespaces": [
-		{
-			"binding": "SESSION",
-			"id": "57d38c8db0174e7cbdd4396954b675a7",
-		},
-		{
-			"binding": "POST_VIEWS",
-			"id": "57d38c8db0174e7cbdd4396954b675a7",
-		},
-	],
-	"worker_loaders": [
-		{
-			"binding": "LOADER",
-		},
-	],
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "soft-innova-web-blog",
+  "main": "./src/worker.ts",
+  "compatibility_date": "2026-02-24",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "my-emdash-site",
+      "database_id": "78b60750-35a2-43fe-b5dd-4bb9cccca8e6"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "blog-soft-innova-media"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "SESSION",
+      "id": "57d38c8db0174e7cbdd4396954b675a7"
+    },
+    {
+      "binding": "POST_VIEWS",
+      "id": "57d38c8db0174e7cbdd4396954b675a7"
+    }
+  ],
+  "worker_loaders": [
+    {
+      "binding": "LOADER"
+    }
+  ]
 }
