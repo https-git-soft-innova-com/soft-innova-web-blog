@@ -8,7 +8,6 @@
 		{
 			"binding": "DB",
 			"database_name": "my-emdash-site",
-			// Run `wrangler d1 create my-emdash-site` and paste the real ID here for deploy
 			"database_id": "78b60750-35a2-43fe-b5dd-4bb9cccca8e6",
 		},
 	],
@@ -23,8 +22,11 @@
 			"binding": "SESSION",
 			"id": "57d38c8db0174e7cbdd4396954b675a7",
 		},
+		{
+			"binding": "POST_VIEWS",
+			"id": "57d38c8db0174e7cbdd4396954b675a7",
+		},
 	],
-	// Worker Loader for plugin sandboxing
 	"worker_loaders": [
 		{
 			"binding": "LOADER",
