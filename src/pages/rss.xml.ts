@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { getEmDashCollection, getSiteSettings } from "emdash";
+import { getEmDashCollection, getSiteSettings, getTermsForEntries } from "emdash";
 
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 
@@ -12,6 +12,12 @@ export const GET: APIRoute = async ({ site, url }) => {
 		limit: 20,
 	});
 
+	const tagsByEntry = await getTermsForEntries(
+		"posts",
+		posts.map((p) => p.data.id),
+		"tag",
+	);
+
 	const items = posts
 		.map((post) => {
 			if (!post.data.publishedAt) return null;
@@ -20,6 +26,10 @@ export const GET: APIRoute = async ({ site, url }) => {
 			const postUrl = `${siteUrl}/posts/${post.id}`;
 			const title = escapeXml(post.data.title || "Untitled");
 			const description = escapeXml(post.data.excerpt || "");
+			const primaryTag = tagsByEntry.get(post.data.id)?.[0];
+			const categoryLine = primaryTag
+				? `      <category>${escapeXml(primaryTag.label)}</category>\n`
+				: "";
 
 			return `    <item>
       <title>${title}</title>
@@ -27,7 +37,7 @@ export const GET: APIRoute = async ({ site, url }) => {
       <guid isPermaLink="true">${postUrl}</guid>
       <pubDate>${pubDate}</pubDate>
       <description>${description}</description>
-    </item>`;
+${categoryLine}    </item>`;
 		})
 		.filter(Boolean)
 		.join("\n");
