@@ -1,25 +1,52 @@
 import type { APIRoute } from "astro";
-import { getEmDashCollection } from "emdash";
 
-export const GET: APIRoute = async () => {
-  const { entries: posts } = await getEmDashCollection("posts", {
-    orderBy: { published_at: "desc" },
-    limit: 3,
-  });
+export const prerender = false;
 
-  const items = posts.map((post) => ({
-    slug: post.id,
-    title: post.data.title,
-    excerpt: post.data.excerpt,
-    publishedAt: post.data.publishedAt,
-    byline: post.data.bylines?.[0]?.byline?.displayName ?? null,
-  }));
+export const GET: APIRoute = async ({ locals }) => {
+  try {
+    const db = (locals.runtime?.env as any)?.DB;
+    
+    if (!db) {
+      return new Response(JSON.stringify({ error: "DB not available" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
 
-  return new Response(JSON.stringify({ items }), {
-    headers: {
-      "Content-Type": "application/json",
-      "Cache-Control": "public, max-age=300",
-      "Access-Control-Allow-Origin": "https://www.soft-innova.com",
-    },
-  });
+    const result = await db.prepare(`
+      SELECT 
+        p.id,
+        p.slug,
+        json_extract(p.data, '$.title') as title,
+        json_extract(p.data, '$.excerpt') as excerpt,
+        p.published_at,
+        b.display_name as byline
+      FROM ec_posts p
+      LEFT JOIN _emdash_bylines b ON p.primary_byline_id = b.id
+      WHERE p.status = 'published'
+      ORDER BY p.published_at DESC
+      LIMIT 3
+    `).all();
+
+    const items = result.results.map((row: any) => ({
+      slug: row.slug,
+      title: row.title,
+      excerpt: row.excerpt,
+      publishedAt: row.published_at,
+      byline: row.byline,
+    }));
+
+    return new Response(JSON.stringify({ items }), {
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "public, max-age=300",
+        "Access-Control-Allow-Origin": "https://www.soft-innova.com",
+      },
+    });
+  } catch (e: any) {
+    return new Response(JSON.stringify({ error: e.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
 };
