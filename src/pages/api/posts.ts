@@ -1,10 +1,11 @@
 import type { APIRoute } from "astro";
+import { env } from "cloudflare:workers";
 
 export const prerender = false;
 
 export const GET: APIRoute = async ({ locals }) => {
   try {
-    const db = (locals.runtime?.env as any)?.DB;
+    const db = (env as any).DB;
     
     if (!db) {
       return new Response(JSON.stringify({ error: "DB not available" }), {
