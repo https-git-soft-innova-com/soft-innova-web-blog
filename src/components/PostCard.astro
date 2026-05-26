@@ -1,6 +1,7 @@
 ---
 import type { MediaValue } from "emdash";
 import { Image } from "emdash/ui";
+import { formatViewCount } from "../utils/post-views";
 
 interface Props {
 	title: string;
@@ -10,10 +11,21 @@ interface Props {
 	date?: Date;
 	readingTime?: number;
 	tags?: Array<{ slug: string; label: string }>;
+	viewCount?: number;
+	reveal?: boolean;
 }
 
-const { title, excerpt, featuredImage, href, date, readingTime, tags } =
-	Astro.props;
+const {
+	title,
+	excerpt,
+	featuredImage,
+	href,
+	date,
+	readingTime,
+	tags,
+	viewCount,
+	reveal = false,
+} = Astro.props;
 
 const isoDate = date ? date.toISOString().slice(0, 10) : undefined;
 const formattedDate = date
@@ -27,9 +39,10 @@ const formattedDate = date
 const gradientVariant =
 	[...title].reduce((acc, ch) => acc + ch.charCodeAt(0), 0) % 3;
 const primaryTag = tags?.[0];
+const showViews = viewCount != null && viewCount > 0;
 ---
 
-<article class="post-card">
+<article class:list={["post-card", reveal && "reveal"]}>
 	<a href={href} class="card-link">
 		<div class="card-media">
 			{
@@ -38,7 +51,12 @@ const primaryTag = tags?.[0];
 						<Image image={featuredImage} />
 					</div>
 				) : (
-					<div class:list={["card-placeholder", `card-placeholder--${gradientVariant}`]} />
+					<div
+						class:list={[
+							"card-placeholder",
+							`card-placeholder--${gradientVariant}`,
+						]}
+					/>
 				)
 			}
 			{
@@ -49,6 +67,15 @@ const primaryTag = tags?.[0];
 		</div>
 		<div class="card-body">
 			<h2 class="card-title">{title}</h2>
+			{
+				tags && tags.length > 0 && (
+					<div class="card-hashtags">
+						{tags.slice(0, 3).map((tag) => (
+							<span class="card-hashtag">#{tag.label}</span>
+						))}
+					</div>
+				)
+			}
 			{excerpt && <p class="card-excerpt">{excerpt}</p>}
 			<div class="card-meta-row">
 				{
@@ -62,7 +89,7 @@ const primaryTag = tags?.[0];
 					readingTime != null && readingTime > 0 && (
 						<span class="card-read">
 							<svg
-								class="card-read-icon"
+								class="card-meta-icon"
 								viewBox="0 0 24 24"
 								fill="none"
 								stroke="currentColor"
@@ -75,6 +102,26 @@ const primaryTag = tags?.[0];
 								<path d="M12 6v6l4 2"></path>
 							</svg>
 							{readingTime} min
+						</span>
+					)
+				}
+				{
+					showViews && (
+						<span class="card-views">
+							<svg
+								class="card-meta-icon"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"></path>
+								<circle cx="12" cy="12" r="3"></circle>
+							</svg>
+							{formatViewCount(viewCount)} lecturas
 						</span>
 					)
 				}
@@ -96,24 +143,39 @@ const primaryTag = tags?.[0];
 
 <style>
 	.post-card {
-		--brand-orange: #f5a623;
-		--card-navy: #1a1a2e;
-		--card-muted: #64748b;
 		display: flex;
 		flex-direction: column;
-		background: #fff;
-		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: var(--color-bg);
+		border: 1px solid var(--color-border-subtle);
 		border-radius: 1.5rem;
 		overflow: hidden;
 		box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 		transition:
-			box-shadow 200ms ease,
-			transform 200ms ease;
+			box-shadow var(--transition-base),
+			transform var(--transition-base),
+			border-color var(--transition-fast);
 	}
 
 	.post-card:hover {
-		box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
+		border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+		box-shadow: 0 12px 40px
+			color-mix(in srgb, var(--color-accent) 18%, rgba(15, 23, 42, 0.12));
 		transform: translateY(-2px);
+	}
+
+	.post-card.reveal {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+
+	.post-card.reveal.is-visible {
+		opacity: 1;
+		transform: translateY(0);
+		transition:
+			opacity 360ms ease,
+			transform 360ms ease,
+			box-shadow var(--transition-base),
+			border-color var(--transition-fast);
 	}
 
 	.card-link {
@@ -126,7 +188,7 @@ const primaryTag = tags?.[0];
 		position: relative;
 		aspect-ratio: 16 / 10;
 		overflow: hidden;
-		background: #f1f5f9;
+		background: var(--color-surface);
 	}
 
 	.card-image {
@@ -166,16 +228,16 @@ const primaryTag = tags?.[0];
 	}
 
 	.card-placeholder--0 {
-		color: #1a1a2e;
+		color: var(--color-text);
 		background: linear-gradient(
 			135deg,
-			rgba(245, 166, 35, 0.35),
-			rgba(255, 138, 100, 0.45)
+			color-mix(in srgb, var(--color-accent) 35%, transparent),
+			color-mix(in srgb, var(--color-accent) 55%, #ff8a64)
 		);
 	}
 
 	.card-placeholder--1 {
-		color: #1a1a2e;
+		color: var(--color-text);
 		background: linear-gradient(
 			135deg,
 			rgba(59, 130, 246, 0.35),
@@ -184,7 +246,7 @@ const primaryTag = tags?.[0];
 	}
 
 	.card-placeholder--2 {
-		color: #1a1a2e;
+		color: var(--color-text);
 		background: linear-gradient(
 			135deg,
 			rgba(34, 197, 94, 0.3),
@@ -203,10 +265,15 @@ const primaryTag = tags?.[0];
 		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: #fff;
-		background: var(--brand-orange);
+		color: var(--color-on-accent);
+		background: var(--color-accent);
 		border-radius: 9999px;
 		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+		transition: background var(--transition-fast);
+	}
+
+	.post-card:hover .card-tag-pill {
+		background: var(--color-accent-hover);
 	}
 
 	.card-body {
@@ -222,19 +289,34 @@ const primaryTag = tags?.[0];
 		font-weight: 700;
 		line-height: var(--leading-snug);
 		letter-spacing: var(--tracking-snug);
-		color: var(--card-navy);
+		color: var(--color-text);
 		margin: 0;
-		transition: color 200ms ease;
+		transition: color var(--transition-fast);
 	}
 
 	.post-card:hover .card-title {
-		color: var(--brand-orange);
+		color: var(--color-accent);
+	}
+
+	.card-hashtags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-1);
+	}
+
+	.card-hashtag {
+		font-size: 11px;
+		font-weight: 500;
+		color: var(--color-accent);
+		background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+		border-radius: 9999px;
+		padding: 2px 8px;
 	}
 
 	.card-excerpt {
 		font-size: var(--font-size-sm);
 		line-height: var(--leading-relaxed);
-		color: var(--card-muted);
+		color: var(--color-text-secondary);
 		margin: 0;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
@@ -250,21 +332,26 @@ const primaryTag = tags?.[0];
 		margin-top: auto;
 		padding-top: var(--spacing-1);
 		font-size: var(--font-size-xs);
-		color: var(--card-muted);
+		color: var(--color-muted);
 	}
 
 	.card-date {
-		color: var(--card-muted);
+		color: var(--color-muted);
 	}
 
-	.card-read {
+	.card-read,
+	.card-views {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.35rem;
-		color: var(--card-muted);
 	}
 
-	.card-read-icon {
+	.card-views {
+		color: var(--color-accent);
+		font-weight: 500;
+	}
+
+	.card-meta-icon {
 		width: 14px;
 		height: 14px;
 		flex-shrink: 0;
@@ -282,25 +369,32 @@ const primaryTag = tags?.[0];
 		padding: var(--tag-padding-y) var(--spacing-2);
 		font-size: var(--font-size-xs);
 		font-weight: 500;
-		color: var(--card-navy);
-		background: rgba(245, 166, 35, 0.12);
+		color: var(--color-text);
+		background: color-mix(in srgb, var(--color-accent) 14%, transparent);
 		border-radius: 9999px;
 		text-decoration: none;
 		transition:
-			background 200ms ease,
-			color 200ms ease;
+			background var(--transition-fast),
+			color var(--transition-fast);
 	}
 
 	.card-tag-link:hover {
-		background: rgba(245, 166, 35, 0.22);
-		color: #c2780a;
+		background: color-mix(in srgb, var(--color-accent) 26%, transparent);
+		color: var(--color-accent-hover);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
 		.post-card,
-		.post-card:hover {
+		.post-card:hover,
+		.post-card.reveal,
+		.post-card.reveal.is-visible {
 			transition: none;
 			transform: none;
+		}
+
+		.post-card.reveal,
+		.post-card.reveal.is-visible {
+			opacity: 1;
 		}
 
 		.post-card:hover .card-image :global(img) {
