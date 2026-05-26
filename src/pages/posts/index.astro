@@ -4,6 +4,7 @@ import LiveSearch from "emdash/ui/search";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import { getReadingTime } from "../../utils/reading-time";
+import { getPostViewCountsForLocals } from "../../utils/post-views";
 
 // Sort in the database rather than in JS — lets the DB use its index on
 // published_at and avoids a full-table scan on the client.
@@ -26,16 +27,21 @@ const postsWithTags = posts.map((post) => ({
 	post,
 	tags: tagsByEntry.get(post.data.id) ?? [],
 }));
+
+const viewCounts = await getPostViewCountsForLocals(
+	Astro.locals,
+	posts.map((post) => post.data.id),
+);
 ---
 
 <Base title="All Posts" description="Browse all blog posts">
 	<div class="posts-page">
 		<header class="page-header">
 			<div>
-				<h1 class="page-title">All Posts</h1>
+				<h1 class="page-title">Todos los artículos</h1>
 				<p class="page-description">
 					{posts.length}
-					{posts.length === 1 ? "article" : "articles"}
+					{posts.length === 1 ? "artículo" : "artículos"}
 				</p>
 			</div>
 			<div class="page-controls">
@@ -61,17 +67,13 @@ const postsWithTags = posts.map((post) => ({
 
 		{
 			posts.length === 0 ? (
-				<p class="empty">No posts yet.</p>
+				<p class="empty">Aún no hay artículos.</p>
 			) : (
 				<>
 					<div class="posts-grid" data-posts-grid>
 						{postsWithTags.map(({ post, tags }, index) => (
 							<div
-								class:list={[
-									"post-slot",
-									"reveal",
-									index >= 6 && "is-hidden",
-								]}
+								class:list={["post-slot", index >= 6 && "is-hidden"]}
 								data-post-card
 								data-published-at={post.data.publishedAt?.getTime() ?? 0}
 							>
@@ -83,6 +85,8 @@ const postsWithTags = posts.map((post) => ({
 									date={post.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(post.data.content)}
 									tags={tags.map((t) => ({ slug: t.slug, label: t.label }))}
+									viewCount={viewCounts.get(post.data.id)}
+									reveal
 								/>
 							</div>
 						))}
@@ -126,10 +130,10 @@ const postsWithTags = posts.map((post) => ({
 				{ threshold: 0.15 },
 			);
 
-			for (const card of cards) {
-				if (!card.classList.contains("is-hidden")) {
-					revealObserver.observe(card);
-				}
+			for (const slot of cards) {
+				if (slot.classList.contains("is-hidden")) continue;
+				const card = slot.querySelector<HTMLElement>(".post-card.reveal");
+				if (card) revealObserver.observe(card);
 			}
 		};
 
@@ -138,7 +142,9 @@ const postsWithTags = posts.map((post) => ({
 				const shouldShow = index < visibleCount;
 				card.classList.toggle("is-hidden", !shouldShow);
 				if (resetAnimation) {
-					card.classList.remove("is-visible");
+					card
+						.querySelector<HTMLElement>(".post-card.reveal")
+						?.classList.remove("is-visible");
 				}
 			});
 
@@ -316,19 +322,6 @@ const postsWithTags = posts.map((post) => ({
 		display: none;
 	}
 
-	.reveal {
-		opacity: 0;
-		transform: translateY(14px);
-		transition:
-			opacity 360ms ease,
-			transform 360ms ease;
-	}
-
-	.reveal.is-visible {
-		opacity: 1;
-		transform: translateY(0);
-	}
-
 	.load-sentinel {
 		height: 1px;
 		margin-top: var(--spacing-2);
@@ -339,15 +332,6 @@ const postsWithTags = posts.map((post) => ({
 		font-size: var(--font-size-sm);
 		color: var(--color-muted);
 		text-align: center;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.reveal,
-		.reveal.is-visible {
-			opacity: 1;
-			transform: none;
-			transition: none;
-		}
 	}
 
 	@media (max-width: 1024px) {

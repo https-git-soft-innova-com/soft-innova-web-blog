@@ -19,6 +19,8 @@ import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import { getReadingTime } from "../../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
+import { getPostViewCountsForLocals } from "../../utils/post-views";
+import RevealOnView from "../../components/RevealOnView.astro";
 
 const slug = decodeSlug(Astro.params.slug);
 
@@ -98,8 +100,13 @@ const otherPostsWithTags = otherPosts.map((p) => ({
 	tags: otherTagsByEntry.get(p.data.id) ?? [],
 }));
 
+const relatedViewCounts = await getPostViewCountsForLocals(
+	Astro.locals,
+	otherPosts.map((p) => p.data.id),
+);
+
 const publishDate =
-	post.data.publishedAt?.toLocaleDateString("en-US", {
+	post.data.publishedAt?.toLocaleDateString("es-CL", {
 		year: "numeric",
 		month: "long",
 		day: "numeric",
@@ -137,7 +144,7 @@ const publishDate =
 						bylines.length > 0 && (
 							<div class="meta-block byline-block">
 								<span class="meta-label">
-									{bylines.length === 1 ? "Author" : "Authors"}
+									{bylines.length === 1 ? "Autor" : "Autores"}
 								</span>
 								<div class="bylines">
 									{bylines.map((credit) => (
@@ -166,19 +173,19 @@ const publishDate =
 					{
 						publishDate && (
 							<div class="meta-block">
-								<span class="meta-label">Published</span>
+								<span class="meta-label">Publicado</span>
 								<time class="meta-value">{publishDate}</time>
 							</div>
 						)
 					}
 					<div class="meta-block">
-						<span class="meta-label">Reading time</span>
+						<span class="meta-label">Tiempo de lectura</span>
 						<span class="meta-value">{readingTime} min</span>
 					</div>
 					{
 						tags.length > 0 && (
 							<div class="meta-block">
-								<span class="meta-label">Tags</span>
+								<span class="meta-label">Etiquetas</span>
 								<div class="meta-tags">
 									{tags.map((t) => (
 										<a href={`/tag/${t.slug}`} class="meta-tag">
@@ -219,7 +226,7 @@ const publishDate =
 								</>
 							)
 						}
-						<span>{readingTime} min read</span>
+						<span>{readingTime} min lectura</span>
 					</div>
 					<h1 class="article-title" {...post.edit.title}>{post.data.title}</h1>
 					{
@@ -243,7 +250,7 @@ const publishDate =
 			<aside class="article-sidebar">
 				<div class="sidebar-sticky">
 					<nav class="toc" aria-label="Table of contents">
-						<h4 class="toc-title">On this page</h4>
+						<h4 class="toc-title">En esta página</h4>
 						<div class="toc-content" id="toc-content">
 							<!-- Populated by JS -->
 						</div>
@@ -260,7 +267,7 @@ const publishDate =
 		otherPostsWithTags.length > 0 && (
 			<section class="more-posts">
 				<div class="more-inner">
-					<h2 class="more-title">Continue reading</h2>
+					<h2 class="more-title">Seguir leyendo</h2>
 					<div class="more-grid">
 						{otherPostsWithTags.map(({ post: p, tags: postTags }) => (
 								<PostCard
@@ -271,6 +278,8 @@ const publishDate =
 									date={p.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(p.data.content)}
 									tags={postTags.map((t) => ({ slug: t.slug, label: t.label }))}
+									viewCount={relatedViewCounts.get(p.data.id)}
+									reveal
 								/>
 							)
 						)}
@@ -343,6 +352,7 @@ const publishDate =
 
 		buildToc();
 	</script>
+	<RevealOnView />
 </Base>
 
 <style>

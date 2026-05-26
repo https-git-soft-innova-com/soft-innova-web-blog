@@ -9,6 +9,8 @@ import Base from "../layouts/Base.astro";
 import PostCard from "../components/PostCard.astro";
 import { getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
+import { getPostViewCountsForLocals } from "../utils/post-views";
+import RevealOnView from "../components/RevealOnView.astro";
 
 // Limit to what we render (1 featured + 6 grid). The DB does the slicing
 // instead of fetching every post and discarding the tail in JS.
@@ -29,12 +31,12 @@ Astro.cache.set(cacheHint);
 const visiblePosts = posts.slice(0, POSTS_PER_PAGE);
 const hasMorePosts = posts.length > POSTS_PER_PAGE;
 
-// Find the first post with a featured image for the hero
-const featuredPost = visiblePosts.find((p) => p.data.featured_image);
-const featuredIndex = featuredPost ? visiblePosts.indexOf(featuredPost) : -1;
+// Hero: el post publicado más reciente (contenido real del blog, no solo los que tienen imagen)
+const featuredPost = visiblePosts[0];
+const featuredIndex = 0;
 
-// Get remaining posts (exclude featured if found, limit to 6 for grid)
-const gridPosts = visiblePosts.filter((_, i) => i !== featuredIndex).slice(0, 6);
+// Resto en la grilla (hasta 6)
+const gridPosts = visiblePosts.slice(1, 7);
 
 // Single batched query for tags across the featured post + grid posts.
 // Avoids the N+1 pattern of calling getEntryTerms() per entry.
@@ -61,6 +63,11 @@ const gridPostsWithTags = gridPosts.map((post) => ({
 	})),
 }));
 
+const viewCounts = await getPostViewCountsForLocals(
+	Astro.locals,
+	gridPosts.map((post) => post.data.id),
+);
+
 // Format date helper
 function formatDate(date: Date | null | undefined) {
 	if (!date) return null;
@@ -76,8 +83,8 @@ function formatDate(date: Date | null | undefined) {
 	{
 		posts.length === 0 ? (
 			<section class="empty-state">
-				<h2>No posts yet</h2>
-				<p>Create your first post in the admin panel.</p>
+				<h2>Aún no hay artículos</h2>
+				<p>Crea tu primer artículo en el panel de administración.</p>
 				<a href="/_emdash/admin/content/posts/new" class="btn">
 					Create a post
 				</a>
@@ -88,11 +95,15 @@ function formatDate(date: Date | null | undefined) {
 				{featuredPost && (
 					<section class="featured-section">
 						<div class="featured-grid">
-							<a href={`/posts/${featuredPost.id}`} class="featured-image-link">
-								<div class="featured-image">
-									<Image image={featuredPost.data.featured_image} />
-								</div>
-							</a>
+							{
+								featuredPost.data.featured_image && (
+									<a href={`/posts/${featuredPost.id}`} class="featured-image-link">
+										<div class="featured-image">
+											<Image image={featuredPost.data.featured_image} />
+										</div>
+									</a>
+								)
+							}
 							<div class="featured-content">
 								<div class="featured-meta">
 									{featuredBylines.length > 0 && (
@@ -159,10 +170,10 @@ function formatDate(date: Date | null | undefined) {
 				{gridPostsWithTags.length > 0 && (
 					<section class="posts-section">
 						<header class="section-header">
-							<h2 class="section-title">Latest</h2>
+							<h2 class="section-title">Últimos artículos</h2>
 							{hasMorePosts && (
 								<a href="/posts" class="section-link">
-									View all
+									Ver todos
 								</a>
 							)}
 						</header>
@@ -176,6 +187,8 @@ function formatDate(date: Date | null | undefined) {
 									date={post.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(post.data.content)}
 									tags={tags}
+									viewCount={viewCounts.get(post.data.id)}
+									reveal
 								/>
 							))}
 						</div>
@@ -184,6 +197,7 @@ function formatDate(date: Date | null | undefined) {
 			</div>
 		)
 	}
+	<RevealOnView />
 </Base>
 
 <style>

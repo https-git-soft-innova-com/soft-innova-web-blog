@@ -8,6 +8,8 @@ import {
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import { getReadingTime } from "../../utils/reading-time";
+import { getPostViewCountsForLocals } from "../../utils/post-views";
+import RevealOnView from "../../components/RevealOnView.astro";
 
 const slug = decodeSlug(Astro.params.slug);
 const term = slug ? await getTerm("category", slug) : null;
@@ -35,6 +37,11 @@ const filteredPosts = posts.map((post) => ({
 	post,
 	tags: tagsByEntry.get(post.data.id) ?? [],
 }));
+
+const viewCounts = await getPostViewCountsForLocals(
+	Astro.locals,
+	posts.map((post) => post.data.id),
+);
 ---
 
 <Base title={`${term.label} posts`} description={`All posts in ${term.label}`}>
@@ -50,7 +57,7 @@ const filteredPosts = posts.map((post) => ({
 
 		{
 			filteredPosts.length === 0 ? (
-				<p class="no-posts">No posts in this category yet.</p>
+				<p class="no-posts">Aún no hay artículos en esta categoría.</p>
 			) : (
 				<div class="posts-grid">
 					{filteredPosts.map(({ post, tags }) => (
@@ -62,12 +69,15 @@ const filteredPosts = posts.map((post) => ({
 							date={post.data.publishedAt ?? undefined}
 							readingTime={getReadingTime(post.data.content)}
 							tags={tags.map((t) => ({ slug: t.slug, label: t.label }))}
+							viewCount={viewCounts.get(post.data.id)}
+							reveal
 						/>
 					))}
 				</div>
 			)
 		}
 	</section>
+	<RevealOnView />
 </Base>
 
 <style>
