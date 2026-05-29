@@ -199,10 +199,10 @@ const viewCounts = await getPostViewCountsForLocals(
 	.page-header {
 		margin-bottom: var(--spacing-10);
 		display: flex;
+		flex-direction: column;
 		flex-wrap: wrap;
 		gap: var(--spacing-5);
-		align-items: end;
-		justify-content: space-between;
+		align-items: flex-start;
 	}
 
 	.page-title {
@@ -219,9 +219,10 @@ const viewCounts = await getPostViewCountsForLocals(
 
 	.page-controls {
 		display: flex;
-		gap: var(--spacing-3);
+		gap: 12px;
 		flex-wrap: wrap;
-		align-items: end;
+		align-items: center;
+		justify-content: flex-start;
 	}
 
 	.archive-search {

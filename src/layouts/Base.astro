@@ -497,27 +497,25 @@ const pageCtx = createPublicPageContext({
 
 		<style>
 			.site-header {
+				background: rgba(11, 31, 58, 0.85);
+				backdrop-filter: blur(12px);
+				-webkit-backdrop-filter: blur(12px);
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 				position: sticky;
 				top: 0;
 				z-index: 100;
-				background: transparent;
-				border-bottom: 1px solid transparent;
-				transition:
-					background-color 200ms ease,
-					box-shadow 200ms ease,
-					border-color 200ms ease;
 			}
 
 			.site-header.is-scrolled {
-				background: #ffffff;
-				box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-				border-bottom-color: rgba(0, 0, 0, 0.06);
+				background: rgba(11, 31, 58, 0.92);
+				box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+				border-bottom-color: rgba(255, 255, 255, 0.08);
 			}
 
 			:root.dark .site-header.is-scrolled {
-				background: var(--color-bg);
+				background: rgba(11, 31, 58, 0.92);
 				box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
-				border-bottom-color: var(--color-border-subtle);
+				border-bottom-color: rgba(255, 255, 255, 0.08);
 			}
 
 			.nav {
@@ -538,7 +536,7 @@ const pageCtx = createPublicPageContext({
 				align-items: center;
 				gap: var(--spacing-3);
 				text-decoration: none;
-				color: var(--color-text);
+				color: #ffffff;
 				letter-spacing: var(--tracking-snug);
 			}
 
@@ -563,6 +561,7 @@ const pageCtx = createPublicPageContext({
 			.brand-name {
 				font-size: var(--font-size-lg);
 				font-weight: 700;
+				color: white;
 			}
 
 			.brand-accent {
@@ -573,12 +572,12 @@ const pageCtx = createPublicPageContext({
 			.brand-subtitle {
 				font-size: 10px;
 				font-weight: 500;
-				color: #5f5f5f;
+				color: rgba(255, 255, 255, 0.55);
 				letter-spacing: 0.08em;
 			}
 
 			:root.dark .brand-subtitle {
-				color: var(--color-text-secondary);
+				color: rgba(255, 255, 255, 0.55);
 			}
 
 			@media (prefers-reduced-motion: reduce) {
@@ -591,24 +590,21 @@ const pageCtx = createPublicPageContext({
 				display: inline-flex;
 				align-items: center;
 				justify-content: center;
-				padding: 0.625rem 1.25rem;
+				background: linear-gradient(135deg, #E07020, #F59B20);
+				color: white !important;
+				padding: 10px 22px;
+				border-radius: 9999px;
+				font-weight: 700;
 				font-size: 0.875rem;
-				font-weight: 600;
-				line-height: 1.25;
-				font-family: Inter, system-ui, sans-serif;
-				color: #ffffff;
 				text-decoration: none;
+				transition: opacity 0.2s;
 				white-space: nowrap;
 				border: none;
-				border-radius: 9999px;
-				background: linear-gradient(135deg, #f5a623 0%, #000000 100%);
-				box-shadow: 0 4px 24px rgba(245, 166, 35, 0.35);
-				transition: transform 200ms ease;
 			}
 
 			.nav-cta:hover {
-				color: #ffffff;
-				transform: scale(1.05);
+				opacity: 0.9;
+				color: white !important;
 			}
 
 			.nav-cta:focus-visible {
@@ -634,20 +630,20 @@ const pageCtx = createPublicPageContext({
 				text-decoration: none;
 				font-size: 15px;
 				font-weight: 500;
-				color: #1a1a2e;
+				color: rgba(255, 255, 255, 0.85);
 				transition: color 200ms ease;
 			}
 
 			.nav-links a:hover {
-				color: var(--color-accent);
+				color: white;
 			}
 
 			:root.dark .nav-links a {
-				color: var(--color-text);
+				color: rgba(255, 255, 255, 0.85);
 			}
 
 			:root.dark .nav-links a:hover {
-				color: var(--color-accent);
+				color: white;
 			}
 
 			.nav-links a:focus-visible {
