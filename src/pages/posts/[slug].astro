@@ -155,19 +155,16 @@ const viewsLabel =
 										height="48"
 									/>
 								)}
-								<span class="article-meta-author-text">
-									<span class="article-meta-name">
+								<div class="byline-info">
+									<span class="byline-name">
 										{primaryByline.byline.displayName}
 									</span>
 									{primaryByline.roleLabel && (
-										<>
-											<span class="article-meta-sep"> · </span>
-											<span class="article-meta-role">
-												{primaryByline.roleLabel}
-											</span>
-										</>
+										<span class="byline-role">
+											{primaryByline.roleLabel}
+										</span>
 									)}
-								</span>
+								</div>
 							</div>
 						)
 					}
@@ -354,13 +351,21 @@ const viewsLabel =
 		flex-shrink: 0;
 	}
 
-	.article-meta-name {
-		font-weight: 600;
-		color: var(--color-text);
+	.byline-info {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
 	}
 
-	.article-meta-role {
-		color: var(--color-muted);
+	.byline-name {
+		font-weight: 600;
+		font-size: 0.95rem;
+		color: #1a1a1a;
+	}
+
+	.byline-role {
+		font-size: 0.78rem;
+		color: #888;
 	}
 
 	.article-meta-stats {
@@ -455,7 +460,7 @@ const viewsLabel =
 
 	/* More posts section */
 	.more-posts {
-		padding-top: 48px;
+		padding-top: 64px;
 		border-top: 1px solid rgba(0, 0, 0, 0.08);
 		background: var(--color-bg-subtle);
 		padding-bottom: var(--spacing-16);
@@ -478,6 +483,10 @@ const viewsLabel =
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: var(--spacing-8);
+	}
+
+	.more-grid > :global(*) {
+		margin-bottom: 32px;
 	}
 
 	/* Responsive */
