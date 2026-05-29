@@ -10,6 +10,7 @@ import { Font } from "astro:assets";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import WhatsAppFloat from "../components/WhatsAppFloat.astro";
 import "../styles/theme.css";
+import "../styles/article.css";
 
 const SOFT_SITE = "https://soft-innova.com";
 
@@ -79,8 +80,6 @@ const pageCtx = createPublicPageContext({
 	siteName: siteTitle,
 });
 
-// Check if user is logged in (for showing admin link)
-const isLoggedIn = !!Astro.locals.user;
 ---
 
 <!doctype html>
@@ -137,7 +136,7 @@ const isLoggedIn = !!Astro.locals.user;
 						Conversemos
 					</a>
 					{
-						isLoggedIn && (
+						import.meta.env.DEV && (
 							<a href="/_emdash/admin" class="nav-admin">
 								Admin
 							</a>

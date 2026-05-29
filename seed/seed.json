@@ -182,7 +182,7 @@
 				{
 					"type": "component",
 					"componentId": "core:archives",
-					"title": "Archives",
+					"title": "ARCHIVO",
 					"settings": {
 						"type": "monthly",
 						"limit": 6

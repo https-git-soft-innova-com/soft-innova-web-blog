@@ -1,0 +1,81 @@
+/*
+  article.css — Rich typography for blog post content (.article-content).
+  Imported from theme.css; selectors target Portable Text output in posts.
+*/
+
+/* CALLOUT — bloque destacado (⚡) */
+.article-content .callout-block {
+	background: rgba(255, 200, 0, 0.08);
+	border-left: 4px solid #F59B20;
+	border-radius: 0 12px 12px 0;
+	padding: 20px 24px;
+	margin: 32px 0;
+	font-size: 0.95rem;
+	line-height: 1.75;
+	color: var(--color-text);
+}
+
+/* BLOCKQUOTE mejorado */
+.article-content blockquote {
+	background: linear-gradient(135deg, rgba(11, 31, 58, 0.8), rgba(11, 31, 58, 0.4));
+	border-left: 4px solid #E07020;
+	border-radius: 0 16px 16px 0;
+	padding: 28px 32px;
+	margin: 40px 0;
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: #0B1F3A;
+	line-height: 1.6;
+	position: relative;
+	font-style: normal;
+}
+
+/* H2 con acento de color */
+.article-content h2 {
+	color: #0B1F3A;
+	font-size: 1.5rem;
+	font-weight: 700;
+	margin: 3rem 0 1rem;
+	padding-bottom: 8px;
+	border-bottom: 2px solid #E07020;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	scroll-margin-top: calc(var(--nav-height, 72px) + 1rem);
+}
+
+/* CTA bloque final */
+.article-content h2:last-of-type {
+	background: linear-gradient(135deg, #0B1F3A, #1a3a5c);
+	color: white !important;
+	border: none !important;
+	border-radius: 16px;
+	padding: 32px !important;
+	margin-top: 48px !important;
+}
+
+/* Párrafos con datos/estadísticas (empiezan con —) */
+.article-content p.stat-line {
+	padding: 6px 0;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+:root.dark .article-content p.stat-line {
+	border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Widget sidebar: ARCHIVO en lugar de Archives */
+.sidebar-widgets .widget:has(.widget-archives) .widget__title {
+	font-size: 0;
+	line-height: 0;
+}
+
+.sidebar-widgets .widget:has(.widget-archives) .widget__title::after {
+	content: "ARCHIVO";
+	font-size: var(--font-size-xs);
+	font-weight: 500;
+	line-height: var(--leading-snug);
+	text-transform: uppercase;
+	letter-spacing: var(--tracking-wide);
+	color: var(--color-muted);
+}

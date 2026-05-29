@@ -367,6 +367,16 @@ const publishDate =
 		}
 
 		buildToc();
+
+		// Enriquecer bloques de contenido (callout ⚡, líneas de estadística —)
+		const articleContent = document.querySelector(".article-content");
+		if (articleContent) {
+			articleContent.querySelectorAll("p").forEach((p) => {
+				const text = (p.textContent ?? "").trim();
+				if (text.startsWith("⚡")) p.classList.add("callout-block");
+				if (text.startsWith("—")) p.classList.add("stat-line");
+			});
+		}
 	</script>
 	<RevealOnView />
 </Base>
@@ -584,13 +594,6 @@ const publishDate =
 		margin-bottom: 1.5em;
 	}
 
-	.article-content :global(h2) {
-		font-size: var(--font-size-2xl);
-		margin-top: 2.5em;
-		margin-bottom: 0.75em;
-		scroll-margin-top: calc(var(--nav-height) + var(--spacing-4));
-	}
-
 	.article-content :global(h3) {
 		font-size: var(--font-size-xl);
 		margin-top: 2em;
@@ -598,15 +601,7 @@ const publishDate =
 		scroll-margin-top: calc(var(--nav-height) + var(--spacing-4));
 	}
 
-	.article-content :global(blockquote) {
-		margin: 2em 0;
-		padding: var(--spacing-4) var(--spacing-6);
-		border-left: 3px solid var(--color-border);
-		background: var(--color-bg-subtle);
-		border-radius: 0 var(--radius) var(--radius) 0;
-		color: var(--color-text-secondary);
-		font-style: italic;
-	}
+	/* blockquote, h2, callout, stat-line → src/styles/article.css */
 
 	.article-content :global(pre) {
 		margin: 2em 0;
