@@ -251,6 +251,11 @@ const publishDate =
 
 				<div class="article-content">
 					<PortableText value={post.data.content} />
+					{
+						post.data.custom_html && (
+							<div class="custom-html-blocks" set:html={post.data.custom_html} />
+						)
+					}
 				</div>
 
 				{/* Comentarios desactivados — EmDash tiene commentsEnabled en la colección posts, sin plugin separado */}
