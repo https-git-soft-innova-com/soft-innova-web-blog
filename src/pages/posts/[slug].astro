@@ -11,15 +11,13 @@ import {
 import {
 	Image,
 	PortableText,
-	Comments,
-	CommentForm,
 	WidgetArea,
 } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import { getReadingTime } from "../../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
-import { getPostViewCountsForLocals } from "../../utils/post-views";
+import { getPostViewCountsForLocals, incrementPostView, formatViewCount, getPostViewsKv } from "../../utils/post-views";
 import RevealOnView from "../../components/RevealOnView.astro";
 
 const slug = decodeSlug(Astro.params.slug);
@@ -73,6 +71,11 @@ const bylines = post.data.bylines ?? [];
 
 // Get reading time
 const readingTime = getReadingTime(post.data.content);
+
+const viewCount = await incrementPostView(
+	getPostViewsKv(Astro.locals as import("../../utils/post-views").RuntimeLocals),
+	post.data.id,
+);
 
 // Fetch this post's tags and the related-posts list in parallel — they're
 // independent queries, so running them concurrently halves the round-trip
@@ -180,7 +183,11 @@ const publishDate =
 					}
 					<div class="meta-block">
 						<span class="meta-label">Tiempo de lectura</span>
-						<span class="meta-value">{readingTime} min</span>
+						<span class="meta-value">⏱ {readingTime}</span>
+					</div>
+					<div class="meta-block">
+						<span class="meta-label">Vistas</span>
+						<span class="meta-value">👁 {formatViewCount(viewCount)}</span>
 					</div>
 					{
 						tags.length > 0 && (
@@ -226,7 +233,13 @@ const publishDate =
 								</>
 							)
 						}
-						<span>{readingTime} min lectura</span>
+						<span aria-label={`${readingTime} minutos de lectura`}>
+							<span aria-hidden="true">⏱</span> {readingTime}
+						</span>
+						<span class="meta-dot" />
+						<span aria-label={`${formatViewCount(viewCount)} vistas`}>
+							<span aria-hidden="true">👁</span> {formatViewCount(viewCount)}
+						</span>
 					</div>
 					<h1 class="article-title" {...post.edit.title}>{post.data.title}</h1>
 					{
@@ -240,10 +253,13 @@ const publishDate =
 					<PortableText value={post.data.content} />
 				</div>
 
+				{/* Comentarios desactivados — EmDash tiene commentsEnabled en la colección posts, sin plugin separado */}
+				{/*
 				<div class="article-comments">
 					<Comments collection="posts" contentId={post.data.id} threaded />
 					<CommentForm collection="posts" contentId={post.data.id} />
 				</div>
+				*/}
 			</div>
 
 			{/* Right gutter: TOC + Sidebar widgets */}
@@ -356,6 +372,46 @@ const publishDate =
 </Base>
 
 <style>
+	.article-cta {
+		margin: var(--spacing-12) 0 var(--spacing-8);
+		padding: var(--spacing-8) var(--spacing-10);
+		background: linear-gradient(135deg, #fff4ec 0%, #fde8d0 100%);
+		border-radius: 16px;
+		border-left: 4px solid #E07020;
+	}
+
+	.article-cta h3 {
+		font-size: var(--font-size-xl);
+		font-weight: 700;
+		color: #1a1a1a;
+		margin: 0 0 var(--spacing-3);
+	}
+
+	.article-cta p {
+		font-size: var(--font-size-base);
+		color: #555;
+		margin: 0 0 var(--spacing-6);
+		line-height: var(--leading-relaxed);
+	}
+
+	.cta-button {
+		display: inline-flex;
+		align-items: center;
+		padding: 10px 24px;
+		background: linear-gradient(135deg, #E07020, #F59B20);
+		color: #ffffff;
+		font-weight: 600;
+		font-size: var(--font-size-sm);
+		border-radius: 9999px;
+		text-decoration: none;
+		box-shadow: 0 4px 16px rgba(224, 112, 32, 0.35);
+		transition: transform 200ms ease, box-shadow 200ms ease;
+	}
+
+	.cta-button:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 20px rgba(224, 112, 32, 0.5);
+	}
 	/* Article container */
 	.article {
 		max-width: var(--wide-width);
