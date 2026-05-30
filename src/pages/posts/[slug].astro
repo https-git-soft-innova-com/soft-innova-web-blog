@@ -319,7 +319,7 @@ const bodyBlocks = leadBlock
 										{block._key === "k8" && customParts.successCase && (
 											<div class="custom-html-inline" set:html={customParts.successCase} />
 										)}
-										{block._key === "k10" && customParts.opexChartSd && (
+										{block._key === "k10" && customParts.opexChartSd && !customParts.costGridSd && (
 											<div class="custom-html-inline" set:html={customParts.opexChartSd} />
 										)}
 										{block._key === "k10" && customParts.solsPy && (
@@ -375,6 +375,9 @@ const bodyBlocks = leadBlock
 										)}
 										{block._key === "k12" && customParts.impactPy && (
 											<div class="custom-html-inline" set:html={customParts.impactPy} />
+										)}
+										{block._key === "k11" && customParts.opexChartSd && (
+											<div class="custom-html-inline" set:html={customParts.opexChartSd} />
 										)}
 										{block._key === "k11" && customParts.costGridSd && (
 											<div class="custom-html-inline" set:html={customParts.costGridSd} />
