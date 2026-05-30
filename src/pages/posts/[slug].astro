@@ -109,6 +109,58 @@ const publishDate =
 const primaryByline = bylines[0] ?? null;
 const viewsLabel =
 	viewCount === 1 ? "1 vista" : `${formatViewCount(viewCount)} vistas`;
+
+/** Extrae bloques de custom_html por marcadores HTML para inyectarlos inline */
+function parseCustomHtmlParts(html: string | undefined) {
+	if (!html) return null;
+
+	const styles = html.match(/<style>[\s\S]*?<\/style>/)?.[0] ?? "";
+
+	const sliceBetween = (startMarker: string, endMarkers: string[]) => {
+		const start = html.indexOf(startMarker);
+		if (start === -1) return "";
+		const contentStart = html.indexOf("-->", start);
+		if (contentStart === -1) return "";
+		const from = contentStart + 3;
+		let end = html.length;
+		for (const marker of endMarkers) {
+			const idx = html.indexOf(marker, from);
+			if (idx !== -1 && idx < end) end = idx;
+		}
+		return html.slice(from, end).trim();
+	};
+
+	return {
+		styles,
+		counters: sliceBetween("<!-- COUNTERS", [
+			"<!-- BRAIN MAP",
+			"<!-- GRÁFICO TRÁFICO",
+			"<!-- GRÁFICO",
+		]),
+		brainMap: sliceBetween("<!-- BRAIN MAP", ["<!-- GRÁFICO COMPARATIVO", "<!-- GRÁFICO"]),
+		traffic: sliceBetween("<!-- GRÁFICO TRÁFICO", ["<!-- BLOQUE SEO vs AEO", "<!-- BLOQUE SEO"]),
+		chart: sliceBetween("<!-- GRÁFICO COMPARATIVO", ["<!-- 3 MODELOS", "<!-- MODELOS"]),
+		seoAeo: sliceBetween("<!-- BLOQUE SEO vs AEO", ["<!-- TERMINAL"]),
+		models: sliceBetween("<!-- 3 MODELOS", ["<!-- CTA FINAL"]),
+		terminal: sliceBetween("<!-- TERMINAL", ["<!-- CTA FINAL"]),
+		cta: sliceBetween("<!-- CTA FINAL", []),
+	};
+}
+
+const customParts = parseCustomHtmlParts(post.data.custom_html);
+const contentBlocks = post.data.content ?? [];
+
+/** Imágenes reemplazadas por bloques HTML inline */
+const SKIP_CONTENT_KEYS = new Set(["img-trafico", "img-aeo"]);
+
+/** Con indicadores: primer párrafo va antes de los counters (después del byline) */
+const leadBlock =
+	customParts?.counters && contentBlocks[0]?._type === "block"
+		? contentBlocks[0]
+		: null;
+const bodyBlocks = leadBlock
+	? contentBlocks.filter((block) => block._key !== leadBlock._key)
+	: contentBlocks;
 ---
 
 <Base
@@ -133,6 +185,8 @@ const viewsLabel =
 		}
 
 		<div class="article-inner">
+			{customParts?.styles && <Fragment set:html={customParts.styles} />}
+
 			<header class="article-header">
 				<h1 class="article-title" {...post.edit.title}>{post.data.title}</h1>
 				{
@@ -185,12 +239,55 @@ const viewsLabel =
 						</span>
 					</div>
 				</div>
+				{
+					leadBlock && (
+						<div class="article-lead">
+							<PortableText value={[leadBlock]} />
+						</div>
+					)
+				}
+				{
+					customParts?.counters && (
+						<div class="article-counters" set:html={customParts.counters} />
+					)
+				}
 			</header>
 
 			<div class="article-content">
-				<PortableText value={post.data.content} />
 				{
-					post.data.custom_html && (
+					customParts
+						? bodyBlocks.map((block) => {
+								if (SKIP_CONTENT_KEYS.has(block._key as string)) return null;
+								return (
+									<>
+										<PortableText value={[block]} />
+										{block._key === "k3" && customParts.brainMap && (
+											<div class="custom-html-inline" set:html={customParts.brainMap} />
+										)}
+										{block._key === "k6" && (customParts.chart || customParts.traffic) && (
+											<div class="custom-html-inline" set:html={customParts.chart || customParts.traffic} />
+										)}
+										{block._key === "k10" && customParts.models && (
+											<div class="custom-html-inline" set:html={customParts.models} />
+										)}
+										{block._key === "k16" && customParts.terminal && (
+											<div class="custom-html-inline" set:html={customParts.terminal} />
+										)}
+										{block._key === "k21" && customParts.seoAeo && (
+											<div class="custom-html-inline" set:html={customParts.seoAeo} />
+										)}
+									</>
+								);
+							})
+						: <PortableText value={contentBlocks} />
+				}
+				{
+					customParts?.cta && (
+						<div class="custom-html-inline" set:html={customParts.cta} />
+					)
+				}
+				{
+					!customParts && post.data.custom_html && (
 						<div class="custom-html-blocks" set:html={post.data.custom_html} />
 					)
 				}
@@ -326,15 +423,33 @@ const viewsLabel =
 		margin: 16px 0 24px;
 	}
 
+	.article-counters {
+		margin: 0 0 var(--spacing-8);
+	}
+
+	.custom-html-inline {
+		margin: 0;
+	}
+
 	.article-meta-row {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 16px 24px;
-		padding-bottom: var(--spacing-8);
+		padding-bottom: var(--spacing-6);
 		border-bottom: 1px solid var(--color-border-subtle);
 		font-size: var(--font-size-sm);
 		color: var(--color-muted);
+	}
+
+	.article-lead {
+		font-size: var(--font-size-lg);
+		line-height: var(--leading-relaxed);
+		margin: var(--spacing-6) 0 var(--spacing-4);
+	}
+
+	.article-lead :global(p) {
+		margin: 0;
 	}
 
 	.article-meta-author {
