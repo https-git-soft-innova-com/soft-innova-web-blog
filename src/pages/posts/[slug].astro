@@ -133,6 +133,7 @@ function parseCustomHtmlParts(html: string | undefined) {
 	return {
 		styles,
 		counters: sliceBetween("<!-- COUNTERS", [
+			"<!-- 3 EXPLAINER",
 			"<!-- GRÁFICO AUTOMATIZACIÓN",
 			"<!-- DANGER BOX",
 			"<!-- 3 PECADOS",
@@ -140,6 +141,11 @@ function parseCustomHtmlParts(html: string | undefined) {
 			"<!-- GRÁFICO TRÁFICO",
 			"<!-- GRÁFICO",
 		]),
+		explainersPy: sliceBetween("<!-- 3 EXPLAINER", ["<!-- GRÁFICO CUELLOS"]),
+		bottlenecksPy: sliceBetween("<!-- GRÁFICO CUELLOS", ["<!-- 3 SOLUCIONES"]),
+		solsPy: sliceBetween("<!-- 3 SOLUCIONES", ["<!-- COMPARATIVA"]),
+		compPy: sliceBetween("<!-- COMPARATIVA", ["<!-- GRÁFICO IMPACTO"]),
+		impactPy: sliceBetween("<!-- GRÁFICO IMPACTO", ["<!-- CTA FINAL"]),
 		autoChart: sliceBetween("<!-- GRÁFICO AUTOMATIZACIÓN", ["<!-- 4 FASES"]),
 		danger: sliceBetween("<!-- DANGER BOX", ["<!-- 4 PREGUNTAS"]),
 		questions: sliceBetween("<!-- 4 PREGUNTAS", ["<!-- GRÁFICO VECTORES"]),
@@ -149,7 +155,8 @@ function parseCustomHtmlParts(html: string | undefined) {
 			"<!-- 3 MODELOS",
 			"<!-- GRÁFICO REVENUE",
 		]),
-		modelsF40: sliceBetween("<!-- 3 MODELOS", ["<!-- GRÁFICO ROI"]),
+		modelsF40: sliceBetween("<!-- 3 MODELOS", ["<!-- CASO ÉXITO", "<!-- GRÁFICO ROI"]),
+		successCase: sliceBetween("<!-- CASO ÉXITO", ["<!-- GRÁFICO ROI"]),
 		roiF40: sliceBetween("<!-- GRÁFICO ROI", [
 			"<!-- CTA FINAL",
 			"<!-- EMDASH BADGE",
@@ -299,6 +306,15 @@ const bodyBlocks = leadBlock
 										{block._key === "k8" && customParts.phases && (
 											<div class="custom-html-inline" set:html={customParts.phases} />
 										)}
+										{block._key === "k8" && customParts.successCase && (
+											<div class="custom-html-inline" set:html={customParts.successCase} />
+										)}
+										{block._key === "k10" && customParts.solsPy && (
+											<div class="custom-html-inline" set:html={customParts.solsPy} />
+										)}
+										{block._key === "k10" && customParts.compPy && (
+											<div class="custom-html-inline" set:html={customParts.compPy} />
+										)}
 										{block._key === "k10" && customParts.modelsF40 && (
 											<div class="custom-html-inline" set:html={customParts.modelsF40} />
 										)}
@@ -307,6 +323,9 @@ const bodyBlocks = leadBlock
 										)}
 										{block._key === "k1" && (customParts.sins || customParts.danger) && (
 											<div class="custom-html-inline" set:html={customParts.sins || customParts.danger} />
+										)}
+										{block._key === "k3" && customParts.explainersPy && (
+											<div class="custom-html-inline" set:html={customParts.explainersPy} />
 										)}
 										{block._key === "k3" && customParts.brainMap && (
 											<div class="custom-html-inline" set:html={customParts.brainMap} />
@@ -317,23 +336,29 @@ const bodyBlocks = leadBlock
 										{block._key === "k5" && customParts.questions && (
 											<div class="custom-html-inline" set:html={customParts.questions} />
 										)}
+										{block._key === "k6" && customParts.bottlenecksPy && (
+											<div class="custom-html-inline" set:html={customParts.bottlenecksPy} />
+										)}
 										{block._key === "k6" && (customParts.chart || customParts.traffic) && (
 											<div class="custom-html-inline" set:html={customParts.chart || customParts.traffic} />
 										)}
 										{block._key === "k8" && (customParts.compareTable || customParts.pvTable) && (
 											<div class="custom-html-inline" set:html={customParts.compareTable || customParts.pvTable} />
 										)}
-										{block._key === "k10" && customParts.models && (
+										{block._key === "k10" && customParts.models && !customParts.modelsF40 && (
 											<div class="custom-html-inline" set:html={customParts.models} />
 										)}
 										{block._key === "k14" && customParts.emdashBadge && (
 											<div class="custom-html-inline" set:html={customParts.emdashBadge} />
 										)}
-										{block._key === "k10" && customParts.phases && (
+										{block._key === "k10" && customParts.phases && !customParts.modelsF40 && (
 											<div class="custom-html-inline" set:html={customParts.phases} />
 										)}
 										{block._key === "k10" && customParts.revProjection && (
 											<div class="custom-html-inline" set:html={customParts.revProjection} />
+										)}
+										{block._key === "k12" && customParts.impactPy && (
+											<div class="custom-html-inline" set:html={customParts.impactPy} />
 										)}
 										{block._key === "k11" && customParts.revenueChart && (
 											<div class="custom-html-inline" set:html={customParts.revenueChart} />
