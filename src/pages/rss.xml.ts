@@ -3,6 +3,15 @@ import { getEmDashCollection, getSiteSettings, getTermsForEntries } from "emdash
 
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 
+function getFeaturedImageSrc(img: unknown): string {
+	if (!img || typeof img !== "object") return "";
+	const image = img as Record<string, unknown>;
+	if (typeof image.src === "string" && image.src) {
+		return image.src;
+	}
+	return "";
+}
+
 export const GET: APIRoute = async ({ site, url }) => {
 	const siteUrl = site?.toString() || url.origin;
 	const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings());
@@ -30,6 +39,10 @@ export const GET: APIRoute = async ({ site, url }) => {
 			const categoryLine = primaryTag
 				? `      <category>${escapeXml(primaryTag.label)}</category>\n`
 				: "";
+			const featuredImageSrc = getFeaturedImageSrc(post.data.featured_image);
+			const mediaLines = featuredImageSrc
+				? `      <enclosure url="${escapeXml(featuredImageSrc)}" type="image/jpeg" length="0"/>\n      <media:content url="${escapeXml(featuredImageSrc)}" medium="image"/>\n`
+				: "";
 
 			return `    <item>
       <title>${title}</title>
@@ -37,13 +50,13 @@ export const GET: APIRoute = async ({ site, url }) => {
       <guid isPermaLink="true">${postUrl}</guid>
       <pubDate>${pubDate}</pubDate>
       <description>${description}</description>
-${categoryLine}    </item>`;
+${categoryLine}${mediaLines}    </item>`;
 		})
 		.filter(Boolean)
 		.join("\n");
 
 	const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>${escapeXml(siteTitle)}</title>
     <description>${escapeXml(siteTagline)}</description>
