@@ -133,18 +133,32 @@ function parseCustomHtmlParts(html: string | undefined) {
 	return {
 		styles,
 		counters: sliceBetween("<!-- COUNTERS", [
+			"<!-- GRÁFICO AUTOMATIZACIÓN",
 			"<!-- DANGER BOX",
 			"<!-- 3 PECADOS",
 			"<!-- BRAIN MAP",
 			"<!-- GRÁFICO TRÁFICO",
 			"<!-- GRÁFICO",
 		]),
+		autoChart: sliceBetween("<!-- GRÁFICO AUTOMATIZACIÓN", ["<!-- 4 FASES"]),
 		danger: sliceBetween("<!-- DANGER BOX", ["<!-- 4 PREGUNTAS"]),
 		questions: sliceBetween("<!-- 4 PREGUNTAS", ["<!-- GRÁFICO VECTORES"]),
 		attackChart: sliceBetween("<!-- GRÁFICO VECTORES", ["<!-- TABLA COMPARATIVA"]),
 		compareTable: sliceBetween("<!-- TABLA COMPARATIVA", ["<!-- 4 FASES"]),
-		phases: sliceBetween("<!-- 4 FASES", ["<!-- GRÁFICO REVENUE"]),
-		revProjection: sliceBetween("<!-- GRÁFICO REVENUE", ["<!-- CTA FINAL"]),
+		phases: sliceBetween("<!-- 4 FASES", [
+			"<!-- 3 MODELOS",
+			"<!-- GRÁFICO REVENUE",
+		]),
+		modelsF40: sliceBetween("<!-- 3 MODELOS", ["<!-- GRÁFICO ROI"]),
+		roiF40: sliceBetween("<!-- GRÁFICO ROI", [
+			"<!-- CTA FINAL",
+			"<!-- EMDASH BADGE",
+		]),
+		revProjection: sliceBetween("<!-- GRÁFICO REVENUE", [
+			"<!-- EMDASH BADGE",
+			"<!-- CTA FINAL",
+		]),
+		emdashBadge: sliceBetween("<!-- EMDASH BADGE", ["<!-- CTA FINAL"]),
 		sins: sliceBetween("<!-- 3 PECADOS", ["<!-- TABLA PECADOS"]),
 		pvTable: sliceBetween("<!-- TABLA PECADOS", [
 			"<!-- GRÁFICO CORRELACIÓN",
@@ -279,6 +293,18 @@ const bodyBlocks = leadBlock
 								return (
 									<>
 										<PortableText value={[block]} />
+										{block._key === "k4" && customParts.autoChart && (
+											<div class="custom-html-inline" set:html={customParts.autoChart} />
+										)}
+										{block._key === "k8" && customParts.phases && (
+											<div class="custom-html-inline" set:html={customParts.phases} />
+										)}
+										{block._key === "k10" && customParts.modelsF40 && (
+											<div class="custom-html-inline" set:html={customParts.modelsF40} />
+										)}
+										{block._key === "k10" && customParts.roiF40 && (
+											<div class="custom-html-inline" set:html={customParts.roiF40} />
+										)}
 										{block._key === "k1" && (customParts.sins || customParts.danger) && (
 											<div class="custom-html-inline" set:html={customParts.sins || customParts.danger} />
 										)}
@@ -299,6 +325,9 @@ const bodyBlocks = leadBlock
 										)}
 										{block._key === "k10" && customParts.models && (
 											<div class="custom-html-inline" set:html={customParts.models} />
+										)}
+										{block._key === "k14" && customParts.emdashBadge && (
+											<div class="custom-html-inline" set:html={customParts.emdashBadge} />
 										)}
 										{block._key === "k10" && customParts.phases && (
 											<div class="custom-html-inline" set:html={customParts.phases} />
