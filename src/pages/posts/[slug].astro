@@ -133,6 +133,7 @@ function parseCustomHtmlParts(html: string | undefined) {
 	return {
 		styles,
 		counters: sliceBetween("<!-- COUNTERS", [
+			"<!-- GRÁFICO SEO",
 			"<!-- MANIFESTO",
 			"<!-- 3 EXPLAINER",
 			"<!-- GRÁFICO AUTOMATIZACIÓN",
@@ -142,6 +143,11 @@ function parseCustomHtmlParts(html: string | undefined) {
 			"<!-- GRÁFICO TRÁFICO",
 			"<!-- GRÁFICO",
 		]),
+		gapHs: sliceBetween("<!-- GAP VISUALIZATION", ["<!-- COUNTERS"]),
+		seoChartHs: sliceBetween("<!-- GRÁFICO SEO", ["<!-- TABLA ROI"]),
+		roiTableHs: sliceBetween("<!-- TABLA ROI", ["<!-- 6 FEATURES"]),
+		featuresHs: sliceBetween("<!-- 6 FEATURES", ["<!-- 4 PREGUNTAS"]),
+		questionsHs: sliceBetween("<!-- 4 PREGUNTAS", ["<!-- CTA FINAL"]),
 		manifestoSd: sliceBetween("<!-- MANIFESTO", ["<!-- GRÁFICO OPEX"]),
 		opexChartSd: sliceBetween("<!-- GRÁFICO OPEX", ["<!-- 4 PILARES"]),
 		pillarsSd: sliceBetween("<!-- 4 PILARES", ["<!-- COMPARATIVA COSTOS"]),
@@ -310,6 +316,9 @@ const bodyBlocks = leadBlock
 										{block._key === "k4" && customParts.autoChart && (
 											<div class="custom-html-inline" set:html={customParts.autoChart} />
 										)}
+										{block._key === "k8" && customParts.seoChartHs && (
+											<div class="custom-html-inline" set:html={customParts.seoChartHs} />
+										)}
 										{block._key === "k8" && customParts.pillarsSd && (
 											<div class="custom-html-inline" set:html={customParts.pillarsSd} />
 										)}
@@ -318,6 +327,9 @@ const bodyBlocks = leadBlock
 										)}
 										{block._key === "k8" && customParts.successCase && (
 											<div class="custom-html-inline" set:html={customParts.successCase} />
+										)}
+										{block._key === "k10" && customParts.roiTableHs && (
+											<div class="custom-html-inline" set:html={customParts.roiTableHs} />
 										)}
 										{block._key === "k10" && customParts.opexChartSd && !customParts.costGridSd && (
 											<div class="custom-html-inline" set:html={customParts.opexChartSd} />
@@ -336,6 +348,9 @@ const bodyBlocks = leadBlock
 										)}
 										{block._key === "k1" && (customParts.sins || customParts.danger) && (
 											<div class="custom-html-inline" set:html={customParts.sins || customParts.danger} />
+										)}
+										{block._key === "k3" && customParts.gapHs && (
+											<div class="custom-html-inline" set:html={customParts.gapHs} />
 										)}
 										{block._key === "k3" && customParts.explainersPy && (
 											<div class="custom-html-inline" set:html={customParts.explainersPy} />
@@ -388,11 +403,17 @@ const bodyBlocks = leadBlock
 										{block._key === "k11" && customParts.revenueChart && !customParts.costGridSd && (
 											<div class="custom-html-inline" set:html={customParts.revenueChart} />
 										)}
+										{block._key === "k13" && customParts.featuresHs && (
+											<div class="custom-html-inline" set:html={customParts.featuresHs} />
+										)}
 										{block._key === "k13" && customParts.regionalSd && (
 											<div class="custom-html-inline" set:html={customParts.regionalSd} />
 										)}
 										{block._key === "k13" && customParts.steps && !customParts.regionalSd && (
 											<div class="custom-html-inline" set:html={customParts.steps} />
+										)}
+										{block._key === "k15" && customParts.questionsHs && (
+											<div class="custom-html-inline" set:html={customParts.questionsHs} />
 										)}
 										{block._key === "k16" && customParts.terminal && (
 											<div class="custom-html-inline" set:html={customParts.terminal} />
