@@ -63,6 +63,9 @@ const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
 // If title already includes site title (from getSeoMeta), use as-is
 const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
 
+const DEFAULT_OG_IMAGE = "https://soft-innova.com/images/iso-removebg-preview.png";
+const resolvedImage = image ?? DEFAULT_OG_IMAGE;
+
 // Build public page context for plugin contributions
 // SEO data is passed here and rendered securely by EmDashHead
 const pageCtx = createPublicPageContext({
@@ -73,9 +76,9 @@ const pageCtx = createPublicPageContext({
 	pageTitle: pageTitle ?? title,
 	description,
 	canonical,
-	image,
+	image: resolvedImage,
 	content,
-	seo: { ogImage: image, robots },
+	seo: { ogImage: resolvedImage, robots },
 	articleMeta: { publishedTime, modifiedTime, author },
 	siteName: siteTitle,
 });
@@ -227,6 +230,18 @@ const pageCtx = createPublicPageContext({
 								</svg>
 							</a>
 						</div>
+						<a
+							href="https://www.cloudflare.com"
+							target="_blank"
+							rel="noopener"
+							style="display:inline-block;margin-top:12px"
+						>
+							<img
+								src="/images/cloudflare-badge.png"
+								alt="Protected by Cloudflare"
+								style="height:32px;opacity:0.8"
+							/>
+						</a>
 					</div>
 					<div class="footer-col">
 						<h4 class="footer-heading">Productos</h4>

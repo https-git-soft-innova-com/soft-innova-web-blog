@@ -161,7 +161,10 @@ function parseCustomHtmlParts(html: string | undefined) {
 		impactPy: sliceBetween("<!-- GRÁFICO IMPACTO", ["<!-- CTA FINAL"]),
 		autoChart: sliceBetween("<!-- GRÁFICO AUTOMATIZACIÓN", ["<!-- 4 FASES"]),
 		danger: sliceBetween("<!-- DANGER BOX", ["<!-- 4 PREGUNTAS"]),
-		questions: sliceBetween("<!-- 4 PREGUNTAS", ["<!-- GRÁFICO VECTORES"]),
+		questions: sliceBetween("<!-- 4 PREGUNTAS", [
+			"<!-- GRÁFICO VECTORES",
+			"<!-- CTA FINAL",
+		]),
 		attackChart: sliceBetween("<!-- GRÁFICO VECTORES", ["<!-- TABLA COMPARATIVA"]),
 		compareTable: sliceBetween("<!-- TABLA COMPARATIVA", ["<!-- 4 FASES"]),
 		phases: sliceBetween("<!-- 4 FASES", [
@@ -179,6 +182,8 @@ function parseCustomHtmlParts(html: string | undefined) {
 			"<!-- CTA FINAL",
 		]),
 		emdashBadge: sliceBetween("<!-- EMDASH BADGE", ["<!-- CTA FINAL"]),
+		greenAlertFmc: sliceBetween("<!-- BLOQUE VERDE", ["<!-- CASO ANDES"]),
+		caseAndesFmc: sliceBetween("<!-- CASO ANDES", ["<!-- 3 PECADOS", "<!-- TABLA"]),
 		sins: sliceBetween("<!-- 3 PECADOS", ["<!-- TABLA PECADOS"]),
 		pvTable: sliceBetween("<!-- TABLA PECADOS", [
 			"<!-- GRÁFICO CORRELACIÓN",
@@ -225,6 +230,7 @@ const bodyBlocks = leadBlock
 	type="article"
 	publishedTime={post.data.publishedAt?.toISOString() ?? null}
 	modifiedTime={post.data.updatedAt.toISOString()}
+	author="Mila Vivanco"
 	content={{ collection: "posts", id: post.data.id, slug }}
 >
 	<article class="article">
@@ -303,6 +309,11 @@ const bodyBlocks = leadBlock
 						<div class="article-counters" set:html={customParts.counters} />
 					)
 				}
+				{
+					customParts?.successCase && customParts?.modelsF40 && (
+						<div class="custom-html-inline" set:html={customParts.successCase} />
+					)
+				}
 			</header>
 
 			<div class="article-content">
@@ -325,7 +336,7 @@ const bodyBlocks = leadBlock
 										{block._key === "k8" && customParts.phases && (
 											<div class="custom-html-inline" set:html={customParts.phases} />
 										)}
-										{block._key === "k8" && customParts.successCase && (
+										{block._key === "k8" && customParts.successCase && !customParts.modelsF40 && (
 											<div class="custom-html-inline" set:html={customParts.successCase} />
 										)}
 										{block._key === "k10" && customParts.roiTableHs && (
@@ -346,8 +357,17 @@ const bodyBlocks = leadBlock
 										{block._key === "k10" && customParts.roiF40 && (
 											<div class="custom-html-inline" set:html={customParts.roiF40} />
 										)}
-										{block._key === "k1" && (customParts.sins || customParts.danger) && (
+										{block._key === "k3" && customParts.greenAlertFmc && (
+											<div class="custom-html-inline" set:html={customParts.greenAlertFmc} />
+										)}
+										{block._key === "k3" && customParts.caseAndesFmc && (
+											<div class="custom-html-inline" set:html={customParts.caseAndesFmc} />
+										)}
+										{block._key === "k1" && !customParts.greenAlertFmc && (customParts.sins || customParts.danger) && (
 											<div class="custom-html-inline" set:html={customParts.sins || customParts.danger} />
+										)}
+										{block._key === "k5" && customParts.greenAlertFmc && customParts.sins && (
+											<div class="custom-html-inline" set:html={customParts.sins} />
 										)}
 										{block._key === "k3" && customParts.gapHs && (
 											<div class="custom-html-inline" set:html={customParts.gapHs} />
@@ -364,7 +384,7 @@ const bodyBlocks = leadBlock
 										{block._key === "k4" && customParts.attackChart && !customParts.manifestoSd && (
 											<div class="custom-html-inline" set:html={customParts.attackChart} />
 										)}
-										{block._key === "k5" && customParts.questions && (
+										{block._key === "k5" && customParts.questions && !customParts.questionsHs && (
 											<div class="custom-html-inline" set:html={customParts.questions} />
 										)}
 										{block._key === "k6" && customParts.bottlenecksPy && (
