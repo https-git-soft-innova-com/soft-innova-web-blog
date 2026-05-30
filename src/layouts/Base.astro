@@ -93,6 +93,11 @@ const pageCtx = createPublicPageContext({
 		<Font cssVariable="--font-sans" preload />
 		<Font cssVariable="--font-mono" />
 		<title>{fullTitle}</title>
+		<meta property="og:image" content={resolvedImage} />
+		<meta property="og:image:width" content="800" />
+		<meta property="og:image:height" content="800" />
+		<meta property="twitter:card" content="summary" />
+		<meta property="twitter:image" content={resolvedImage} />
 		<EmDashHead page={pageCtx} />
 		<script is:inline>
 			// Apply theme immediately to prevent flash
