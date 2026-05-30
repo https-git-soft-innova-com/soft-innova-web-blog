@@ -133,11 +133,18 @@ function parseCustomHtmlParts(html: string | undefined) {
 	return {
 		styles,
 		counters: sliceBetween("<!-- COUNTERS", [
+			"<!-- DANGER BOX",
 			"<!-- 3 PECADOS",
 			"<!-- BRAIN MAP",
 			"<!-- GRÁFICO TRÁFICO",
 			"<!-- GRÁFICO",
 		]),
+		danger: sliceBetween("<!-- DANGER BOX", ["<!-- 4 PREGUNTAS"]),
+		questions: sliceBetween("<!-- 4 PREGUNTAS", ["<!-- GRÁFICO VECTORES"]),
+		attackChart: sliceBetween("<!-- GRÁFICO VECTORES", ["<!-- TABLA COMPARATIVA"]),
+		compareTable: sliceBetween("<!-- TABLA COMPARATIVA", ["<!-- 4 FASES"]),
+		phases: sliceBetween("<!-- 4 FASES", ["<!-- GRÁFICO REVENUE"]),
+		revProjection: sliceBetween("<!-- GRÁFICO REVENUE", ["<!-- CTA FINAL"]),
 		sins: sliceBetween("<!-- 3 PECADOS", ["<!-- TABLA PECADOS"]),
 		pvTable: sliceBetween("<!-- TABLA PECADOS", [
 			"<!-- GRÁFICO CORRELACIÓN",
@@ -272,20 +279,32 @@ const bodyBlocks = leadBlock
 								return (
 									<>
 										<PortableText value={[block]} />
-										{block._key === "k1" && customParts.sins && (
-											<div class="custom-html-inline" set:html={customParts.sins} />
+										{block._key === "k1" && (customParts.sins || customParts.danger) && (
+											<div class="custom-html-inline" set:html={customParts.sins || customParts.danger} />
 										)}
 										{block._key === "k3" && customParts.brainMap && (
 											<div class="custom-html-inline" set:html={customParts.brainMap} />
 										)}
+										{block._key === "k4" && customParts.attackChart && (
+											<div class="custom-html-inline" set:html={customParts.attackChart} />
+										)}
+										{block._key === "k5" && customParts.questions && (
+											<div class="custom-html-inline" set:html={customParts.questions} />
+										)}
 										{block._key === "k6" && (customParts.chart || customParts.traffic) && (
 											<div class="custom-html-inline" set:html={customParts.chart || customParts.traffic} />
 										)}
-										{block._key === "k8" && customParts.pvTable && (
-											<div class="custom-html-inline" set:html={customParts.pvTable} />
+										{block._key === "k8" && (customParts.compareTable || customParts.pvTable) && (
+											<div class="custom-html-inline" set:html={customParts.compareTable || customParts.pvTable} />
 										)}
 										{block._key === "k10" && customParts.models && (
 											<div class="custom-html-inline" set:html={customParts.models} />
+										)}
+										{block._key === "k10" && customParts.phases && (
+											<div class="custom-html-inline" set:html={customParts.phases} />
+										)}
+										{block._key === "k10" && customParts.revProjection && (
+											<div class="custom-html-inline" set:html={customParts.revProjection} />
 										)}
 										{block._key === "k11" && customParts.revenueChart && (
 											<div class="custom-html-inline" set:html={customParts.revenueChart} />
