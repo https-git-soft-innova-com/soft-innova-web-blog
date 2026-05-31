@@ -1,0 +1,66 @@
+<svg width="800" height="320" xmlns="http://www.w3.org/2000/svg" style="background:#0C0C14;border-radius:12px">
+  <!-- Title -->
+  <text x="24" y="32" font-family="Arial" font-size="14" font-weight="bold" fill="#E8F0EE">Evolución del tráfico web: humanos vs. agentes IA (proyección 2024–2027)</text>
+  <text x="24" y="52" font-family="monospace" font-size="11" fill="#445550">// Análisis Soft-Tech · Basado en datos Cloudflare + tendencias de adopción de LLMs</text>
+
+  <!-- Legend -->
+  <rect x="24" y="68" width="12" height="3" fill="#00FFC8" rx="2"/>
+  <text x="42" y="78" font-family="Arial" font-size="11" fill="#8A9E98">Tráfico humano (%)</text>
+  <rect x="170" y="68" width="12" height="3" fill="#FF2D78" rx="2"/>
+  <text x="188" y="78" font-family="Arial" font-size="11" fill="#8A9E98">Tráfico agentes IA (%)</text>
+
+  <!-- Grid lines -->
+  <line x1="60" y1="90" x2="760" y2="90" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+  <line x1="60" y1="128" x2="760" y2="128" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+  <line x1="60" y1="166" x2="760" y2="166" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+  <line x1="60" y1="204" x2="760" y2="204" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+  <line x1="60" y1="242" x2="760" y2="242" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+  <line x1="60" y1="280" x2="760" y2="280" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+  <!-- Y axis labels -->
+  <text x="50" y="93" font-family="monospace" font-size="10" fill="#445550" text-anchor="end">100%</text>
+  <text x="50" y="131" font-family="monospace" font-size="10" fill="#445550" text-anchor="end">80%</text>
+  <text x="50" y="169" font-family="monospace" font-size="10" fill="#445550" text-anchor="end">60%</text>
+  <text x="50" y="207" font-family="monospace" font-size="10" fill="#445550" text-anchor="end">40%</text>
+  <text x="50" y="245" font-family="monospace" font-size="10" fill="#445550" text-anchor="end">20%</text>
+  <text x="50" y="283" font-family="monospace" font-size="10" fill="#445550" text-anchor="end">0%</text>
+
+  <!-- X positions: 2022=100, 2023=220, 2024=340, 2025=460, 2026=580, 2027=700 -->
+  <!-- Y formula: 280 - (val/100)*190 -->
+  <!-- Humano: 95,88,78,65,48,32 -->
+  <!-- IA: 5,12,22,35,52,68 -->
+
+  <!-- Humano fill area -->
+  <polygon points="100,100 220,114 340,133 460,157 580,189 700,219 700,280 100,280" fill="rgba(0,255,200,0.06)"/>
+  <!-- IA fill area -->
+  <polygon points="100,270 220,257 340,238 460,214 580,181 700,151 700,280 100,280" fill="rgba(255,45,120,0.06)"/>
+
+  <!-- Humano line -->
+  <polyline points="100,100 220,114 340,133 460,157 580,189 700,219" fill="none" stroke="#00FFC8" stroke-width="2" stroke-linejoin="round"/>
+  <!-- IA line -->
+  <polyline points="100,270 220,257 340,238 460,214 580,181 700,151" fill="none" stroke="#FF2D78" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Dots humano -->
+  <circle cx="100" cy="100" r="4" fill="#00FFC8"/>
+  <circle cx="220" cy="114" r="4" fill="#00FFC8"/>
+  <circle cx="340" cy="133" r="4" fill="#00FFC8"/>
+  <circle cx="460" cy="157" r="4" fill="#00FFC8"/>
+  <circle cx="580" cy="189" r="4" fill="#00FFC8"/>
+  <circle cx="700" cy="219" r="4" fill="#00FFC8"/>
+
+  <!-- Dots IA -->
+  <circle cx="100" cy="270" r="4" fill="#FF2D78"/>
+  <circle cx="220" cy="257" r="4" fill="#FF2D78"/>
+  <circle cx="340" cy="238" r="4" fill="#FF2D78"/>
+  <circle cx="460" cy="214" r="4" fill="#FF2D78"/>
+  <circle cx="580" cy="181" r="4" fill="#FF2D78"/>
+  <circle cx="700" cy="151" r="4" fill="#FF2D78"/>
+
+  <!-- X labels -->
+  <text x="100" y="300" font-family="monospace" font-size="11" fill="#445550" text-anchor="middle">2022</text>
+  <text x="220" y="300" font-family="monospace" font-size="11" fill="#445550" text-anchor="middle">2023</text>
+  <text x="340" y="300" font-family="monospace" font-size="11" fill="#445550" text-anchor="middle">2024</text>
+  <text x="460" y="300" font-family="monospace" font-size="11" fill="#445550" text-anchor="middle">2025</text>
+  <text x="580" y="300" font-family="monospace" font-size="11" fill="#445550" text-anchor="middle">2026</text>
+  <text x="700" y="300" font-family="monospace" font-size="11" fill="#445550" text-anchor="middle">2027</text>
+</svg>

@@ -1,6 +1,5 @@
 ---
 import { getEmDashCollection, getTermsForEntries } from "emdash";
-import LiveSearch from "emdash/ui/search";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import { getReadingTime } from "../../utils/reading-time";
@@ -45,16 +44,6 @@ const viewCounts = await getPostViewCountsForLocals(
 				</p>
 			</div>
 			<div class="page-controls">
-				<div class="archive-search">
-					<LiveSearch
-						placeholder="Buscar en el blog..."
-						class="archive-search-root"
-						inputClass="archive-search-input"
-						resultsClass="archive-search-results"
-						resultClass="archive-search-result"
-						collections={["posts"]}
-					/>
-				</div>
 				<label class="sort-label">
 					<span>Ordenar por</span>
 					<select class="sort-select" data-sort-order>
@@ -225,57 +214,6 @@ const viewCounts = await getPostViewCountsForLocals(
 		justify-content: flex-start;
 	}
 
-	.archive-search {
-		min-width: min(100%, 280px);
-	}
-
-	:global(.archive-search-input) {
-		width: 100%;
-		min-height: 44px;
-		padding: var(--spacing-2) var(--spacing-3);
-		font-family: var(--font-sans);
-		font-size: var(--font-size-sm);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius);
-		background: var(--color-bg);
-		color: var(--color-text);
-		transition:
-			border-color var(--transition-fast),
-			box-shadow var(--transition-fast);
-	}
-
-	:global(.archive-search-input)::placeholder {
-		color: var(--color-muted);
-	}
-
-	:global(.archive-search-input:focus-visible) {
-		outline: none;
-		border-color: var(--color-accent);
-		box-shadow: 0 0 0 3px var(--color-accent-ring);
-	}
-
-	:global(.archive-search-results) {
-		margin-top: var(--spacing-2);
-		background: var(--color-bg);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-dropdown);
-		max-height: 360px;
-		overflow-y: auto;
-	}
-
-	:global(.archive-search-result) {
-		display: block;
-		padding: var(--spacing-3) var(--spacing-4);
-		text-decoration: none;
-		color: var(--color-text);
-		border-bottom: 1px solid var(--color-border-subtle);
-	}
-
-	:global(.archive-search-result:last-child) {
-		border-bottom: none;
-	}
-
 	.sort-label {
 		display: flex;
 		flex-direction: column;
@@ -354,7 +292,6 @@ const viewCounts = await getPostViewCountsForLocals(
 			width: 100%;
 		}
 
-		.archive-search,
 		.sort-label,
 		.sort-select {
 			width: 100%;
