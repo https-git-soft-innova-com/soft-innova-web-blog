@@ -12,8 +12,9 @@ export interface BlogSiteIdentitySettings {
 	favicon?: MediaReference;
 }
 
-const DEFAULT_SITE_TITLE = "My Blog";
-const DEFAULT_SITE_TAGLINE = "Thoughts, stories, and ideas.";
+const DEFAULT_SITE_TITLE = "Soft-Tech Blog · IA y Transformación Digital";
+const DEFAULT_SITE_TAGLINE =
+	"Ideas accionables sobre IA, automatización y transformación digital para empresas LATAM. Casos reales, datos y estrategias del equipo de Soft-Tech. Nuevo artículo cada semana.";
 
 export function resolveBlogSiteIdentity(settings?: BlogSiteIdentitySettings) {
 	return {

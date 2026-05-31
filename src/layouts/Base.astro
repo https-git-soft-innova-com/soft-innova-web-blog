@@ -59,7 +59,8 @@ const {
 	author,
 	content,
 } = Astro.props;
-const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
+const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings());
+const resolvedDescription = description ?? siteTagline;
 // If title already includes site title (from getSeoMeta), use as-is
 const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
 
@@ -74,7 +75,7 @@ const pageCtx = createPublicPageContext({
 	pageType: type,
 	title: fullTitle,
 	pageTitle: pageTitle ?? title,
-	description,
+	description: resolvedDescription,
 	canonical,
 	image: resolvedImage,
 	content,
