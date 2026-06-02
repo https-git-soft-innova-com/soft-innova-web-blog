@@ -12,6 +12,7 @@ interface Props {
 	readingTime?: number;
 	tags?: Array<{ slug: string; label: string }>;
 	viewCount?: number;
+	author?: string;
 	reveal?: boolean;
 }
 
@@ -24,6 +25,7 @@ const {
 	readingTime,
 	tags,
 	viewCount,
+	author,
 	reveal = false,
 } = Astro.props;
 
@@ -78,6 +80,11 @@ const displayViews = viewCount ?? 0;
 			}
 			{excerpt && <p class="card-excerpt">{excerpt}</p>}
 			<div class="card-meta-row">
+				{
+					author && (
+						<span class="card-author">{author}</span>
+					)
+				}
 				{
 					formattedDate && isoDate && (
 						<time class="card-date" datetime={isoDate}>
@@ -310,6 +317,11 @@ const displayViews = viewCount ?? 0;
 
 	.card-date {
 		color: var(--color-muted);
+	}
+
+	.card-author {
+		font-weight: 500;
+		color: var(--color-text-secondary);
 	}
 
 	.card-read,

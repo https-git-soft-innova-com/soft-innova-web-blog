@@ -42,10 +42,7 @@ const gridPosts = visiblePosts.slice(1);
 // Single batched query for tags across the featured post + grid posts.
 // Avoids the N+1 pattern of calling getEntryTerms() per entry.
 // Bylines are already hydrated on entry.data.bylines by getEmDashCollection.
-const tagEntryIds = [
-	...(featuredPost ? [featuredPost.data.id] : []),
-	...gridPosts.map((p) => p.data.id),
-];
+const tagEntryIds = posts.map((p) => p.data.id);
 const tagsByEntry = await getTermsForEntries("posts", tagEntryIds, "tag");
 
 const featuredTags = featuredPost
@@ -66,11 +63,18 @@ const gridPostsWithTags = gridPosts.map((post) => ({
 
 const viewCounts = await getPostViewCountsForLocals(
 	Astro.locals,
-	gridPosts.map((post) => post.data.id),
+	posts.map((post) => post.data.id),
 );
 
-// Top 3 most viewed for "Más vistos" section
-const topViewed = [...gridPostsWithTags]
+// Top 3 most viewed from ALL posts (not just visible grid)
+const allPostsWithTags = posts.slice(1).map((post) => ({
+	post,
+	tags: (tagsByEntry.get(post.data.id) ?? []).map((t) => ({
+		slug: t.slug,
+		label: t.label,
+	})),
+}));
+const topViewed = [...allPostsWithTags]
 	.sort((a, b) => (viewCounts.get(b.post.data.id) ?? 0) - (viewCounts.get(a.post.data.id) ?? 0))
 	.slice(0, 3);
 
@@ -195,6 +199,7 @@ function formatDate(date: Date | null | undefined) {
 										readingTime={getReadingTime(post.data.content)}
 										tags={tags}
 										viewCount={viewCounts.get(post.data.id)}
+										author={post.data.bylines?.[0]?.byline?.displayName}
 										reveal
 									/>
 								</div>
@@ -227,6 +232,7 @@ function formatDate(date: Date | null | undefined) {
 									readingTime={getReadingTime(post.data.content)}
 									tags={tags}
 									viewCount={viewCounts.get(post.data.id)}
+									author={post.data.bylines?.[0]?.byline?.displayName}
 									reveal
 								/>
 							))}
