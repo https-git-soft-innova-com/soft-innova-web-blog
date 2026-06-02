@@ -1,0 +1,170 @@
+<style>
+.mh-counters{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:40px 0}
+.mh-c{border-radius:12px;padding:22px 16px;text-align:center}
+.mh-c .mn{font-family:Georgia,serif;font-weight:700;font-size:2.8rem;line-height:1;display:block;margin-bottom:6px}
+.mh-c .ml{font-size:0.7rem;letter-spacing:1.5px;text-transform:uppercase;line-height:1.4;color:#8A7A5E;font-family:system-ui,sans-serif}
+.mhc1{background:rgba(110,40,24,0.08);border:1px solid rgba(110,40,24,0.2)}.mhc1 .mn{color:#6E2818}
+.mhc2{background:rgba(74,96,66,0.08);border:1px solid rgba(74,96,66,0.2)}.mhc2 .mn{color:#4A6042}
+.mhc3{background:rgba(168,130,52,0.1);border:1px solid rgba(168,130,52,0.25)}.mhc3 .mn{color:#A88234}
+.chart-mh{background:#FBF6EA;border:1px solid rgba(26,19,10,0.12);border-radius:12px;padding:26px;margin:36px 0}
+.chart-mh .cht{font-family:Georgia,serif;font-weight:600;font-size:0.95rem;color:#1A130A;margin-bottom:4px}
+.chart-mh .chs{font-size:0.75rem;color:#8A7A5E;margin-bottom:20px;font-family:system-ui,sans-serif}
+.mh-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.mh-bar-label{width:240px;font-size:11px;color:#4A3D2A;flex-shrink:0;text-align:right;font-family:system-ui,sans-serif;line-height:1.4}
+.mh-bar-track{flex:1;height:22px;background:rgba(26,19,10,0.06);border-radius:4px;overflow:hidden}
+.mh-bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:10px;font-weight:700;color:white;font-family:system-ui,sans-serif}
+.mh-bar-burgundy{background:rgba(110,40,24,0.75)}
+.mh-bar-sage{background:rgba(74,96,66,0.8)}
+.questions-mh{background:#1A130A;border-radius:16px;padding:32px 28px;margin:36px 0}
+.qmh-eyebrow{font-family:system-ui,sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(168,130,52,0.8);margin-bottom:8px}
+.qmh-title{font-family:Georgia,serif;font-size:1.2rem;color:white;margin-bottom:24px;line-height:1.3}
+.qmh-item{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.qmh-item:last-child{border:none}
+.qmh-num{font-family:Georgia,serif;font-weight:700;font-size:1.1rem;color:rgba(168,130,52,0.9);min-width:24px;flex-shrink:0}
+.qmh-text{font-size:0.88rem;color:rgba(255,255,255,0.72);line-height:1.65;font-family:system-ui,sans-serif}
+.qmh-text strong{color:rgba(255,255,255,0.92)}
+.chart-gap-mh{background:#FBF6EA;border:1px solid rgba(26,19,10,0.12);border-radius:12px;padding:26px;margin:36px 0}
+.chart-gap-mh .cht{font-family:Georgia,serif;font-weight:600;font-size:0.95rem;color:#1A130A;margin-bottom:4px}
+.chart-gap-mh .chs{font-size:0.75rem;color:#8A7A5E;margin-bottom:20px;font-family:system-ui,sans-serif}
+.gap-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.gap-label{width:200px;font-size:11px;color:#4A3D2A;flex-shrink:0;text-align:right;font-family:system-ui,sans-serif;line-height:1.4}
+.gap-track{flex:1;height:22px;background:rgba(26,19,10,0.06);border-radius:4px;overflow:hidden}
+.gap-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:10px;font-weight:700;color:white;font-family:system-ui,sans-serif}
+.cta-mh{background:linear-gradient(135deg,#1A130A,#2A1F0E);border-radius:20px;padding:52px 44px;margin:52px 0;text-align:center;position:relative;overflow:hidden}
+.cta-mh::before{content:'✦ ✦ ✦';position:absolute;top:28px;left:50%;transform:translateX(-50%);font-size:12px;color:rgba(168,130,52,0.5);letter-spacing:8px}
+.cta-mh h3{font-family:Georgia,serif;font-weight:500;font-size:1.7rem;color:white;margin:0 0 16px;line-height:1.3;font-style:italic}
+.cta-mh p{font-size:0.95rem;color:rgba(255,255,255,0.6);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;font-family:system-ui,sans-serif}
+.btn-mh-gold{display:inline-block;background:linear-gradient(135deg,#A88234,#C9A04E);color:white !important;padding:14px 36px;border-radius:9999px;text-decoration:none;font-weight:600;font-size:0.95rem;font-family:system-ui,sans-serif}
+</style>
+
+<!-- COUNTERS -->
+<div class="mh-counters">
+  <div class="mh-c mhc1">
+    <span class="mn">68%</span>
+    <span class="ml">Adopta IA por presión<br>sin marco ético definido</span>
+  </div>
+  <div class="mh-c mhc2">
+    <span class="mn">16%</span>
+    <span class="ml">Empresas con marco ético<br>y plan de recalificación</span>
+  </div>
+  <div class="mh-c mhc3">
+    <span class="mn">7</span>
+    <span class="ml">Preguntas antes de<br>cada implementación de IA</span>
+  </div>
+</div>
+
+<!-- GRÁFICO PARADIGMA TECNOCRÁTICO -->
+<div class="chart-mh">
+  <div class="cht">El paradigma tecnocrático en números — empresas LATAM 2025–2026</div>
+  <div class="chs">Análisis Soft-Tech basado en evaluaciones y diagnósticos de clientes</div>
+  <div class="mh-bar-row">
+    <span class="mh-bar-label">Adopta IA por presión de mercado</span>
+    <div class="mh-bar-track">
+      <div class="mh-bar-fill mh-bar-burgundy" style="width:80%">68%</div>
+    </div>
+  </div>
+  <div class="mh-bar-row">
+    <span class="mh-bar-label">Sin marco ético definido</span>
+    <div class="mh-bar-track">
+      <div class="mh-bar-fill mh-bar-burgundy" style="width:63%">54%</div>
+    </div>
+  </div>
+  <div class="mh-bar-row">
+    <span class="mh-bar-label">Sin plan de recalificación de equipos</span>
+    <div class="mh-bar-track">
+      <div class="mh-bar-fill mh-bar-burgundy" style="width:55%">47%</div>
+    </div>
+  </div>
+  <div class="mh-bar-row">
+    <span class="mh-bar-label">Mide ROI solo en reducción de costos</span>
+    <div class="mh-bar-track">
+      <div class="mh-bar-fill mh-bar-burgundy" style="width:83%">71%</div>
+    </div>
+  </div>
+  <div class="mh-bar-row">
+    <span class="mh-bar-label">Con marco ético y plan humano</span>
+    <div class="mh-bar-track">
+      <div class="mh-bar-fill mh-bar-sage" style="width:19%">16%</div>
+    </div>
+  </div>
+</div>
+
+<!-- 7 PREGUNTAS -->
+<div class="questions-mh">
+  <div class="qmh-eyebrow">✦ Examen práctico</div>
+  <div class="qmh-title">Siete preguntas antes de aprobar su próxima implementación de IA</div>
+  <div class="qmh-item">
+    <div class="qmh-num">01</div>
+    <div class="qmh-text"><strong>¿Hay un humano responsable de cada decisión que tomará el sistema?</strong> Si la respuesta es "el sistema decide solo", está construyendo Babel.</div>
+  </div>
+  <div class="qmh-item">
+    <div class="qmh-num">02</div>
+    <div class="qmh-text"><strong>¿Cómo va a medir el éxito?</strong> Si solo va a medir reducción de costos, está midiendo mal. Mida también tiempo humano liberado para decisiones que requieren criterio.</div>
+  </div>
+  <div class="qmh-item">
+    <div class="qmh-num">03</div>
+    <div class="qmh-text"><strong>¿Su equipo entiende qué hace el sistema y por qué?</strong> Una IA que su gente no puede interrogar es una IA que su gente debe obedecer ciegamente. Eso no es transformación digital — es dependencia digital.</div>
+  </div>
+  <div class="qmh-item">
+    <div class="qmh-num">04</div>
+    <div class="qmh-text"><strong>¿Quién es dueño de los datos que entrena el modelo?</strong> Si sus datos viajan a servidores que usted no controla, no está implementando IA — está cediendo soberanía sin saberlo.</div>
+  </div>
+  <div class="qmh-item">
+    <div class="qmh-num">05</div>
+    <div class="qmh-text"><strong>¿Las personas afectadas participaron en el diseño?</strong> La encíclica habla de subsidiariedad — que las comunidades intermedias decidan, no solo reciban decisiones tomadas en otra parte.</div>
+  </div>
+  <div class="qmh-item">
+    <div class="qmh-num">06</div>
+    <div class="qmh-text"><strong>¿Cuál es el plan de recalificación para los puestos afectados?</strong> Si no hay plan, no es transformación — es despido encubierto con vocabulario tecnológico.</div>
+  </div>
+  <div class="qmh-item">
+    <div class="qmh-num">07</div>
+    <div class="qmh-text"><strong>¿Esta implementación va a calificar a su equipo o va a reemplazarlo?</strong> Es la pregunta final. La que separa Babel de Jerusalén. La que separa la IA que humaniza de la IA que deshumaniza.</div>
+  </div>
+</div>
+
+<!-- GRÁFICO GAP -->
+<div class="chart-gap-mh">
+  <div class="cht">El gap entre "saber usar IA" y "saber pensar con criterio"</div>
+  <div class="chs">Análisis Soft-Tech basado en evaluaciones de competencias digitales LATAM 2025–2026</div>
+  <div class="gap-bar-row">
+    <span class="gap-label">Saben usar herramientas de IA</span>
+    <div class="gap-track">
+      <div class="gap-fill" style="width:82%;background:rgba(168,130,52,0.85)">82%</div>
+    </div>
+  </div>
+  <div class="gap-bar-row">
+    <span class="gap-label">Saben configurar y ajustar la IA</span>
+    <div class="gap-track">
+      <div class="gap-fill" style="width:51%;background:rgba(168,130,52,0.7)">51%</div>
+    </div>
+  </div>
+  <div class="gap-bar-row">
+    <span class="gap-label">Saben interpretar los resultados</span>
+    <div class="gap-track">
+      <div class="gap-fill" style="width:38%;background:rgba(168,130,52,0.55)">38%</div>
+    </div>
+  </div>
+  <div class="gap-bar-row">
+    <span class="gap-label">Saben cuestionar los resultados</span>
+    <div class="gap-track">
+      <div class="gap-fill" style="width:22%;background:rgba(110,40,24,0.65)">22%</div>
+    </div>
+  </div>
+  <div class="gap-bar-row">
+    <span class="gap-label">Saben cuándo NO usar la IA</span>
+    <div class="gap-track">
+      <div class="gap-fill" style="width:14%;background:rgba(110,40,24,0.85)">14%</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-mh">
+  <h3>Antes de su próxima implementación<br>de IA — conversemos.</h3>
+  <p>No para venderle un producto. Para pensar con usted qué tipo de transformación digital quiere para su empresa, y ayudarle a hacerla sin perder humanidad en el proceso.</p>
+  <a class="btn-mh-gold" 
+    href="https://soft-innova.com/#contacto">
+    Conversemos →
+  </a>
+</div>
