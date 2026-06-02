@@ -107,6 +107,15 @@ const publishDate =
 	}) ?? null;
 
 const primaryByline = bylines[0] ?? null;
+
+const avatarMap: Record<string, string> = {
+	"Mila Vivanco": "/images/mila-vivanco-400.webp",
+	"Isabel Martínez": "/images/isabel-martinez.jpg",
+};
+const authorAvatar =
+	avatarMap[primaryByline?.byline.displayName ?? ""] ??
+	"/images/mila-vivanco-400.webp";
+
 const viewsLabel =
 	viewCount === 1 ? "1 vista" : `${formatViewCount(viewCount)} vistas`;
 
@@ -258,15 +267,13 @@ const bodyBlocks = leadBlock
 					{
 						primaryByline && (
 							<div class="article-meta-author">
-								{primaryByline.byline.avatarMediaId && (
-									<img
-										src={`/_emdash/api/media/file/${primaryByline.byline.avatarMediaId}`}
-										alt={primaryByline.byline.displayName}
-										class="article-meta-avatar"
-										width="48"
-										height="48"
-									/>
-								)}
+								<img
+									src={authorAvatar}
+									alt={primaryByline.byline.displayName}
+									class="article-meta-avatar"
+									width="48"
+									height="48"
+								/>
 								<div class="byline-info">
 									<span class="byline-name">
 										{primaryByline.byline.displayName}

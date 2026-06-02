@@ -11,6 +11,19 @@ const ALLOWED_ORIGINS = new Set([
 	"https://soft-innova.com",
 ]);
 
+/** Primary tag label por slug (fallback si content_taxonomies no tiene filas). */
+const CATEGORY_BY_SLUG: Record<string, string> = {
+	"muerte-clic-tradicional": "AEO",
+	"laberinto-cognitivo-ecommerce": "Annie-AI",
+	"fin-marketing-creencias": "Growth Marketing",
+	"fragilidad-del-gigante-wordpress": "WordPress",
+	"fabricas-2040-venta-autonoma": "Fábricas 2040",
+	"pymes-crecer-annie-ai": "Annie-AI",
+	"soberania-digital": "Soberanía Digital",
+	"hubspot-ia-chile-2026": "HubSpot",
+	"magnifica-humanitas-ia-etica": "Dirección",
+};
+
 function corsHeaders(request: Request): HeadersInit {
 	const origin = request.headers.get("Origin");
 	return {
@@ -70,19 +83,33 @@ export const GET: APIRoute = async ({ request, locals, site, url }) => {
 		);
 
 		const items = posts.map((post) => {
-			const primaryTag = tagsByEntry.get(post.data.id)?.[0];
+			const entryId = post.data.id;
+			const publicSlug = post.id;
+			const tags = tagsByEntry.get(entryId) ?? [];
+			const primaryTag = tags[0];
 			const byline = post.data.bylines?.[0];
+			const bylineCredit = byline as
+				| { byline?: { displayName?: string }; displayName?: string }
+				| undefined;
 
 			return {
-				slug: post.id,
+				slug: publicSlug,
+				link: `${siteUrl}/posts/${publicSlug}`,
 				title: post.data.title ?? "Untitled",
 				excerpt: post.data.excerpt ?? "",
 				publishedAt: post.data.publishedAt?.toISOString() ?? null,
-				byline: byline?.displayName ?? "Mila Vivanco",
-				category: primaryTag?.label ?? "",
+				byline:
+					bylineCredit?.byline?.displayName ??
+					bylineCredit?.displayName ??
+					"Mila Vivanco",
+				category:
+					primaryTag?.label ??
+					primaryTag?.slug ??
+					CATEGORY_BY_SLUG[publicSlug] ??
+					"",
 				featuredImage: getFeaturedImageUrl(post.data.featured_image, siteUrl),
 				readingTimeMinutes: getReadingTime(post.data.content),
-				viewCount: viewCounts.get(post.data.id) ?? 0,
+				viewCount: viewCounts.get(entryId) ?? 0,
 			};
 		});
 
