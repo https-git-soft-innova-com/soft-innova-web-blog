@@ -15,11 +15,12 @@ import RevealOnView from "../components/RevealOnView.astro";
 // Limit to what we render (1 featured + 6 grid). The DB does the slicing
 // instead of fetching every post and discarding the tail in JS.
 const POSTS_PER_PAGE = 7;
+const POSTS_VISIBLE_INITIAL = 6;
 
 const [{ entries: posts, cacheHint }, settings] = await Promise.all([
 	getEmDashCollection("posts", {
 		orderBy: { published_at: "desc" },
-		limit: POSTS_PER_PAGE + 1, // +1 to detect "view all" need
+		limit: 50, // fetch more for "más vistos" and "ver más"
 	}),
 	getSiteSettings(),
 ]);
@@ -35,8 +36,8 @@ const hasMorePosts = posts.length > POSTS_PER_PAGE;
 const featuredPost = visiblePosts[0];
 const featuredIndex = 0;
 
-// Resto en la grilla (hasta 6)
-const gridPosts = visiblePosts.slice(1, 7);
+// Resto en la grilla (all posts beyond featured)
+const gridPosts = visiblePosts.slice(1);
 
 // Single batched query for tags across the featured post + grid posts.
 // Avoids the N+1 pattern of calling getEntryTerms() per entry.
@@ -67,6 +68,11 @@ const viewCounts = await getPostViewCountsForLocals(
 	Astro.locals,
 	gridPosts.map((post) => post.data.id),
 );
+
+// Top 3 most viewed for "Más vistos" section
+const topViewed = [...gridPostsWithTags]
+	.sort((a, b) => (viewCounts.get(b.post.data.id) ?? 0) - (viewCounts.get(a.post.data.id) ?? 0))
+	.slice(0, 3);
 
 // Format date helper
 function formatDate(date: Date | null | undefined) {
@@ -177,8 +183,41 @@ function formatDate(date: Date | null | undefined) {
 								</a>
 							)}
 						</header>
+						<div class="posts-grid" id="posts-grid">
+							{gridPostsWithTags.map(({ post, tags }, idx) => (
+								<div class:list={["post-grid-item", idx >= POSTS_VISIBLE_INITIAL && "hidden-post"]}>
+									<PostCard
+										title={post.data.title ?? "Untitled"}
+										excerpt={post.data.excerpt}
+										featuredImage={post.data.featured_image}
+										href={`/posts/${post.id}`}
+										date={post.data.publishedAt ?? undefined}
+										readingTime={getReadingTime(post.data.content)}
+										tags={tags}
+										viewCount={viewCounts.get(post.data.id)}
+										reveal
+									/>
+								</div>
+							))}
+						</div>
+						{gridPostsWithTags.length > POSTS_VISIBLE_INITIAL && (
+							<div class="ver-mas-container" id="ver-mas-container">
+								<button id="btn-ver-mas" class="btn-ver-mas">
+									Ver más artículos
+								</button>
+							</div>
+						)}
+					</section>
+				)}
+
+				{/* Más vistos */}
+				{topViewed.length > 0 && (
+					<section class="top-viewed-section">
+						<h2 class="top-viewed-title">
+							<span>🔥</span> Más vistos
+						</h2>
 						<div class="posts-grid">
-							{gridPostsWithTags.map(({ post, tags }) => (
+							{topViewed.map(({ post, tags }) => (
 								<PostCard
 									title={post.data.title ?? "Untitled"}
 									excerpt={post.data.excerpt}
@@ -198,6 +237,28 @@ function formatDate(date: Date | null | undefined) {
 		)
 	}
 	<RevealOnView />
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const btn = document.getElementById('btn-ver-mas');
+			const container = document.getElementById('ver-mas-container');
+			if (!btn || !container) return;
+
+			const items = document.querySelectorAll('.post-grid-item.hidden-post');
+			let shown = 0;
+			const BATCH = 6;
+
+			btn.addEventListener('click', () => {
+				const toShow = Array.from(items).slice(shown, shown + BATCH);
+				toShow.forEach(el => el.classList.remove('hidden-post'));
+				shown += toShow.length;
+
+				if (shown >= items.length) {
+					container.remove();
+				}
+			});
+		});
+	</script>
 </Base>
 
 <style>
@@ -393,6 +454,53 @@ function formatDate(date: Date | null | undefined) {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: var(--spacing-12) var(--spacing-8);
+	}
+
+	.post-grid-item {
+		display: block;
+	}
+
+	.post-grid-item.hidden-post {
+		display: none;
+	}
+
+	.ver-mas-container {
+		text-align: center;
+		margin-top: var(--spacing-8);
+		margin-bottom: var(--spacing-4);
+	}
+
+	.btn-ver-mas {
+		padding: 0.75rem 2rem;
+		border-radius: 9999px;
+		border: 2px solid #E07020;
+		color: #E07020;
+		font-weight: 700;
+		font-size: var(--font-size-sm);
+		background: transparent;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.btn-ver-mas:hover {
+		background: #E07020;
+		color: white;
+	}
+
+	/* Top viewed section */
+	.top-viewed-section {
+		margin-top: var(--spacing-16);
+		margin-bottom: var(--spacing-8);
+	}
+
+	.top-viewed-title {
+		font-size: var(--font-size-2xl);
+		font-weight: 700;
+		color: var(--color-text);
+		margin-bottom: var(--spacing-6);
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
 	}
 
 	/* Empty State */

@@ -158,4 +158,25 @@
   ::-webkit-scrollbar-thumb {
     background: #475569 !important;
   }
+
+  /* Sobrescribir colores inline azules oscuros */
+  [style*="color:#0B1F3A"],
+  [style*="color: #0B1F3A"],
+  [style*="color:#1a3a5c"],
+  [style*="color: #1a3a5c"],
+  [style*="color:#0b1f3a"],
+  [style*="color: rgb(11, 31, 58)"] {
+    color: #e2e8f0 !important;
+  }
+
+  [style*="background"][style*="0B1F3A"] *,
+  [style*="background"][style*="0b1f3a"] *,
+  [style*="background"][style*="1a3a5c"] * {
+    color: #e2e8f0 !important;
+  }
+
+  [style*="font-style: italic"],
+  [style*="font-style:italic"] {
+    color: #e2e8f0 !important;
+  }
 }
