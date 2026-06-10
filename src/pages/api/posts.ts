@@ -22,6 +22,8 @@ const CATEGORY_BY_SLUG: Record<string, string> = {
 	"soberania-digital": "Soberanía Digital",
 	"hubspot-ia-chile-2026": "HubSpot",
 	"magnifica-humanitas-ia-etica": "Dirección",
+	"sobrevivir-recesion-2026": "Comercial",
+	"ia-ventas-mineria-exponor-2026": "Comercial",
 };
 
 function corsHeaders(request: Request): HeadersInit {

@@ -210,6 +210,14 @@ function parseCustomHtmlParts(html: string | undefined) {
 		models: sliceBetween("<!-- 3 MODELOS", ["<!-- CTA FINAL"]),
 		terminal: sliceBetween("<!-- TERMINAL", ["<!-- CTA FINAL"]),
 		cta: sliceBetween("<!-- CTA FINAL", []),
+		exponorHto: sliceBetween("<!-- HTO PROFILE", ["<!-- DATA CARDS"]),
+		exponorData: sliceBetween("<!-- DATA CARDS", ["<!-- TIMELINE"]),
+		exponorTimeline: sliceBetween("<!-- TIMELINE", ["<!-- ANNIE SECTION"]),
+		exponorAnnie: sliceBetween("<!-- ANNIE SECTION", ["<!-- COMPARE"]),
+		exponorCompare: sliceBetween("<!-- COMPARE", ["<!-- GRÁFICO CONVERSIÓN"]),
+		exponorChart: sliceBetween("<!-- GRÁFICO CONVERSIÓN", ["<!-- DIAG BLOCK"]),
+		exponorDiag: sliceBetween("<!-- DIAG BLOCK", ["<!-- FUENTES"]),
+		exponorSources: sliceBetween("<!-- FUENTES", ["<!-- CTA FINAL"]),
 	};
 }
 
@@ -447,6 +455,30 @@ const bodyBlocks = leadBlock
 										)}
 										{block._key === "k21" && customParts.seoAeo && (
 											<div class="custom-html-inline" set:html={customParts.seoAeo} />
+										)}
+										{block._key === "k9" && customParts.exponorHto && (
+											<div class="custom-html-inline" set:html={customParts.exponorHto} />
+										)}
+										{block._key === "k13" && customParts.exponorData && (
+											<div class="custom-html-inline" set:html={customParts.exponorData} />
+										)}
+										{block._key === "k15" && customParts.exponorTimeline && (
+											<div class="custom-html-inline" set:html={customParts.exponorTimeline} />
+										)}
+										{block._key === "k20" && customParts.exponorAnnie && (
+											<div class="custom-html-inline" set:html={customParts.exponorAnnie} />
+										)}
+										{block._key === "k22" && customParts.exponorCompare && (
+											<div class="custom-html-inline" set:html={customParts.exponorCompare} />
+										)}
+										{block._key === "k22" && customParts.exponorChart && (
+											<div class="custom-html-inline" set:html={customParts.exponorChart} />
+										)}
+										{block._key === "k24" && customParts.exponorDiag && (
+											<div class="custom-html-inline" set:html={customParts.exponorDiag} />
+										)}
+										{block._key === "k28" && customParts.exponorSources && (
+											<div class="custom-html-inline" set:html={customParts.exponorSources} />
 										)}
 									</>
 								);

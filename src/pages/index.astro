@@ -66,8 +66,8 @@ const viewCounts = await getPostViewCountsForLocals(
 	posts.map((post) => post.data.id),
 );
 
-// Top 3 most viewed from ALL posts (not just visible grid)
-const allPostsWithTags = posts.slice(1).map((post) => ({
+// Top 3 most viewed — incluye portada (Humanitas puede tener más vistas que el resto)
+const allPostsWithTags = posts.map((post) => ({
 	post,
 	tags: (tagsByEntry.get(post.data.id) ?? []).map((t) => ({
 		slug: t.slug,
