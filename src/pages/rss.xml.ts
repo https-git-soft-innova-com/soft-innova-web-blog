@@ -2,15 +2,7 @@ import type { APIRoute } from "astro";
 import { getEmDashCollection, getSiteSettings, getTermsForEntries } from "emdash";
 
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
-
-function getFeaturedImageSrc(img: unknown): string {
-	if (!img || typeof img !== "object") return "";
-	const image = img as Record<string, unknown>;
-	if (typeof image.src === "string" && image.src) {
-		return image.src;
-	}
-	return "";
-}
+import { getFeaturedImageUrl } from "../utils/featured-image";
 
 export const GET: APIRoute = async ({ site, url }) => {
 	const siteUrl = site?.toString() || url.origin;
@@ -39,7 +31,8 @@ export const GET: APIRoute = async ({ site, url }) => {
 			const categoryLine = primaryTag
 				? `      <category>${escapeXml(primaryTag.label)}</category>\n`
 				: "";
-			const featuredImageSrc = getFeaturedImageSrc(post.data.featured_image);
+			const featuredImageSrc =
+				getFeaturedImageUrl(post.data.featured_image, siteUrl) ?? "";
 			const mediaLines = featuredImageSrc
 				? `      <enclosure url="${escapeXml(featuredImageSrc)}" type="image/jpeg" length="0"/>\n      <media:content url="${escapeXml(featuredImageSrc)}" medium="image"/>\n`
 				: "";

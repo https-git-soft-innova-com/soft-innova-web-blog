@@ -13,3 +13,8 @@ data.db
 
 .agents/
 .claude/
+
+# Local dev state
+.wrangler/
+.DS_Store
+.qa-review/

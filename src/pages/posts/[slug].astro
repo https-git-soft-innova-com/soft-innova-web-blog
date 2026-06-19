@@ -111,6 +111,7 @@ const primaryByline = bylines[0] ?? null;
 const avatarMap: Record<string, string> = {
 	"Mila Vivanco": "/images/mila-vivanco-400.webp",
 	"Isabel Martínez": "/images/isabel-martinez.jpg",
+	"Felipe Ahumada": "/_emdash/api/media/file/01KVF3MFGASGP8W7B0SC4YMHS5.webp",
 };
 const authorAvatar =
 	avatarMap[primaryByline?.byline.displayName ?? ""] ??
@@ -122,6 +123,11 @@ const viewsLabel =
 /** Extrae bloques de custom_html por marcadores HTML para inyectarlos inline */
 function parseCustomHtmlParts(html: string | undefined) {
 	if (!html) return null;
+
+	// Si no tiene ningún marcador conocido, retornar null para activar el fallback
+	const knownMarkers = ["<!-- COUNTERS", "<!-- CTA FINAL", "<!-- GRÁFICO", "<!-- MANIFESTO", "<!-- 3 EXPLAINER", "<!-- DANGER BOX", "<!-- 4 FASES", "<!-- 3 MODELOS", "<!-- CASO ÉXITO", "<!-- HTO PROFILE", "<!-- DATA CARDS", "<!-- TIMELINE", "<!-- ANNIE SECTION", "<!-- COMPARE", "<!-- TERMINAL", "<!-- BLOQUE SEO"];
+	const hasKnownMarker = knownMarkers.some(m => html.includes(m));
+	if (!hasKnownMarker) return null;
 
 	const styles = html.match(/<style>[\s\S]*?<\/style>/)?.[0] ?? "";
 
@@ -247,7 +253,7 @@ const bodyBlocks = leadBlock
 	type="article"
 	publishedTime={post.data.publishedAt?.toISOString() ?? null}
 	modifiedTime={post.data.updatedAt.toISOString()}
-	author="Mila Vivanco"
+	author={primaryByline?.byline.displayName ?? "Mila Vivanco"}
 	content={{ collection: "posts", id: post.data.id, slug }}
 >
 	<article class="article">
@@ -674,12 +680,12 @@ const bodyBlocks = leadBlock
 	.byline-name {
 		font-weight: 600;
 		font-size: 0.95rem;
-		color: #1a1a1a;
+		color: var(--color-text);
 	}
 
 	.byline-role {
 		font-size: 0.78rem;
-		color: #888;
+		color: var(--color-muted);
 	}
 
 	.article-meta-stats {

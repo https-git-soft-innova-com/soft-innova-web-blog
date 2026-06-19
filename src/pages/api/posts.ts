@@ -24,6 +24,7 @@ const CATEGORY_BY_SLUG: Record<string, string> = {
 	"magnifica-humanitas-ia-etica": "Dirección",
 	"sobrevivir-recesion-2026": "Comercial",
 	"ia-ventas-mineria-exponor-2026": "Comercial",
+	"agente-olvidadizo-continual-learning": "emDASH",
 };
 
 function corsHeaders(request: Request): HeadersInit {
@@ -84,7 +85,8 @@ export const GET: APIRoute = async ({ request, locals, site, url }) => {
 			posts.map((post) => post.data.id),
 		);
 
-		const items = posts.map((post) => {
+		const items = posts
+			.map((post) => {
 			const entryId = post.data.id;
 			const publicSlug = post.id;
 			const tags = tagsByEntry.get(entryId) ?? [];
@@ -113,7 +115,12 @@ export const GET: APIRoute = async ({ request, locals, site, url }) => {
 				readingTimeMinutes: getReadingTime(post.data.content),
 				viewCount: viewCounts.get(entryId) ?? 0,
 			};
-		});
+		})
+			.sort(
+				(a, b) =>
+					new Date(b.publishedAt ?? 0).getTime() -
+					new Date(a.publishedAt ?? 0).getTime(),
+			);
 
 		return new Response(JSON.stringify({ items }), {
 			headers: corsHeaders(request),

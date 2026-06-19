@@ -34,9 +34,14 @@ const viewCounts = await getPostViewCountsForLocals(
 );
 
 const { siteTagline } = resolveBlogSiteIdentity(await getSiteSettings());
+const postsIndexUrl = new URL("/posts", Astro.url.origin).href;
 ---
 
-<Base title="All Posts" description={siteTagline}>
+<Base
+	title="Todos los artículos"
+	description={siteTagline}
+	canonical={postsIndexUrl}
+>
 	<div class="posts-page">
 		<header class="page-header">
 			<div>

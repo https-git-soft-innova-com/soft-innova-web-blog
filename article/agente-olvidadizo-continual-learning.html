@@ -1,0 +1,1546 @@
+<style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --bg:        #0E0F12;
+  --bg-soft:   #15171C;
+  --bg-card:   #1A1D24;
+  --bg-elev:   #22262F;
+
+  --ink:       #E8EAED;
+  --ink-mid:   #B4B8C0;
+  --ink-soft:  #797F89;
+  --ink-faint: #4A4F57;
+
+  --border:    rgba(232,234,237,0.08);
+  --border2:   rgba(232,234,237,0.04);
+
+  --cyan:      #4FC3F7;
+  --cyan-d:    #29B6F6;
+  --cyan-pale: rgba(79,195,247,0.12);
+
+  --green:     #66BB6A;
+  --green-d:   #4CAF50;
+  --green-pale: rgba(102,187,106,0.12);
+
+  --amber:     #FFB74D;
+  --amber-pale: rgba(255,183,77,0.12);
+
+  --pink:      #F06292;
+  --pink-pale: rgba(240,98,146,0.12);
+
+  --purple:    #BA68C8;
+  --purple-pale: rgba(186,104,200,0.12);
+
+  --red:       #EF5350;
+  --red-pale:  rgba(239,83,80,0.12);
+
+  --sans:    'Inter', system-ui, sans-serif;
+  --serif:   'Newsreader', Georgia, serif;
+  --mono:    'JetBrains Mono', 'Menlo', monospace;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* ── HEADER ─────────────────────────── */
+.site-header {
+  background: rgba(14,15,18,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.logo {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 18px;
+  color: #fff;
+  letter-spacing: -0.4px;
+}
+.logo span { color: var(--cyan); }
+.hdr-meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ── HERO ───────────────────────────── */
+.hero {
+  background: var(--bg);
+  padding: 80px 56px 90px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 80% 30%, rgba(79,195,247,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 30% 80%, rgba(186,104,200,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+.tag-paper {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--cyan-pale);
+  border: 1px solid rgba(79,195,247,0.3);
+  color: var(--cyan);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 3px;
+}
+.tag-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  animation: blink 1.6s infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.meta-bar {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-soft);
+  letter-spacing: 1.5px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 5.2vw, 4.4rem);
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+h1 em { font-style: italic; }
+h1 .cyan { color: var(--cyan); font-style: italic; }
+h1 .block { display: block; }
+
+.hero-dek {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  color: var(--ink-mid);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 36px;
+  font-weight: 400;
+}
+.hero-dek strong { color: var(--ink); font-weight: 500; }
+.hero-dek code {
+  font-family: var(--mono);
+  background: var(--bg-card);
+  color: var(--cyan);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  border: 1px solid var(--border);
+}
+
+.byline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.av {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--cyan);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--bg);
+  flex-shrink: 0;
+}
+.byline-txt {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.4px;
+}
+.byline-txt strong {
+  color: var(--ink-mid);
+  display: block;
+  font-weight: 600;
+}
+
+/* Hero right: metrics terminal */
+.term-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: var(--mono);
+  position: relative;
+}
+.term-header {
+  background: var(--bg-card);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.term-dots {
+  display: flex;
+  gap: 6px;
+}
+.term-dot {
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+}
+.term-dot.red { background: #FF5F56; }
+.term-dot.yellow { background: #FFBD2E; }
+.term-dot.green { background: #27C93F; }
+.term-title {
+  font-size: 10px;
+  color: var(--ink-soft);
+  letter-spacing: 1px;
+  margin-left: 12px;
+}
+
+.term-body {
+  padding: 22px 22px;
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: var(--ink-mid);
+}
+.term-line { display: flex; gap: 12px; }
+.term-prompt { color: var(--cyan); flex-shrink: 0; }
+.term-out { color: var(--ink-soft); }
+.term-key { color: var(--amber); }
+.term-val { color: var(--green); font-weight: 600; }
+.term-comment { color: var(--ink-faint); font-style: italic; }
+
+.term-divider {
+  border-top: 1px dashed var(--border);
+  margin: 14px 0;
+}
+
+.term-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+.tm-label { color: var(--ink-mid); font-size: 12px; }
+.tm-val {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: var(--mono);
+}
+.tm-val.pos { color: var(--green); }
+.tm-val.neg { color: var(--red); }
+.tm-val.neu { color: var(--amber); }
+
+/* ── ARTICLE ────────────────────────── */
+.article-body {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 90px 56px 100px;
+}
+
+.article-body p {
+  font-family: var(--serif);
+  font-size: 1.18rem;
+  line-height: 1.85;
+  margin-bottom: 1.5rem;
+  color: var(--ink);
+  font-weight: 400;
+}
+.first-para::first-letter {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 5.5rem;
+  color: var(--cyan);
+  float: left;
+  line-height: 0.85;
+  margin: 6px 14px 0 0;
+}
+.article-body p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.article-body p em {
+  font-style: italic;
+  color: var(--cyan);
+}
+.article-body p code,
+.callout code,
+li code {
+  font-family: var(--mono);
+  background: var(--bg-card);
+  color: var(--cyan);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.83em;
+  border: 1px solid var(--border);
+}
+
+h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 2.2rem;
+  letter-spacing: -0.8px;
+  color: var(--ink);
+  margin: 5rem 0 1.4rem;
+  line-height: 1.18;
+}
+h2 .num {
+  font-family: var(--mono);
+  font-size: 0.5em;
+  color: var(--cyan);
+  margin-right: 14px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  vertical-align: middle;
+}
+h2 em { font-style: italic; color: var(--cyan); }
+
+h3 {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--ink);
+  margin: 2rem 0 1rem;
+  letter-spacing: -0.3px;
+}
+
+/* PAPER CARD */
+.paper-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 26px;
+  margin: 32px 0;
+  position: relative;
+  overflow: hidden;
+}
+.paper-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--cyan);
+}
+.paper-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.paper-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: var(--cyan-pale);
+  color: var(--cyan);
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+.paper-cite {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-soft);
+}
+.paper-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.35;
+  font-style: italic;
+}
+.paper-authors {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+  letter-spacing: 0.3px;
+}
+.paper-quote {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  color: var(--ink-mid);
+  font-style: italic;
+  line-height: 1.65;
+  padding: 14px 16px;
+  background: var(--bg-soft);
+  border-radius: 6px;
+  border-left: 2px solid var(--cyan);
+}
+
+/* CALLOUT */
+.callout {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 8px 8px 0;
+  padding: 22px 26px;
+  margin: 36px 0;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--ink-mid);
+  line-height: 1.7;
+}
+.callout strong { color: var(--amber); font-weight: 600; }
+
+/* BIG QUOTE */
+.bigquote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.95rem;
+  line-height: 1.35;
+  color: var(--ink);
+  text-align: center;
+  padding: 50px 28px;
+  margin: 56px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.bigquote::before {
+  content: '"';
+  position: absolute;
+  top: -22px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg);
+  padding: 0 18px;
+  font-size: 4rem;
+  color: var(--cyan);
+  font-style: normal;
+  line-height: 1;
+}
+.bigquote-cite {
+  display: block;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 18px;
+  font-weight: 500;
+}
+
+/* THREE PILLARS GRID */
+.pillars-block {
+  margin: 44px 0;
+}
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.pillar-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 26px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.pillar-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.pillar-card.plasticity::before { background: var(--cyan); }
+.pillar-card.stability::before { background: var(--green); }
+.pillar-card.generalization::before { background: var(--purple); }
+
+.pillar-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.plasticity .pillar-tag { color: var(--cyan); }
+.stability .pillar-tag { color: var(--green); }
+.generalization .pillar-tag { color: var(--purple); }
+
+.pillar-name {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--ink);
+  margin-bottom: 12px;
+  line-height: 1.15;
+}
+.pillar-formula {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  background: var(--bg-soft);
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+  border: 1px solid var(--border);
+}
+.pillar-desc {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: var(--ink-mid);
+  line-height: 1.65;
+}
+
+/* CHART */
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 26px;
+  margin: 44px 0;
+}
+.chart-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 6px;
+}
+.chart-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.chart-src {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-soft);
+  margin-bottom: 22px;
+  letter-spacing: 0.4px;
+}
+
+/* MEMORY TYPES */
+.memory-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 34px 32px;
+  margin: 44px 0;
+}
+.mb-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 6px;
+}
+.mb-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: var(--ink);
+  margin-bottom: 22px;
+}
+.mb-title em { font-style: italic; }
+.mem-list {
+  display: grid;
+  gap: 14px;
+}
+.mem-item {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 22px;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 18px;
+  align-items: flex-start;
+}
+.mem-num {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.mem-item.interaction .mem-num { color: var(--cyan); border-color: rgba(79,195,247,0.3); }
+.mem-item.insight .mem-num { color: var(--amber); border-color: rgba(255,183,77,0.3); }
+.mem-item.skill .mem-num { color: var(--green); border-color: rgba(102,187,106,0.3); }
+
+.mem-name {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.mem-name em {
+  font-style: italic;
+  font-weight: 500;
+}
+.mem-item.interaction .mem-name em { color: var(--cyan); }
+.mem-item.insight .mem-name em { color: var(--amber); }
+.mem-item.skill .mem-name em { color: var(--green); }
+
+.mem-desc {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: var(--ink-mid);
+  line-height: 1.65;
+  margin-bottom: 10px;
+}
+.mem-example {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  background: var(--bg);
+  padding: 10px 14px;
+  border-radius: 6px;
+  line-height: 1.6;
+  border: 1px solid var(--border);
+}
+.mem-example .lbl { color: var(--ink-faint); }
+
+/* RETRIEVE-SOLVE-CONSOLIDATE LOOP */
+.loop-block {
+  background: linear-gradient(135deg, var(--bg-soft) 0%, var(--bg-card) 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 36px 34px;
+  margin: 44px 0;
+}
+.loop-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.4rem;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.loop-sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+}
+.loop-row {
+  display: grid;
+  grid-template-columns: 1fr 30px 1fr 30px 1fr;
+  align-items: stretch;
+  gap: 8px;
+}
+.loop-step {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 20px;
+  position: relative;
+}
+.loop-step::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  border-radius: 10px 10px 0 0;
+}
+.loop-step.retrieve::before { background: var(--cyan); }
+.loop-step.solve::before { background: var(--amber); }
+.loop-step.consolidate::before { background: var(--green); }
+.loop-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+.loop-step.retrieve .loop-num { color: var(--cyan); }
+.loop-step.solve .loop-num { color: var(--amber); }
+.loop-step.consolidate .loop-num { color: var(--green); }
+.loop-name {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.loop-desc {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+.loop-arrow {
+  font-family: var(--mono);
+  font-size: 1.6rem;
+  color: var(--ink-faint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ANNIE TRANSLATION TABLE */
+.annie-table {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 40px 0;
+}
+.at-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border);
+}
+.at-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--border2);
+}
+.at-row:last-child { border: none; }
+.at-header div, .at-row div {
+  padding: 16px 18px;
+  font-size: 0.85rem;
+}
+.at-header div {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.at-row .concept {
+  font-family: var(--sans);
+  color: var(--cyan);
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+.at-row .static {
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 0.84rem;
+}
+.at-row .annie {
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  background: var(--cyan-pale);
+  font-weight: 500;
+}
+
+/* ANNIE BLOCK */
+.annie-section {
+  background: linear-gradient(135deg, var(--bg-soft) 0%, var(--bg-card) 100%);
+  border: 1px solid var(--cyan);
+  border-radius: 18px;
+  padding: 52px 46px;
+  margin: 56px 0;
+  position: relative;
+  overflow: hidden;
+}
+.annie-section::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(79,195,247,0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+.as-tag {
+  display: inline-block;
+  background: var(--cyan-pale);
+  border: 1px solid rgba(79,195,247,0.3);
+  color: var(--cyan);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 22px;
+  position: relative;
+}
+.as-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 2rem;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  margin-bottom: 18px;
+  line-height: 1.2;
+  position: relative;
+}
+.as-title em { font-style: italic; color: var(--cyan); }
+.as-intro {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--ink-mid);
+  line-height: 1.7;
+  margin-bottom: 28px;
+  position: relative;
+  max-width: 620px;
+}
+
+.arch-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  position: relative;
+}
+.arch-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 22px;
+}
+.arch-icon {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--cyan);
+  margin-bottom: 10px;
+}
+.arch-name {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.arch-desc {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--ink-mid);
+  line-height: 1.65;
+}
+
+/* DIAGNOSTIC */
+.diag-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 12px 12px 0;
+  padding: 30px 32px;
+  margin: 44px 0;
+}
+.diag-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 6px;
+}
+.diag-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: var(--ink);
+  margin-bottom: 22px;
+  line-height: 1.25;
+}
+.diag-title em { font-style: italic; }
+.diag-list {
+  list-style: none;
+}
+.diag-list li {
+  display: flex;
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border2);
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  color: var(--ink-mid);
+  line-height: 1.65;
+}
+.diag-list li:last-child { border: none; }
+.diag-num {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--amber);
+  background: var(--bg-soft);
+  padding: 4px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  height: fit-content;
+  border: 1px solid var(--border);
+}
+
+/* CTA */
+.cta-block {
+  background: linear-gradient(135deg, #0E3A52 0%, #1565A8 100%);
+  border-radius: 16px;
+  padding: 60px 50px;
+  margin: 60px 0 40px;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.cta-block::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, rgba(79,195,247,0.25) 0%, transparent 65%);
+}
+.cta-block::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(0,0,0,0.15) 0%, transparent 65%);
+}
+.cta-eyebrow {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.95);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+  position: relative;
+}
+.cta-h {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 2.3rem;
+  letter-spacing: -0.5px;
+  color: #fff;
+  margin-bottom: 16px;
+  line-height: 1.2;
+  position: relative;
+}
+.cta-h em { font-style: italic; color: #B3E5FC; }
+.cta-sub {
+  font-family: var(--serif);
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 32px;
+  font-size: 1.1rem;
+  max-width: 580px;
+  margin-left: auto; margin-right: auto;
+  line-height: 1.65;
+  position: relative;
+}
+.cta-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 32px;
+  position: relative;
+}
+.cta-pill {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.btn-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+.btn-white {
+  display: inline-block;
+  background: #fff;
+  color: #0E3A52;
+  padding: 15px 32px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+.btn-outline {
+  display: inline-block;
+  background: transparent;
+  color: #fff;
+  padding: 15px 32px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  border: 1px solid rgba(255,255,255,0.45);
+  font-family: var(--sans);
+  font-weight: 500;
+}
+
+/* SOURCES */
+.sources-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px 30px;
+  margin: 36px 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-mid);
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+.sources-title {
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 12px;
+  font-size: 10px;
+}
+.sources-block ol {
+  list-style: none;
+  counter-reset: src;
+}
+.sources-block li {
+  counter-increment: src;
+  padding: 6px 0;
+  padding-left: 28px;
+  position: relative;
+}
+.sources-block li::before {
+  content: '[' counter(src) ']';
+  position: absolute;
+  left: 0;
+  color: var(--cyan);
+  font-weight: 700;
+}
+.sources-block a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--ink-faint);
+  text-underline-offset: 2px;
+}
+.sources-block a:hover {
+  color: var(--cyan);
+}
+
+/* TAGS */
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+footer {
+  background: var(--bg-soft);
+  border-top: 1px solid var(--border);
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 32px 24px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+footer strong { color: var(--ink); }
+
+@media (max-width: 820px) {
+  .site-header { padding: 13px 22px; }
+  .hero { padding: 50px 22px 60px; }
+  .article-body { padding: 60px 22px 80px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.65rem; }
+  .pillars-grid { grid-template-columns: 1fr; }
+  .arch-grid { grid-template-columns: 1fr; }
+  .at-header, .at-row { grid-template-columns: 1fr; }
+  .at-row > div { padding: 12px 18px; border-bottom: 1px solid var(--border2); }
+  .at-row > div:last-child { border-bottom: none; }
+  .loop-row { grid-template-columns: 1fr; gap: 12px; }
+  .loop-arrow { transform: rotate(90deg); padding: 4px 0; }
+  .cta-block, .annie-section { padding: 38px 24px; }
+  .cta-h { font-size: 1.7rem; }
+  .as-title { font-size: 1.6rem; }
+  .bigquote { font-size: 1.35rem; padding: 36px 16px; }
+  .memory-block { padding: 28px 22px; }
+  .mem-item { grid-template-columns: 36px 1fr; gap: 14px; padding: 18px 18px; }
+  .hdr-meta { display: none; }
+}
+
+
+/* Dark background for blog article wrapper */
+.article, .article-inner, .article-content, .article-header {
+  background: #0E0F12 !important;
+  color: #E8EAED !important;
+}
+.article-title { color: #E8EAED !important; }
+.article-excerpt { color: #B4B8C0 !important; }
+.byline-name, .byline-info, .byline-role { color: #E8EAED !important; }
+.article-meta-stat, .article-meta-row { color: #B4B8C0 !important; }
+.custom-html-blocks { background: #0E0F12; }
+.article-hero { display: none !important; }
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<article class="article-body">
+
+  <p class="first-para">Hay una frase que escuchamos cada semana en reuniones técnicas con clientes que tienen un chatbot funcionando hace meses. La frase es siempre la misma: <em>"el bot ya respondía bien al cliente la semana pasada, ¿por qué hoy lo trata como si lo viera por primera vez?"</em>. La pregunta parece tonta. No lo es. Es exactamente el problema central del campo de los <strong>language agents</strong> en 2026 — y es la razón por la que la mayoría de los Sales Qualifiers en producción siguen comportándose como estudiantes que aprueban un examen y al día siguiente olvidan todo.</p>
+
+  <p>El término técnico para esto se llama <em>continual learning</em>, y durante años fue uno de los problemas más esquivos del machine learning aplicado. La promesa siempre estuvo clara: un agente que acumule experiencia entre tareas, mejore con cada interacción y se vuelva más útil con el tiempo, sin requerir re-entrenamientos costosos del modelo base. La realidad fue otra: <strong>los agentes con LLMs actuales son sorprendentemente malos para reutilizar lo que ya aprendieron</strong>. Cada conversación arranca casi desde cero. Cada cliente repite su historia. Cada lead pasa por el mismo embudo como si nunca hubiera entrado antes.</p>
+
+  <p>Hay dos papers que vale la pena tener arriba del escritorio si construyes Sales Qualifiers, asistentes conversacionales o cualquier producto agéntico que tenga que escalar: <strong>BabyAI</strong>, publicado en ICLR 2019 por Mila/Université de Montréal con Yoshua Bengio como uno de los autores, y <strong>AGENTCL</strong>, publicado en junio de 2026 por equipos de Ohio State University, Johns Hopkins y el grupo de IA de Intuit. Juntos forman el mapa más honesto del problema y, lo más importante, traen herramientas concretas para resolverlo. <em>Acá te explicamos qué dicen y cómo Annie de Soft-innova ya está aplicando ambos enfoques en arquitectura de producción</em>.</p>
+
+  <h2><span class="num">01 //</span>Lo que <em>BabyAI</em> demostró sobre sample efficiency</h2>
+
+  <p>BabyAI es engañosamente simple. Es una plataforma de investigación con 19 niveles de dificultad creciente, donde un agente neuronal aprende a seguir instrucciones en lenguaje natural sintético dentro de un mundo 2D. Cosas como <em>"go to the red ball"</em>, <em>"put the blue key next to the green ball"</em>, o en el nivel más complejo <em>"pick up the grey box behind you, then go to the grey key and open a door"</em>. Tareas triviales para un humano de 5 años. La pregunta del paper es: <strong>¿cuántas demostraciones necesita un agente con deep learning para aprenderlas?</strong></p>
+
+  <div class="paper-card">
+    <div class="paper-header">
+      <span class="paper-tag">// PAPER 01</span>
+      <span class="paper-cite">ICLR 2019 · arXiv:1810.08272</span>
+    </div>
+    <div class="paper-title">BabyAI: A Platform to Study the Sample Efficiency of Grounded Language Learning</div>
+    <div class="paper-authors">CHEVALIER-BOISVERT · BAHDANAU · LAHLOU · WILLEMS · SAHARIA · NGUYEN · BENGIO · MILA / UNIVERSITÉ DE MONTRÉAL</div>
+    <div class="paper-quote">"Current deep learning methods are not yet sufficiently sample-efficient in the context of learning a language with compositional properties. Hundreds of thousands of demonstrations are needed to learn tasks which seem trivial by human standards. In order for learning with an actual human in the loop to become realistic, an improvement of at least three orders of magnitude is required."</div>
+  </div>
+
+  <p>Los números son brutales. Para que un agente con Behavioral Cloning resuelva un nivel sencillo como <code>GoToLocal</code> (ir a un objeto específico evitando distractores), necesita entre <strong>148 mil y 193 mil demostraciones</strong>. Para <code>PutNextLocal</code> (un nivel solo marginalmente más complejo), entre 244 mil y 322 mil. Y si usas Reinforcement Learning en lugar de Imitation Learning, los números son entre <strong>2 y 10 veces peores</strong>: para que el mismo agente aprenda <code>GoToLocal</code> con RL necesita entre 903 mil y 1,1 millones de episodios.</p>
+
+  <div class="chart-card">
+    <div class="chart-eyebrow">// BABYAI 2019 · BASELINE RESULTS</div>
+    <div class="chart-title">Demostraciones necesarias para alcanzar 99% de éxito en tareas composicionales</div>
+    <div class="chart-src">// Fuente: Chevalier-Boisvert et al., ICLR 2019 · Tabla 3 · Valores en miles de demos/episodios</div>
+    <div style="position: relative; width: 100%; height: 300px;">
+      <canvas id="chartSampleEff"></canvas>
+    </div>
+  </div>
+
+  <p>El paper concluye con una frase incómoda para todo el ecosistema de chatbots: para que el aprendizaje con un humano en el loop sea realista, hay que mejorar la eficiencia de muestreo <em>en al menos tres órdenes de magnitud</em>. Es decir: mil veces. No hablamos de afinar hiperparámetros. Hablamos de repensar la arquitectura del aprendizaje.</p>
+
+  <p>Para los que construimos Sales Qualifiers, la lección de BabyAI es directa: <strong>no se puede entrenar un agente con cientos de miles de ejemplos para cada cliente nuevo</strong>. Si quieres que tu Annie entienda el flujo de ventas específico de una empresa minera, una pyme retail y una consultora B2B simultáneamente, no tienes el lujo de pedirle un millón de demostraciones por cada caso. Necesitas otra arquitectura: una que aprenda con currículum (de simple a complejo) y con entrenamiento interactivo, donde el agente pueda pedir ayuda o aprender de pequeñas correcciones en tiempo real. Esto es exactamente lo que el paper propone como dirección de investigación — y es exactamente lo que el segundo paper, siete años después, vino a aterrizar.</p>
+
+  <h2><span class="num">02 //</span><em>AGENTCL</em>: el framework que mide qué tan bien aprende tu agente</h2>
+
+  <p>Si BabyAI demostró el problema, AGENTCL — publicado en junio de 2026, prácticamente este mes — construyó el framework para evaluarlo con rigor. Lo importante es que AGENTCL no es solo otro benchmark. Es un cambio de paradigma en cómo se mide si un agente realmente aprende, o si solo da la ilusión de aprender por exposición repetida a un dominio.</p>
+
+  <div class="paper-card">
+    <div class="paper-header">
+      <span class="paper-tag">// PAPER 02</span>
+      <span class="paper-cite">arXiv:2606.02461 · JUNIO 2026</span>
+    </div>
+    <div class="paper-title">AGENTCL: Toward Rigorous Evaluation of Continual Learning in Language Agents</div>
+    <div class="paper-authors">SHU · JIMÉNEZ GUTIÉRREZ · JONNALAGEDDA · YAO · SUN · SU · OHIO STATE UNIVERSITY + JOHNS HOPKINS + INTUIT AI RESEARCH</div>
+    <div class="paper-quote">"Language agents spend substantial inference time solving individual tasks, yet the experience acquired in one episode is often underutilized in future episodes. Continual learning expects an agent to accumulate reusable experience across a stream of tasks, improve over time, and avoid interference from irrelevant experiences."</div>
+  </div>
+
+  <p>La crítica central del paper a los benchmarks existentes es elegante. Los autores observan que la mayoría de los frameworks de evaluación organizan las tareas como <strong>streams ingenuos</strong> (naive streams), donde las tareas vienen de un mismo dominio pero no se garantiza que haya relaciones reusables entre ellas. Eso hace imposible distinguir si el agente realmente aprendió algo, o si simplemente se benefició de exposición repetida. Su propuesta: <em>streams composicionales</em>, donde las tareas tempranas exponen explícitamente sub-soluciones, evidencias o workflows que las tareas posteriores pueden reusar. Es la diferencia entre evaluar a un estudiante con preguntas idénticas dos veces, o con problemas que combinan conceptos vistos por separado.</p>
+
+  <p>Pero la contribución más práctica de AGENTCL son sus tres métricas. <strong>Por primera vez se separa explícitamente qué tan plástico, qué tan estable y qué tan generalizable es un agente</strong> — porque optimizar uno solo de esos ejes te lleva a sistemas que parecen buenos en demos y se rompen en producción:</p>
+
+  <div class="pillars-block">
+    <div class="pillars-grid">
+      <div class="pillar-card plasticity">
+        <div class="pillar-tag">// PILAR 01</div>
+        <div class="pillar-name">Plasticity Gain</div>
+        <div class="pillar-formula">PG = F<sub>i</sub> − B<sub>i</sub></div>
+        <div class="pillar-desc">¿Qué tanto ayuda la experiencia acumulada de tareas previas a resolver una nueva? Mide si la memoria del agente realmente transforma episodios pasados en contexto útil. <strong>Si PG es bajo, tu agente no está aprendiendo nada nuevo</strong>.</div>
+      </div>
+      <div class="pillar-card stability">
+        <div class="pillar-tag">// PILAR 02</div>
+        <div class="pillar-name">Stability Gain</div>
+        <div class="pillar-formula">SG = S<sub>i</sub> − F<sub>i</sub></div>
+        <div class="pillar-desc">¿La experiencia que el agente ganó resolviendo una tarea sigue siendo recuperable después de muchas actualizaciones posteriores? Mide reutilización persistente. <strong>Si SG es negativo, la memoria nueva está borrando la útil</strong>.</div>
+      </div>
+      <div class="pillar-card generalization">
+        <div class="pillar-tag">// PILAR 03</div>
+        <div class="pillar-name">Generalization Gain</div>
+        <div class="pillar-formula">GG = H<sub>j</sub> − B<sub>j</sub></div>
+        <div class="pillar-desc">¿La memoria construida sirve para tareas held-out que el agente nunca vio? Mide si el conocimiento es lo suficientemente abstracto. <strong>Si GG es bajo, tu memoria es sobreajuste con esteroides</strong>.</div>
+      </div>
+    </div>
+  </div>
+
+  <p>Léelos otra vez. Lo brillante del framework es que <em>te obliga a mostrar las tres métricas juntas</em>. Si publicas un Sales Qualifier que tiene un PG impresionante pero un SG negativo, lo que estás publicando es un sistema que mejora dentro de una conversación pero se rompe al día siguiente. Si tu GG es bajo, tu agente solo aprendió a copiar — no a abstraer. La industria publicó durante años "mejoras de chatbots" reportando solo el primer eje. AGENTCL es un golpe sobre la mesa para que dejemos de hacer eso.</p>
+
+  <div class="callout">
+    <strong>El hallazgo más incómodo del paper:</strong> los métodos de memoria que muestran las mayores ganancias de <em>plasticidad</em> en streams composicionales suelen tener <em>estabilidad negativa</em> en streams ingenuos. Concretamente: <code>ExpRAG</code> alcanza PG de <strong>+17.7</strong>, pero su Generalization Gain en held-out es <strong>−4.2</strong>. <code>MemProbe</code> llega a PG de <strong>+21.9</strong>, pero SG cae a <strong>−2.1</strong>. Esto significa que <strong>el trade-off plasticidad-estabilidad sigue sin resolverse en 2026</strong>. La pregunta correcta no es "¿cuánta memoria tiene mi agente?", sino "¿qué experiencias decide abstraer, retener o descartar?". Ahí está el verdadero problema.
+  </div>
+
+  <h2><span class="num">03 //</span>El loop <em>retrieve → solve → consolidate</em></h2>
+
+  <p>Para no quedarse en filosofía, el equipo de AGENTCL propuso un método de probing llamado <strong>MemProbe</strong>. No es un producto comercial. Es una arquitectura de referencia diseñada para diagnosticar cómo deben operar las memorias no paramétricas en agentes con LLM. Su diseño es relevante porque define el patrón que cualquier Sales Qualifier serio en 2026 debería implementar:</p>
+
+  <div class="loop-block">
+    <div class="loop-title">El loop fundamental de MemProbe</div>
+    <div class="loop-sub">// PATRÓN DE REFERENCIA · MEMORIA NO PARAMÉTRICA</div>
+
+    <div class="loop-row">
+      <div class="loop-step retrieve">
+        <div class="loop-num">// PASO 01</div>
+        <div class="loop-name">Retrieve</div>
+        <div class="loop-desc">Ante una nueva consulta del cliente, el agente busca en su memoria episodios similares usando búsqueda semántica con embeddings. Top-k experiencias previas se cargan como contexto.</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-step solve">
+        <div class="loop-num">// PASO 02</div>
+        <div class="loop-name">Solve</div>
+        <div class="loop-desc">El agente resuelve la consulta usando ese contexto como referencia — no como respuesta autoritativa. Eso reduce el riesgo de reproducir errores pasados o copiar respuestas inadecuadas.</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-step consolidate">
+        <div class="loop-num">// PASO 03</div>
+        <div class="loop-name">Consolidate</div>
+        <div class="loop-desc">Un "juez interno" evalúa si la respuesta fue exitosa. Si pasa los filtros de calidad, se consolida en memoria como Interacción, Insight o Habilidad. Si no, se descarta.</div>
+      </div>
+    </div>
+  </div>
+
+  <p>Lo más importante de este loop es lo que el paper llama <strong>quality-aware consolidation</strong>. No toda interacción merece quedar en memoria. Los autores observan que <em>muchos métodos de memoria fallan precisamente porque guardan demasiado</em>: el agente termina arrastrando episodios irrelevantes que después interfieren con consultas posteriores. La solución es tener filtros explícitos antes de escribir en memoria — un checker sintáctico que descarta outputs inválidos, y un LLM judge que clasifica la calidad del episodio (<code>correct</code>, <code>incorrect</code>, <code>unknown</code>). <em>Los episodios marcados como incorrectos no contribuyen contexto reusable</em>. Esto es una decisión de diseño que evita amplificar errores con el tiempo.</p>
+
+  <h2><span class="num">04 //</span>Las tres memorias que <em>todo Sales Qualifier necesita</em></h2>
+
+  <p>Acá viene la parte de AGENTCL/MemProbe que más impacto tiene en arquitectura de producto. Los autores demuestran empíricamente que <strong>no basta con un solo tipo de memoria</strong>. Distintos episodios sirven para distintas cosas, y mezclarlos todos en un mismo store genera interferencia. Su propuesta — y nuestra implementación en Annie — separa la memoria del agente en tres componentes complementarios:</p>
+
+  <div class="memory-block">
+    <div class="mb-eyebrow">// MEMPROBE · MEMORIA NO PARAMÉTRICA</div>
+    <div class="mb-title">Los tres tipos de memoria que <em>funcionan juntos</em></div>
+
+    <div class="mem-list">
+      <div class="mem-item interaction">
+        <div class="mem-num">01</div>
+        <div>
+          <div class="mem-name"><em>Interaction Memory</em> · Trayectorias concretas</div>
+          <div class="mem-desc">Guarda el episodio completo de cómo se resolvió una conversación específica — la trayectoria de tool calls, la respuesta final, los pasos intermedios. Útil cuando una consulta futura se beneficia de recordar <em>cómo</em> se resolvió un problema operativamente similar.</div>
+          <div class="mem-example"><span class="lbl">// EJEMPLO ANNIE:</span><br>cliente_id: 4192 · canal: whatsapp<br>trayectoria: [consulta_ficha → cotizacion → seguimiento_24h → cierre]<br>resultado: venta_cerrada · ticket: $2.4M CLP</div>
+        </div>
+      </div>
+
+      <div class="mem-item insight">
+        <div class="mem-num">02</div>
+        <div>
+          <div class="mem-name"><em>Insight Memory</em> · Patrones abstraídos</div>
+          <div class="mem-desc">Almacena resúmenes concisos del patrón de resolución, observaciones de complejidad, modos de fallo potenciales y takeaways reusables. Más abstracta que la interacción, ideal para transferir lecciones sin reproducir la trayectoria completa.</div>
+          <div class="mem-example"><span class="lbl">// EJEMPLO ANNIE:</span><br>patron: "compradores_mineria_zona_norte"<br>insight: "consultas_tecnicas_requieren_compatibilidad_antes_de_precio"<br>failure_mode: "enviar_pdf_antes_de_calificar_baja_conversion_37%"</div>
+        </div>
+      </div>
+
+      <div class="mem-item skill">
+        <div class="mem-num">03</div>
+        <div>
+          <div class="mem-name"><em>Skill Memory</em> · Procedimientos reusables</div>
+          <div class="mem-desc">Guarda procedimientos de nivel workflow o estrategias de alto nivel, opcionalmente acompañados de snippets cortos. Captura estrategias que generalizan a través de múltiples tareas, en lugar de estar atadas a una instancia específica.</div>
+          <div class="mem-example"><span class="lbl">// EJEMPLO ANNIE:</span><br>skill_name: "calificacion_lead_industrial"<br>steps: [validar_industria → preguntar_volumen → estimar_urgencia → derivar_a_KAM]<br>reuse_count: 847 · success_rate: 0.81</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p>Los ablation studies del paper son particularmente convincentes en este punto. Cuando los autores eliminan cualquiera de las tres memorias del sistema, el rendimiento cae consistentemente en streams composicionales — pero las caídas son distintas según qué memoria se quite. Quitar la skill memory destruye plasticidad. Quitar la insight memory afecta especialmente la generalización. Quitar la interaction memory daña tanto plasticidad como estabilidad. <em>Las tres son complementarias, no redundantes</em>. Es exactamente el tipo de evidencia experimental que justifica la complejidad arquitectónica.</p>
+
+  <blockquote class="bigquote">
+    El futuro no es tener un modelo más grande, sino un agente que sepa usar mejor su propia memoria.
+    <span class="bigquote-cite">— Conclusión del paper AGENTCL · OSU + Johns Hopkins + Intuit · 2026</span>
+  </blockquote>
+
+  <h2><span class="num">05 //</span>Cómo Annie traduce estos hallazgos <em>a producción</em></h2>
+
+  <p>Hasta acá la teoría. La parte interesante es cómo todo esto se traduce a un Sales Qualifier real que opera con clientes reales, en canales reales, con conversaciones que no son de juguete. Annie de Soft-innova es una plataforma agéntica diseñada desde su perfil de producto como Sales Qualifier — no como chatbot genérico — y su arquitectura interna implementa precisamente el patrón <code>retrieve → solve → consolidate</code> con las tres memorias separadas. <em>Esto no es marketing de feature. Es decisión arquitectónica conscientemente tomada con base en la literatura que acabamos de revisar</em>.</p>
+
+  <p>La tabla siguiente traduce los hallazgos de AGENTCL/MemProbe en componentes concretos de cómo opera Annie en una cuenta de producción:</p>
+
+  <div class="annie-table">
+    <div class="at-header">
+      <div>Concepto del paper</div>
+      <div>Bot estático tradicional</div>
+      <div>Implementación Annie</div>
+    </div>
+    <div class="at-row">
+      <div class="concept">Sample Efficiency (BabyAI)</div>
+      <div class="static">Requiere reentrenamiento del modelo con miles de ejemplos por cliente nuevo.</div>
+      <div class="annie">Currículum de aprendizaje + corrección interactiva en runtime, sin retraining del LLM base.</div>
+    </div>
+    <div class="at-row">
+      <div class="concept">Retrieve (MemProbe)</div>
+      <div class="static">No tiene memoria entre sesiones. Cada conversación arranca desde cero.</div>
+      <div class="annie">Búsqueda semántica top-k sobre interacciones previas del cliente y casos similares del sector.</div>
+    </div>
+    <div class="at-row">
+      <div class="concept">Solve con contexto</div>
+      <div class="static">Responde usando solo el system prompt y el último turn del usuario.</div>
+      <div class="annie">Responde grounded en la memoria recuperada, tratándola como referencia — no autoridad.</div>
+    </div>
+    <div class="at-row">
+      <div class="concept">Quality-aware consolidation</div>
+      <div class="static">Guarda todo (logs sin curaduría) o no guarda nada (stateless).</div>
+      <div class="annie">LLM judge clasifica cada episodio antes de escribir. Errores quedan como marca, no como contexto reusable.</div>
+    </div>
+    <div class="at-row">
+      <div class="concept">Plasticity Gain</div>
+      <div class="static">Cero. El bot rinde igual el día 1 que el día 90.</div>
+      <div class="annie">Curva creciente: el agente entiende mejor las consultas del sector con cada semana operando.</div>
+    </div>
+    <div class="at-row">
+      <div class="concept">Stability Gain</div>
+      <div class="static">Si "se actualiza", lo previo se pierde o se contamina.</div>
+      <div class="annie">Memoria segmentada por agente especializado evita interferencia entre dominios (Captación ≠ Cierre ≠ Retención).</div>
+    </div>
+    <div class="at-row">
+      <div class="concept">Generalization Gain</div>
+      <div class="static">No transfiere. Lo aprendido en una cuenta no sirve para otra.</div>
+      <div class="annie">Skill memory abstrae patrones de calificación reusables entre verticales (con guardrails de privacidad).</div>
+    </div>
+  </div>
+
+  <p>El detalle importante — y el que nos costó más resolver técnicamente — es que las tres memorias no operan en silos. Comparten contexto entre los agentes especializados de Annie (Captación, Seguimiento, Cierre, Retención, Posicionamiento, Contenido). Lo que aprende el Agente de Captación sobre un lead lo usa inmediatamente el Agente de Seguimiento. La consulta técnica que resolvió bien el Agente Técnico se consolida como skill que reusan los demás. <em>Pero la memoria no fluye sin filtros</em>. Cada escritura pasa por un juez antes de quedar disponible. Sin ese filtro, el sistema degrada con el tiempo — y eso es exactamente lo que el paper demuestra empíricamente sobre los métodos sin consolidación de calidad.</p>
+
+  <h2><span class="num">06 //</span>El trade-off que sigue <em>sin resolverse</em></h2>
+
+  <p>Sería deshonesto cerrar este artículo sin mencionar lo que la propia investigación reconoce como problema abierto. AGENTCL termina con una conclusión incómoda: <strong>el trade-off plasticidad-estabilidad sigue sin resolverse</strong>. Los métodos que muestran las mayores ganancias de plasticidad en streams composicionales suelen tener estabilidad negativa cuando enfrentan tareas held-out o streams diferentes. No hay todavía una arquitectura de memoria que domine las tres métricas simultáneamente.</p>
+
+  <p>Esto importa porque define qué tipo de promesas son técnicamente honestas hacer sobre un Sales Qualifier en 2026. <em>Decir "nuestro agente aprende y se vuelve mejor con el tiempo" sin explicar bajo qué condiciones es marketing que no resiste un benchmark serio</em>. Lo que sí es defendible es: "nuestro agente está diseñado con el patrón retrieve-solve-consolidate, separa interaction/insight/skill memory, aplica quality-aware filtering, y monitorea sus propias métricas de PG, SG y GG por agente especializado". Esa es una afirmación técnicamente sustentable. Lo otro es venderle humo a un CTO que después se va a dar cuenta.</p>
+
+  <div class="annie-section">
+    <div class="as-tag">✦ Annie · Sales Qualifier agéntico</div>
+    <div class="as-title">Annie no es <em>otro chatbot</em>.<br>Es una plataforma 100% orientada a agentes desde su perfil.</div>
+    <p class="as-intro">Annie está construida desde el perfil Sales Qualifier — calificación, seguimiento, cierre y retención — con arquitectura agéntica modular. Cada agente especializado opera con su propio loop retrieve-solve-consolidate y memoria segmentada. El comportamiento del sistema completo está supervisado por un KAM humano que revisa los hallazgos de los agentes y ajusta la estrategia. <em>Lo que la literatura propone como dirección de investigación, nosotros lo operamos en producción</em>.</p>
+
+    <div class="arch-grid">
+      <div class="arch-card">
+        <div class="arch-icon">// AGENTE 01</div>
+        <div class="arch-name">Agente de Captación</div>
+        <div class="arch-desc">Identifica leads en multi-canal (WhatsApp, web, ads). Califica intención antes de derivar. Memoria de patrones de captación por sector.</div>
+      </div>
+      <div class="arch-card">
+        <div class="arch-icon">// AGENTE 02</div>
+        <div class="arch-name">Agente de Seguimiento</div>
+        <div class="arch-desc">Persigue leads tibios con timing y contexto. Skill memory de cadencias óptimas según vertical y estado del lead.</div>
+      </div>
+      <div class="arch-card">
+        <div class="arch-icon">// AGENTE 03</div>
+        <div class="arch-name">Agente Técnico</div>
+        <div class="arch-desc">Responde consultas técnicas grounded en la base de conocimiento del cliente. Insight memory de objeciones frecuentes.</div>
+      </div>
+      <div class="arch-card">
+        <div class="arch-icon">// AGENTE 04</div>
+        <div class="arch-name">Agente de Cierre</div>
+        <div class="arch-desc">Detecta señales de readiness, activa ofertas personalizadas, deriva a humano cuando excede umbral. Interaction memory por cliente.</div>
+      </div>
+      <div class="arch-card">
+        <div class="arch-icon">// AGENTE 05</div>
+        <div class="arch-name">Agente de Retención</div>
+        <div class="arch-desc">Vigila señales tempranas de fuga. Memoria persistente del cliente activo. Recuperación antes de que la pérdida sea irreversible.</div>
+      </div>
+      <div class="arch-card">
+        <div class="arch-icon">// AGENTE 06</div>
+        <div class="arch-name">Agente de Posicionamiento</div>
+        <div class="arch-desc">Optimiza huella en Google, ChatGPT, Gemini, Perplexity, DeepSeek. Mantiene la marca presente donde hoy se busca.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2><span class="num">07 //</span>Las preguntas correctas para <em>evaluar un Sales Qualifier en 2026</em></h2>
+
+  <p>Si estás evaluando comprar o reemplazar un agente conversacional para ventas — sea Annie o cualquier otro — estas son las preguntas técnicas que vale la pena llevar a la reunión de evaluación con el proveedor. Son las preguntas que se hacen los autores de AGENTCL y son las que separan a las plataformas serias de los chatbots reempaquetados:</p>
+
+  <div class="diag-block">
+    <div class="diag-eyebrow">// EVALUACIÓN TÉCNICA</div>
+    <div class="diag-title">Siete preguntas para tu <em>próximo proveedor</em> de Sales Qualifier</div>
+    <ol class="diag-list">
+      <li><span class="diag-num">01</span><span><strong>¿Su agente mantiene memoria persistente</strong> entre sesiones del mismo cliente? Si la respuesta es "sí, pero solo el resumen del chat anterior", no es memoria — es contexto extendido. Pregunta cómo manejan compactación.</span></li>
+      <li><span class="diag-num">02</span><span><strong>¿Cómo separan la memoria de interacción, insights y habilidades?</strong> Si toda la memoria es un solo store de logs, vas a tener problemas de interferencia con el tiempo.</span></li>
+      <li><span class="diag-num">03</span><span><strong>¿Tienen quality-aware consolidation</strong> antes de escribir en memoria? ¿Quién decide qué episodio merece quedar como skill reusable? Sin filtro, el sistema degrada.</span></li>
+      <li><span class="diag-num">04</span><span><strong>¿Pueden mostrar curvas de Plasticity Gain y Stability Gain</strong> de su agente en cuentas reales? Si nunca midieron esto, están operando a ciegas.</span></li>
+      <li><span class="diag-num">05</span><span><strong>¿Cómo evitan que el agente reuse memoria irrelevante?</strong> El paper de AGENTCL muestra que memorias mal calibradas pueden hurt performance — no es teórico, es medible.</span></li>
+      <li><span class="diag-num">06</span><span><strong>¿La memoria del cliente fluye entre agentes especializados</strong> o cada agente opera en su propio silo? Lo segundo es exactamente el problema que esta arquitectura existe para resolver.</span></li>
+      <li><span class="diag-num">07</span><span><strong>¿Quién supervisa cuando el sistema toma decisiones controvertidas?</strong> Memoria agéntica sin KAM humano arriba es deuda técnica acumulándose en tiempo real.</span></li>
+    </ol>
+  </div>
+
+  <p>Si tu proveedor actual no puede responder con detalle técnico al menos cuatro de estas siete preguntas, probablemente estés operando un chatbot disfrazado de agente — no un sistema que realmente acumula experiencia. Y la diferencia entre ambas cosas, en un horizonte de 12 a 18 meses, se nota en métricas de conversión, en costo de atención al cliente, y en lo único que realmente importa: <em>cuántas conversaciones que tu Sales Qualifier ya tuvo se traducen en aprendizaje que mejora la siguiente conversación con el siguiente cliente</em>.</p>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <div class="cta-eyebrow">✦ Conversación técnica · Sin comerciales en medio</div>
+    <h3 class="cta-h">
+      Si estás construyendo un <em>Sales Qualifier</em>,<br>
+      hablemos de arquitectura.
+    </h3>
+    <p class="cta-sub">
+      Conversemos 45 minutos sobre cómo está diseñada Annie por dentro, los trade-offs que tomamos, las métricas que monitoreamos, y dónde te puede servir o no. Sin pitch comercial — diagnóstico técnico honesto. Nos interesa especialmente conversar con CTOs, heads of engineering y ML leads.
+    </p>
+    <div class="cta-pills">
+      <span class="cta-pill">// Retrieve → Solve → Consolidate</span>
+      <span class="cta-pill">// Interaction · Insight · Skill memory</span>
+      <span class="cta-pill">// Quality-aware filtering</span>
+      <span class="cta-pill">// Agentes especializados</span>
+      <span class="cta-pill">// KAM humano supervisa</span>
+    </div>
+    <div class="btn-row">
+      <a class="btn-white" href="https://soft-innova.com/#contacto" target="_blank">Agendar sesión técnica →</a>
+      <a class="btn-outline" href="https://soft-innova.com/proposito" target="_blank">Conocer nuestro propósito</a>
+    </div>
+  </div>
+
+  <!-- SOURCES -->
+  <div class="sources-block">
+    <div class="sources-title">// Referencias verificadas</div>
+    <ol>
+      <li>Chevalier-Boisvert, M., Bahdanau, D., Lahlou, S., Willems, L., Saharia, C., Nguyen, T.H., Bengio, Y. (2019). "BabyAI: A Platform to Study the Sample Efficiency of Grounded Language Learning." International Conference on Learning Representations (ICLR 2019). arXiv:1810.08272 · Mila / Université de Montréal · <a href="https://github.com/mila-iqia/babyai/tree/iclr19" target="_blank">github.com/mila-iqia/babyai</a></li>
+      <li>Shu, Y., Jiménez Gutiérrez, B., Jonnalagedda, S.P., Yao, Y., Sun, H., Su, Y. (2026). "AGENTCL: Toward Rigorous Evaluation of Continual Learning in Language Agents." arXiv:2606.02461v2 · The Ohio State University · Johns Hopkins University · Intuit AI Research · <a href="https://huggingface.co/datasets/osunlp/AgentCL" target="_blank">huggingface.co/datasets/osunlp/AgentCL</a></li>
+      <li>Wang, L., Zhang, X., Su, H., Zhu, J. (2024). "A Comprehensive Survey of Continual Learning: Theory, Method and Application." IEEE Transactions on Pattern Analysis and Machine Intelligence, 46(8):5362-5383.</li>
+      <li>Yao, S., Zhao, J., Yu, D., Du, N., Shafran, I., Narasimhan, K.R., Cao, Y. (2023). "ReAct: Synergizing Reasoning and Acting in Language Models." ICLR 2023.</li>
+      <li>Chhikara, P., Khant, D., Aryan, S., Singh, T., Yadav, D. (2025). "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory." ECAI 2025.</li>
+      <li>Wang, Z.Z., Mao, J., Fried, D., Neubig, G. (2025). "Agent Workflow Memory." ICML 2025.</li>
+      <li>Suzgun, M., Yüksekgönül, M., Bianchi, F., Jurafsky, D., Zou, J. (2026). "Dynamic Cheatsheet: Test-Time Learning with Adaptive Memory." EACL 2026.</li>
+      <li>Bengio, Y., Louradour, J., Collobert, R., Weston, J. (2009). "Curriculum Learning." Proceedings of the 26th International Conference on Machine Learning.</li>
+    </ol>
+  </div>
+
+  <div class="tags">
+    <span class="tag">Continual Learning</span>
+    <span class="tag">BabyAI</span>
+    <span class="tag">AGENTCL</span>
+    <span class="tag">MemProbe</span>
+    <span class="tag">Sales Qualifier</span>
+    <span class="tag">Annie-AI</span>
+    <span class="tag">Language Agents</span>
+    <span class="tag">Sample Efficiency</span>
+    <span class="tag">Plasticity-Stability</span>
+    <span class="tag">Soft-innova</span>
+  </div>
+
+</article>
+<script>
+new Chart(document.getElementById('chartSampleEff'), {
+  type: 'bar',
+  data: {
+    labels: ['GoToRedBallGrey', 'GoToRedBall', 'GoToLocal', 'PickupLoc', 'PutNextLocal', 'GoTo'],
+    datasets: [
+      {
+        label: 'Imitation Learning (demos · miles)',
+        data: [10.4, 55.8, 170.8, 222.7, 283.6, 374.8],
+        backgroundColor: 'rgba(79,195,247,0.7)',
+        borderRadius: 6,
+        barThickness: 22
+      },
+      {
+        label: 'Reinforcement Learning (episodios · miles)',
+        data: [16.6, 297.3, 1008.5, 1545, 2456, 1390],
+        backgroundColor: 'rgba(186,104,200,0.7)',
+        borderRadius: 6,
+        barThickness: 22
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: { color: '#B4B8C0', font: { size: 11, family: 'Inter' }, boxWidth: 14, padding: 14 }
+      },
+      tooltip: {
+        callbacks: { label: c => ' ' + c.dataset.label + ': ' + c.raw + 'k' }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(232,234,237,0.04)' },
+        ticks: { color: '#797F89', font: { family: 'JetBrains Mono', size: 9 }, maxRotation: 30 }
+      },
+      y: {
+        type: 'logarithmic',
+        grid: { color: 'rgba(232,234,237,0.04)' },
+        ticks: {
+          color: '#797F89',
+          font: { family: 'JetBrains Mono', size: 10 },
+          callback: v => v >= 1000 ? (v/1000) + 'M' : v + 'k'
+        }
+      }
+    }
+  }
+});
+</script>

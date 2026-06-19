@@ -28,9 +28,15 @@ const { siteTitle, siteTagline } = resolveBlogSiteIdentity(settings);
 
 Astro.cache.set(cacheHint);
 
+const postsByDate = [...posts].sort(
+	(a, b) =>
+		(b.data.publishedAt?.getTime() ?? 0) -
+		(a.data.publishedAt?.getTime() ?? 0),
+);
+
 // Trim the lookahead post used to detect overflow
-const visiblePosts = posts.slice(0, POSTS_PER_PAGE);
-const hasMorePosts = posts.length > POSTS_PER_PAGE;
+const visiblePosts = postsByDate.slice(0, POSTS_PER_PAGE);
+const hasMorePosts = postsByDate.length > POSTS_PER_PAGE;
 
 // Hero: el post publicado más reciente (contenido real del blog, no solo los que tienen imagen)
 const featuredPost = visiblePosts[0];
@@ -42,7 +48,7 @@ const gridPosts = visiblePosts.slice(1);
 // Single batched query for tags across the featured post + grid posts.
 // Avoids the N+1 pattern of calling getEntryTerms() per entry.
 // Bylines are already hydrated on entry.data.bylines by getEmDashCollection.
-const tagEntryIds = posts.map((p) => p.data.id);
+const tagEntryIds = postsByDate.map((p) => p.data.id);
 const tagsByEntry = await getTermsForEntries("posts", tagEntryIds, "tag");
 
 const featuredTags = featuredPost
@@ -63,11 +69,11 @@ const gridPostsWithTags = gridPosts.map((post) => ({
 
 const viewCounts = await getPostViewCountsForLocals(
 	Astro.locals,
-	posts.map((post) => post.data.id),
+	postsByDate.map((post) => post.data.id),
 );
 
-// Top 3 most viewed — incluye portada (Humanitas puede tener más vistas que el resto)
-const allPostsWithTags = posts.map((post) => ({
+// Top 3 most viewed (solo sección "Más vistos", no "Últimos artículos")
+const allPostsWithTags = postsByDate.map((post) => ({
 	post,
 	tags: (tagsByEntry.get(post.data.id) ?? []).map((t) => ({
 		slug: t.slug,
@@ -87,9 +93,15 @@ function formatDate(date: Date | null | undefined) {
 		day: "numeric",
 	});
 }
+
+const blogOrigin = Astro.url.origin;
 ---
 
-<Base title={siteTitle} description={siteTagline}>
+<Base
+	title={siteTitle}
+	description={siteTagline}
+	canonical={`${blogOrigin}/`}
+>
 	{
 		posts.length === 0 ? (
 			<section class="empty-state">

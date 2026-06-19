@@ -24,7 +24,13 @@
 @media (prefers-color-scheme: dark) {
 	:root:not(.light) {
 		--color-bg: #0f172a;
+		--color-bg-subtle: #141c2e;
 		--color-text: #f8fafc;
+		--color-text-secondary: #cbd5e1;
+		--color-muted: #94a3b8;
+		--color-border: #334155;
+		--color-border-subtle: #1e293b;
+		--color-surface: #1e293b;
 		--emdash-search-bg: var(--color-bg);
 		--emdash-search-text: var(--color-text);
 		--emdash-search-highlight: var(--color-text);
@@ -34,7 +40,13 @@
 /* Cookie-selected dark */
 :root.dark {
 	--color-bg: #0f172a;
+	--color-bg-subtle: #141c2e;
 	--color-text: #f8fafc;
+	--color-text-secondary: #cbd5e1;
+	--color-muted: #94a3b8;
+	--color-border: #334155;
+	--color-border-subtle: #1e293b;
+	--color-surface: #1e293b;
 	--emdash-search-bg: var(--color-bg);
 	--emdash-search-text: var(--color-text);
 	--emdash-search-highlight: var(--color-text);

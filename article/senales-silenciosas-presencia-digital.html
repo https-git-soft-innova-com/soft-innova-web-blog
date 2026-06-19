@@ -1,0 +1,177 @@
+<style>
+.sp-counters{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:40px 0}
+.sp-c{border-radius:12px;padding:24px 18px;text-align:center}
+.sp-c .sn{font-family:Arial Black,Arial;font-weight:900;font-size:2.6rem;line-height:1;display:block;margin-bottom:8px}
+.sp-c .sl{font-size:0.7rem;letter-spacing:1.5px;text-transform:uppercase;line-height:1.4;color:#888}
+.spc1{background:rgba(224,112,32,0.07);border:1px solid rgba(224,112,32,0.25)}.spc1 .sn{color:#E07020}
+.spc2{background:rgba(11,31,58,0.06);border:1px solid rgba(11,31,58,0.18)}.spc2 .sn{color:#0B1F3A}
+.spc3{background:rgba(255,45,120,0.06);border:1px solid rgba(255,45,120,0.2)}.spc3 .sn{color:#FF2D78}
+.sp-callout{background:#0d0d0d;border-radius:16px;padding:28px 24px;margin:36px 0}
+.sp-callout .sp-ct{font-style:italic;font-size:1rem;color:#F59B20;margin-bottom:20px;opacity:0.9}
+.sp-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.sp-item:last-child{border:none}
+.sp-icon{font-size:18px;flex-shrink:0;margin-top:2px}
+.sp-text{font-size:0.84rem;color:rgba(255,255,255,0.65);line-height:1.55}
+.sp-text strong{color:rgba(255,255,255,0.88)}
+.sp-chart{background:#fff;border:1px solid rgba(11,31,58,0.1);border-radius:14px;padding:28px;margin:36px 0}
+.sp-chart .spt{font-weight:700;font-size:0.9rem;color:#0B1F3A;margin-bottom:4px}
+.sp-chart .sps{font-size:0.75rem;color:#888;margin-bottom:16px}
+.sp-bars{display:flex;flex-direction:column;gap:10px}
+.sp-bar-row{display:flex;align-items:center;gap:10px}
+.sp-bar-label{width:100px;font-size:0.75rem;color:#555;flex-shrink:0}
+.sp-bar-track{flex:1;height:18px;background:#f0f0f0;border-radius:4px;overflow:hidden;position:relative}
+.sp-bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:10px;font-weight:700;color:white}
+.sp-bar-bad{background:rgba(255,45,120,0.7)}
+.sp-bar-good{background:linear-gradient(90deg,#0B1F3A,#1a3a5c)}
+.sp-legend{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap}
+.sp-legend span{display:flex;align-items:center;gap:6px;font-size:11px;color:#888}
+.sp-dot{width:12px;height:8px;border-radius:2px;display:inline-block}
+.sp-features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:36px 0}
+.sp-feat{background:#fff;border:1px solid rgba(11,31,58,0.1);border-radius:12px;padding:22px 16px;text-align:center}
+.sp-feat .fi{font-size:28px;margin-bottom:10px;display:block}
+.sp-feat .ft{font-weight:700;font-size:0.85rem;color:#0B1F3A;margin-bottom:6px}
+.sp-feat .fd{font-size:0.76rem;color:#888;line-height:1.55}
+.sp-feat .fb{display:inline-block;margin-top:10px;font-size:0.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:10px}
+.fb-teal{background:rgba(0,212,168,0.1);color:#00D4A8;border:1px solid rgba(0,212,168,0.2)}
+.fb-orange{background:rgba(224,112,32,0.1);color:#E07020;border:1px solid rgba(224,112,32,0.2)}
+.fb-blue{background:rgba(11,31,58,0.08);color:#0B1F3A;border:1px solid rgba(11,31,58,0.15)}
+.sp-cta{background:linear-gradient(135deg,#0B1F3A,#1a3a5c);border-radius:20px;padding:52px 44px;margin:52px 0;text-align:center;position:relative;overflow:hidden}
+.sp-cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:250px;background:radial-gradient(ellipse,rgba(224,112,32,0.1) 0%,transparent 70%);pointer-events:none}
+.sp-cta-tag{display:inline-block;background:rgba(224,112,32,0.12);border:1px solid rgba(224,112,32,0.25);color:#F59B20;font-family:monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:24px;position:relative}
+.sp-cta h3{font-family:Arial Black,Arial;font-weight:900;font-size:1.9rem;color:white;margin:0 0 12px;position:relative;line-height:1.2}
+.sp-cta p{font-size:0.95rem;color:rgba(255,255,255,0.65);margin-bottom:28px;max-width:520px;margin-left:auto;margin-right:auto;position:relative}
+.sp-pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:28px;position:relative}
+.sp-pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.75);font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border-radius:20px}
+.sp-btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
+.sp-btn-p{display:inline-block;background:linear-gradient(135deg,#E07020,#F59B20);color:white !important;padding:14px 32px;border-radius:9999px;text-decoration:none;font-weight:700;font-size:0.95rem}
+.sp-btn-g{display:inline-block;background:transparent;color:rgba(255,255,255,0.7);padding:14px 32px;border-radius:9999px;text-decoration:none;font-size:0.95rem;border:1.5px solid rgba(255,255,255,0.2)}
+</style>
+
+<!-- BLOQUE 1: COUNTERS -->
+<div class="sp-counters">
+  <div class="sp-c spc1">
+    <span class="sn">68%</span>
+    <span class="sl">De pymes en Chile<br>con sitios sin indexar</span>
+  </div>
+  <div class="sp-c spc2">
+    <span class="sn">4 hrs</span>
+    <span class="sl">Ventana de atención<br>en modelo manual</span>
+  </div>
+  <div class="sp-c spc3">
+    <span class="sn">73%</span>
+    <span class="sl">Consultas perdidas<br>fuera de horario laboral</span>
+  </div>
+</div>
+
+<!-- BLOQUE 2: CALLOUT / EXPLAINER -->
+<div class="sp-callout">
+  <div class="sp-ct">// Las 3 señales que tu empresa probablemente está ignorando</div>
+  <div class="sp-item">
+    <span class="sp-icon">🔍</span>
+    <div class="sp-text"><strong>Tu sitio no indexa en Google.</strong> Existe, pero es invisible. Los buscadores no lo muestran porque no cumple con los estándares técnicos mínimos de rastreo, velocidad o estructura de datos.</div>
+  </div>
+  <div class="sp-item">
+    <span class="sp-icon">🛒</span>
+    <div class="sp-text"><strong>Tu e-commerce tiene fricción de compra.</strong> Precios que muestran $0, catálogos desactualizados, carritos que se abandonan porque el proceso de checkout pide demasiados pasos o genera desconfianza.</div>
+  </div>
+  <div class="sp-item">
+    <span class="sp-icon">⏰</span>
+    <div class="sp-text"><strong>Tu atención depende de que alguien responda.</strong> Cada consulta que llega fuera del horario laboral — sábados, domingos, noches — se pierde. No hay seguimiento, no hay registro, no hay segunda oportunidad.</div>
+  </div>
+  <div class="sp-item">
+    <span class="sp-icon">📉</span>
+    <div class="sp-text"><strong>No hay medición real.</strong> Sin analytics correctamente configurados, no hay forma de saber cuántas oportunidades se pierden al mes. El problema crece en silencio hasta que impacta la caja.</div>
+  </div>
+</div>
+
+<!-- BLOQUE 3: GRÁFICO COMPARATIVO -->
+<div class="sp-chart">
+  <div class="spt">Impacto de la fricción digital en la conversión de ventas</div>
+  <div class="sps">Comparativa entre empresas con presencia digital optimizada vs. sin optimizar · Fuente: análisis interno Soft-Tech sobre clientes LATAM 2025</div>
+  <div class="sp-bars">
+    <div class="sp-bar-row">
+      <span class="sp-bar-label">Consultas respondidas</span>
+      <div class="sp-bar-track">
+        <div class="sp-bar-fill sp-bar-bad" style="width:27%">27%</div>
+      </div>
+    </div>
+    <div class="sp-bar-row">
+      <span class="sp-bar-label">Leads calificados</span>
+      <div class="sp-bar-track">
+        <div class="sp-bar-fill sp-bar-bad" style="width:15%">15%</div>
+      </div>
+    </div>
+    <div class="sp-bar-row">
+      <span class="sp-bar-label">Cierre de ventas</span>
+      <div class="sp-bar-track">
+        <div class="sp-bar-fill sp-bar-bad" style="width:8%">8%</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(11,31,58,0.08)">
+    <div class="sps" style="margin-bottom:8px;font-weight:600;color:#0B1F3A">Con presencia digital optimizada + atención 24/7</div>
+    <div class="sp-bars">
+      <div class="sp-bar-row">
+        <span class="sp-bar-label">Consultas respondidas</span>
+        <div class="sp-bar-track">
+          <div class="sp-bar-fill sp-bar-good" style="width:94%">94%</div>
+        </div>
+      </div>
+      <div class="sp-bar-row">
+        <span class="sp-bar-label">Leads calificados</span>
+        <div class="sp-bar-track">
+          <div class="sp-bar-fill sp-bar-good" style="width:62%">62%</div>
+        </div>
+      </div>
+      <div class="sp-bar-row">
+        <span class="sp-bar-label">Cierre de ventas</span>
+        <div class="sp-bar-track">
+          <div class="sp-bar-fill sp-bar-good" style="width:35%">35%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sp-legend">
+    <span><span class="sp-dot" style="background:rgba(255,45,120,0.7)"></span>Sin optimización (atención manual, sitio sin indexar)</span>
+    <span><span class="sp-dot" style="background:#0B1F3A"></span>Con presencia optimizada + automatización</span>
+  </div>
+</div>
+
+<!-- BLOQUE 4: FEATURES / SOLUCIÓN -->
+<div class="sp-features">
+  <div class="sp-feat">
+    <span class="fi">🌐</span>
+    <div class="ft">Presencia web real</div>
+    <div class="fd">Sitio que indexa, carga rápido y comunica lo que tu empresa hace. Sin contenido cruzado, sin certificados vencidos, sin errores técnicos.</div>
+    <span class="fb fb-teal">Visibilidad</span>
+  </div>
+  <div class="sp-feat">
+    <span class="fi">🤖</span>
+    <div class="ft">Atención inteligente 24/7</div>
+    <div class="fd">Un ecosistema de agentes IA que califica consultas, responde con contexto y escala a un ejecutivo humano cuando corresponde. Sin perder leads fuera de horario.</div>
+    <span class="fb fb-orange">Conversión</span>
+  </div>
+  <div class="sp-feat">
+    <span class="fi">🛡️</span>
+    <div class="ft">Modelo Riesgo 0</div>
+    <div class="fd">No inviertes por adelantado en tecnología ni publicidad. Solo pagas por los resultados que realmente se generan. El riesgo lo asumimos nosotros.</div>
+    <span class="fb fb-blue">Sin inversión inicial</span>
+  </div>
+</div>
+
+<!-- BLOQUE 5: CTA FINAL -->
+<div class="sp-cta">
+  <div class="sp-cta-tag">// auditoría gratuita</div>
+  <h3>¿Quieres saber exactamente<br>qué está fallando en tu<br>presencia digital?</h3>
+  <p>Revisamos tu sitio, tu posicionamiento en buscadores y tu flujo de atención. Te mostramos las señales que estás ignorando — y cómo resolverlas sin asumir riesgo.</p>
+  <div class="sp-pills">
+    <span class="sp-pill">Auditoría web</span>
+    <span class="sp-pill">Indexación SEO</span>
+    <span class="sp-pill">Atención 24/7</span>
+    <span class="sp-pill">Modelo Riesgo 0</span>
+  </div>
+  <div class="sp-btn-row">
+    <a class="sp-btn-p" href="https://soft-innova.com/#contacto?utm_source=blog&utm_medium=cta&utm_campaign=senales-silenciosas-presencia-digital">Quiero una auditoría gratuita</a>
+    <a class="sp-btn-g" href="https://soft-innova.com/#productos?utm_source=blog&utm_medium=cta&utm_campaign=senales-silenciosas-presencia-digital">Ver soluciones</a>
+  </div>
+</div>
