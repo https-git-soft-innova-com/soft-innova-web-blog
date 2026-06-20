@@ -1,0 +1,174 @@
+<style>
+.hc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:40px 0}
+.hc{border:1px solid rgba(224,112,32,0.3);border-radius:12px;padding:24px 20px;text-align:center;background:rgba(224,112,32,0.06)}
+.hc .hn{font-family:Arial Black,Arial;font-weight:900;font-size:2.8rem;color:#E07020;line-height:1;display:block;margin-bottom:8px}
+.hc .hl{font-size:0.72rem;color:#888;letter-spacing:1.5px;text-transform:uppercase;line-height:1.4}
+.terminal-html{background:#0d0d0d;border-radius:12px;overflow:hidden;margin:36px 0}
+.term-bar-html{background:#1a1a1a;padding:12px 16px;display:flex;align-items:center;gap:8px}
+.td{width:12px;height:12px;border-radius:50%}
+.term-title-html{font-family:monospace;font-size:11px;color:#666;margin:0 auto}
+.term-body-html{padding:20px 24px;font-family:monospace;font-size:13px;line-height:2}
+.t-p{color:#00FFC8}.t-c{color:white}.t-o{color:#A8FF60}.t-w{color:#FFBD2E}
+.cta-html{background:linear-gradient(135deg,#0B1F3A,#1a3a5c);border-radius:20px;padding:52px 44px;margin:52px 0;text-align:center;position:relative;overflow:hidden}
+.cta-html::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:250px;background:radial-gradient(ellipse,rgba(0,212,168,0.08) 0%,transparent 70%);pointer-events:none}
+.cta-tag-html{display:inline-block;background:rgba(0,212,168,0.1);border:1px solid rgba(0,212,168,0.2);color:#00D4A8;font-family:monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:24px;position:relative}
+.cta-html h3{font-family:Arial Black,Arial;font-weight:900;font-size:1.9rem;color:white;margin:0 0 12px;position:relative;line-height:1.2}
+.cta-html p{font-size:0.95rem;color:rgba(255,255,255,0.65);margin-bottom:32px;max-width:500px;margin-left:auto;margin-right:auto;position:relative}
+.btn-row-html{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
+.btn-primary-html{display:inline-block;background:linear-gradient(135deg,#E07020,#F59B20);color:white !important;padding:14px 32px;border-radius:9999px;text-decoration:none;font-weight:700;font-size:0.95rem}
+.btn-ghost-html{display:inline-block;background:transparent;color:rgba(255,255,255,0.7);padding:14px 32px;border-radius:9999px;text-decoration:none;font-size:0.95rem;border:1.5px solid rgba(255,255,255,0.2)}
+</style>
+
+<!-- COUNTERS: debajo del subtítulo -->
+<div class="hc-grid">
+  <div class="hc">
+    <span class="hn">60%</span>
+    <span class="hl">Tráfico fantasma de<br>agentes IA estimado 2026</span>
+  </div>
+  <div class="hc" style="background:rgba(11,31,58,0.08);border-color:rgba(11,31,58,0.2)">
+    <span class="hn" style="color:#0B1F3A">x402</span>
+    <span class="hl">Nuevo protocolo de pago<br>para agentes IA</span>
+  </div>
+  <div class="hc" style="background:rgba(0,212,168,0.08);border-color:rgba(0,212,168,0.2)">
+    <span class="hn" style="color:#00D4A8">0</span>
+    <span class="hl">Visitas registradas cuando<br>una IA lee tu contenido</span>
+  </div>
+</div>
+
+<!-- GRÁFICO TRÁFICO: reemplaza texto plano 2022-2026 -->
+<div style="margin:32px 0;padding:24px;background:rgba(11,31,58,0.04);border-radius:12px">
+  <h4 style="margin:0 0 16px;font-size:0.85rem;letter-spacing:1px;color:#0B1F3A;text-transform:uppercase">Evolución tráfico web 2022–2026</h4>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="width:36px;font-family:monospace;font-size:11px;color:#888;flex-shrink:0">2022</span>
+      <div style="flex:1;height:22px;background:#eee;border-radius:4px;overflow:hidden;display:flex">
+        <div style="width:95%;background:linear-gradient(90deg,#0B1F3A,#1a3a5c)"></div>
+        <div style="width:5%;background:linear-gradient(90deg,#E07020,#F59B20)"></div>
+      </div>
+      <span style="font-size:11px;color:#E07020;width:32px;text-align:right;flex-shrink:0">5%</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="width:36px;font-family:monospace;font-size:11px;color:#888;flex-shrink:0">2023</span>
+      <div style="flex:1;height:22px;background:#eee;border-radius:4px;overflow:hidden;display:flex">
+        <div style="width:88%;background:linear-gradient(90deg,#0B1F3A,#1a3a5c)"></div>
+        <div style="width:12%;background:linear-gradient(90deg,#E07020,#F59B20)"></div>
+      </div>
+      <span style="font-size:11px;color:#E07020;width:32px;text-align:right;flex-shrink:0">12%</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="width:36px;font-family:monospace;font-size:11px;color:#888;flex-shrink:0">2024</span>
+      <div style="flex:1;height:22px;background:#eee;border-radius:4px;overflow:hidden;display:flex">
+        <div style="width:78%;background:linear-gradient(90deg,#0B1F3A,#1a3a5c)"></div>
+        <div style="width:22%;background:linear-gradient(90deg,#E07020,#F59B20)"></div>
+      </div>
+      <span style="font-size:11px;color:#E07020;width:32px;text-align:right;flex-shrink:0">22%</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="width:36px;font-family:monospace;font-size:11px;color:#888;flex-shrink:0">2025</span>
+      <div style="flex:1;height:22px;background:#eee;border-radius:4px;overflow:hidden;display:flex">
+        <div style="width:65%;background:linear-gradient(90deg,#0B1F3A,#1a3a5c)"></div>
+        <div style="width:35%;background:linear-gradient(90deg,#E07020,#F59B20)"></div>
+      </div>
+      <span style="font-size:11px;color:#E07020;width:32px;text-align:right;flex-shrink:0">35%</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="width:36px;font-family:monospace;font-size:11px;color:#888;flex-shrink:0">2026</span>
+      <div style="flex:1;height:22px;background:#eee;border-radius:4px;overflow:hidden;display:flex">
+        <div style="width:48%;background:linear-gradient(90deg,#0B1F3A,#1a3a5c)"></div>
+        <div style="width:52%;background:linear-gradient(90deg,#E07020,#F59B20)"></div>
+      </div>
+      <span style="font-size:11px;color:#E07020;width:32px;text-align:right;flex-shrink:0">52%</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:16px;margin-top:12px">
+    <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:#888">
+      <span style="width:14px;height:8px;background:#0B1F3A;border-radius:2px;display:inline-block"></span>Tráfico humano</span>
+    <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:#888">
+      <span style="width:14px;height:8px;background:#E07020;border-radius:2px;display:inline-block"></span>Agentes IA</span>
+  </div>
+</div>
+
+<!-- BLOQUE SEO vs AEO: reemplaza texto plano comparativo -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0">
+  <div style="background:rgba(11,31,58,0.06);border:1px solid rgba(11,31,58,0.15);border-radius:12px;padding:20px">
+    <div style="font-size:10px;letter-spacing:2px;color:#888;margin-bottom:14px;text-transform:uppercase">🔗 SEO Tradicional</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#555">
+        <span>Citado en AI Overviews</span><strong style="color:#cc3300">3%</strong></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#555">
+        <span>Mencionado por LLMs</span><strong style="color:#cc3300">5%</strong></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#555">
+        <span>Indexado como fuente</span><strong style="color:#cc3300">8%</strong></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#555">
+        <span>Compensación x402</span><strong style="color:#cc3300">0%</strong></div>
+    </div>
+    <div style="margin-top:14px;display:inline-block;background:rgba(200,0,0,0.08);color:#cc3300;font-size:10px;letter-spacing:1.5px;padding:4px 12px;border-radius:20px">MODELO OBSOLETO</div>
+  </div>
+  <div style="background:rgba(0,212,168,0.06);border:1px solid rgba(0,212,168,0.25);border-radius:12px;padding:20px">
+    <div style="font-size:10px;letter-spacing:2px;color:#888;margin-bottom:14px;text-transform:uppercase">🤖 AEO + MCP (Nuevo modelo)</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#555">
+        <span>Citado en AI Overviews</span><strong style="color:#00A882">67%</strong></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#555">
+        <span>Mencionado por LLMs</span><strong style="color:#00A882">72%</strong></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#555">
+        <span>Indexado como fuente</span><strong style="color:#00A882">85%</strong></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#555">
+        <span>Compensación x402</span><strong style="color:#00A882">45%</strong></div>
+    </div>
+    <div style="margin-top:14px;display:inline-block;background:rgba(0,212,168,0.1);color:#00A882;font-size:10px;letter-spacing:1.5px;padding:4px 12px;border-radius:20px">MODELO VIGENTE</div>
+  </div>
+</div>
+
+<!-- TERMINAL x402 -->
+<div class="terminal-html">
+  <div class="term-bar-html">
+    <span class="td" style="background:#FF5F57"></span>
+    <span class="td" style="background:#FFBD2E"></span>
+    <span class="td" style="background:#28CA41"></span>
+    <span class="term-title-html">// protocolo x402 · flujo simplificado</span>
+  </div>
+  <div class="term-body-html">
+    <div><span class="t-p">→ </span><span class="t-c">AGENTE_IA </span><span class="t-o">solicita contenido de empresa.com</span></div>
+    <div><span class="t-p">→ </span><span class="t-c">servidor x402 </span><span class="t-o">detecta agente · registra consumo</span></div>
+    <div><span class="t-p">→ </span><span class="t-c">micropago </span><span class="t-o">procesado automáticamente</span></div>
+    <div><span class="t-p">→ </span><span class="t-c">empresa.com </span><span class="t-w">recibe compensación por valor entregado</span></div>
+    <div><span class="t-p">→ </span><span class="t-c">analytics </span><span class="t-o">registra: "consumo IA · $0.002 · claude-4 · topic: producto X"</span></div>
+    <div style="color:#555">// resultado: monetización sin visita humana ✓</div>
+  </div>
+</div>
+
+
+<!-- FAQ SECTION -->
+<div style="background:#f8f9fa;border-left:4px solid #E07020;border-radius:12px;padding:28px 32px;margin:32px 0;">
+  <h3 style="font-family:Arial Black,Arial;color:#0B1F3A;font-size:1.1rem;margin:0 0 20px;">
+    Preguntas frecuentes sobre la muerte del clic tradicional
+  </h3>
+  <div style="margin-bottom:16px;">
+    <strong style="color:#0B1F3A;">¿Qué es el tráfico fantasma de agentes de IA?</strong>
+    <p style="color:#444;margin:6px 0 0;font-size:0.95rem;">Son las visitas de LLMs como ChatGPT, Claude o Gemini que rastrean tu contenido para responder a usuarios, pero no aparecen en Google Analytics ni generan conversiones. Tu empresa entrega valor sin recibir nada a cambio.</p>
+  </div>
+  <div style="margin-bottom:16px;">
+    <strong style="color:#0B1F3A;">¿El protocolo x402 ya funciona hoy?</strong>
+    <p style="color:#444;margin:6px 0 0;font-size:0.95rem;">Está en desarrollo activo. Empresas como Cloudflare y Stripe ya trabajan en implementaciones. No es ciencia ficción — es infraestructura que se está construyendo ahora. Preparar tu arquitectura hoy te posiciona primero cuando el estándar se adopte masivamente.</p>
+  </div>
+  <div style="margin-bottom:16px;">
+    <strong style="color:#0B1F3A;">¿Qué diferencia hay entre SEO y AEO?</strong>
+    <p style="color:#444;margin:6px 0 0;font-size:0.95rem;">SEO optimiza para que Google muestre tu sitio en resultados. AEO (Answer Engine Optimization) optimiza para que las IAs citen tu contenido como fuente autorizada al responder preguntas. Ambos son necesarios: SEO captura el tráfico humano que queda, AEO captura la nueva economía de agentes.</p>
+  </div>
+  <div>
+    <strong style="color:#0B1F3A;">¿Cómo sé si los agentes de IA ya están consumiendo mi contenido?</strong>
+    <p style="color:#444;margin:6px 0 0;font-size:0.95rem;">Revisa tu archivo de logs del servidor (no Analytics). Busca user-agents como "GPTBot", "ClaudeBot", "Google-Extended" o "Bingbot". Si los ves, tu contenido ya está siendo consumido por IAs — y no estás monetizando ese tráfico.</p>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-html">
+  <div class="cta-tag-html">// próximo paso</div>
+  <h3>¿Quieres saber cuántos leads estás perdiendo cada vez que alguien consulta una IA y tú no estás posicionado?</h3>
+  <p>En Soft-Tech auditamos tu arquitectura digital y mostramos exactamente cómo monetizar en la economía de los agentes. Sin teoría — con implementación real.</p>
+  <div class="btn-row-html">
+    <a class="btn-primary-html" href="https://auditoria-web.soft-innova.com?tipo=aeo&utm_source=blog&utm_medium=cta&utm_campaign=auditoria">Auditar mi sitio →</a>
+    <a class="btn-ghost-html" href="https://soft-innova.com/#productos">Ver soluciones</a>
+  </div>
+</div>
