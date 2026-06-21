@@ -186,7 +186,7 @@ function parseCustomHtmlParts(html: string | undefined) {
 			"<!-- 3 MODELOS",
 			"<!-- GRÁFICO REVENUE",
 		]),
-		modelsF40: sliceBetween("<!-- 3 MODELOS", ["<!-- CASO ÉXITO", "<!-- GRÁFICO ROI"]),
+		modelsF40: sliceBetween("<!-- 3 MODELOS", ["<!-- CASO ÉXITO", "<!-- GRÁFICO ROI", "<!-- CTA FINAL"]),
 		successCase: sliceBetween("<!-- CASO ÉXITO", ["<!-- GRÁFICO ROI"]),
 		roiF40: sliceBetween("<!-- GRÁFICO ROI", [
 			"<!-- CTA FINAL",
