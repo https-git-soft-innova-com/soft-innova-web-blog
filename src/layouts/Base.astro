@@ -83,7 +83,7 @@ const ogImageType = /\.jpe?g($|\?)/i.test(resolvedImage)
 const pageCtx = createPublicPageContext({
 	Astro,
 	kind: content ? "content" : "custom",
-	pageType: type,
+	pageType: type === "article" ? "custom" : type,
 	title: fullTitle,
 	pageTitle: socialTitle,
 	description: metaDescription,
@@ -147,6 +147,10 @@ const pageCtx = createPublicPageContext({
 			href="/rss.xml"
 		/>
 		<EmDashHead page={pageCtx} />
+		{type === "article" && <meta property="og:type" content="article" />}
+		{type === "article" && publishedTime && <meta property="article:published_time" content={publishedTime} />}
+		{type === "article" && modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+		{type === "article" && author && <meta property="article:author" content={author} />}
 		<meta property="og:locale" content="es_CL" />
 		<meta property="og:image:secure_url" content={resolvedImage} />
 		<meta property="og:image:width" content="1200" />
