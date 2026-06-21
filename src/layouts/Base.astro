@@ -61,7 +61,9 @@ const {
 const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings());
 const resolvedDescription = description ?? siteTagline;
 // If title already includes site title (from getSeoMeta), use as-is
-const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
+// For articles, use short suffix to stay under 60 chars
+const siteSuffix = type === "article" ? "Soft-Tech Blog" : siteTitle;
+const fullTitle = title.includes(siteTitle) || title.includes("Soft-Tech") ? title : `${title} — ${siteSuffix}`;
 
 const DEFAULT_OG_IMAGE =
 	"https://www.soft-innova.com/images/iso-removebg-preview.png";

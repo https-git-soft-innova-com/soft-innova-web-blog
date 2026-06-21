@@ -304,9 +304,9 @@ const bodyBlocks = leadBlock
 ---
 
 <Base
-	title={seo.title}
+	title={post.data.title}
 	pageTitle={seo.ogTitle}
-	description={seo.description}
+	description={seo.description?.length <= 160 ? seo.description : (post.data.excerpt?.slice(0, 155) + "…")}
 	image={seo.ogImage}
 	canonical={seo.canonical}
 	robots={seo.robots}
