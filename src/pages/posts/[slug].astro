@@ -142,6 +142,13 @@ function parseCustomHtmlParts(html: string | undefined) {
 			const idx = html.indexOf(marker, from);
 			if (idx !== -1 && idx < end) end = idx;
 		}
+		// Fallback: never extend past CTA FINAL or FAQ SECTION
+		if (end === html.length && !startMarker.includes("CTA FINAL")) {
+			const ctaIdx = html.indexOf("<!-- CTA FINAL", from);
+			if (ctaIdx !== -1) end = ctaIdx;
+			const faqIdx = html.indexOf("<!-- FAQ SECTION", from);
+			if (faqIdx !== -1 && faqIdx < end) end = faqIdx;
+		}
 		return html.slice(from, end).trim();
 	};
 
